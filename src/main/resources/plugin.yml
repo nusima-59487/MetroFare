@@ -1,0 +1,50 @@
+name: ${project.artifactId}
+version: ${project.version}
+main: com.hasunemiku2015.metrofare.MTFA
+api-version: 1.13
+softdepend: [Vault,Train_Carts,MikuCore]
+commands:
+  datum:
+    description: Interact with the DataTable in MetroFare.
+    usage: /datum
+    aliases: [dt]
+  debitcard:
+    description: DebitCard Related commands.
+    usage: /debitcard
+    aliases: [dc,dbc,ap,ms]
+  valueaddmachine:
+    description: DebitCard Related commands for CommandBlocks.
+    usage: /valueaddmachine
+    aliases: [vam,vm,dcm,apm,msm]
+  ticket:
+    description: Ticket Related commands.
+    usage: /ticket
+    aliases: [tic]
+  vending:
+    description: Ticket Related commands for CommandBlocks.
+    usage: /vending
+    aliases: [vend,ticketm,ticm]
+  company:
+    description: Company Related Commands
+    usage: /company
+    aliases: [cp,comp]
+  faretable:
+    description: FareTable Related Commands.
+    usage: /faretable
+    aliases: [ft,fare]
+permissions:
+  mtfa.buildgate:
+    description: Allows a player to build MetroFate gates and one-time-payment machines.
+    default: op
+  mtfa.buildeditor:
+    description: Allows a player to build MetroFare debit-card editors.
+    default: op
+  mtfa.database:
+    description: Allows a player to edit and download data-table and fare-table.
+    default: op
+  mtfa.fence:
+    description: Allows a player to lock fence gates.
+    default: op
+  mtfa.ticketing:
+    description: Allows a player to use ticket and debit-card related commands.
+    default: op

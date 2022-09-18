@@ -1,0 +1,126 @@
+#                             This is the Main Configuration File of MetroFare
+#           If you mess up the file, DELETE it, and the plugin will generate a new one upon reload
+#              Please DO NOT edit any .jsonc files and DataTables, use in-game-commands instead
+#-----------------------------------------------------------------------------------------------------------------------
+# This Configuration File is generated as of MetroFare version 0.8
+
+# General Settings
+# Set the Default Fare if Algorithm returns an error. (Range : from 0 to 2,147,483.647 , Default : 0)
+default_fare: 0
+
+# Set the Open/Close Delay of Gates (In Ticks , Default : 30)
+open_time: 30
+
+# Enable Vault Integration if Vault is Installed (Default: true)
+vault_integration: true
+
+# Security
+# Set if Permission is required for each part of the plugin (Default: false)
+permission:
+  gate: false
+  editor: false
+  database: false
+  fence: false
+  ticketing: false
+
+# Personalization
+# Customize the prefix of MetroFare (If you really don't want to see [MetroFare])
+prefix: '[MetroFare]'
+
+# Customize the theme color for MetroFare (Use ChatColor Enum Values, ONE of the 16 below)
+# AQUA,BLACK,BLUE,DARK_AQUA,DARK_BLUE,DARK_GRAY,DARK_GREEN,DARK_PURPLE
+# DARK_RED,GOLD,GRAY,GREEN,LIGHT_PURPLE,RED,WHITE,YELLOW
+theme:
+  main: YELLOW
+  error: DARK_RED
+  input_values: LIGHT_PURPLE
+  results: RED
+
+# Customize the layout of MetroFare Signs (Use & as the color code character)
+entry_gate:
+  enable: true
+  prefix: '[MetroFareIn]'
+  info_1: '&6&l請拍卡/車票'
+  info_2: '&5Tap Card/Ticket'
+  transient_1: '&6&l請進  &5Please Enter'
+  transient_2: ''
+  insufficient: '&4Error, Insufficient Balance in Debit Card!'
+  chat: '&ePlease Enter'
+
+exit_gate:
+  enable: true
+  prefix: '[MetroFareOut]'
+  info_1: '&6&l請拍卡/車票'
+  info_2: '&5Tap Card/Ticket'
+  transient_1: '&6&l請出  &5Please Exit'
+  transient_2: ''
+  chat: '&ePlease Exit'
+  chat_fare: '&eFare: '
+  chat_remaining: '&eRemaining Balance: '
+
+card_editor:
+  enable: true
+  prefix: '[MetroFareDCE]'
+  name: 'DebitCardEditor'
+  info_1: ''
+  info_2: '&6&l自助客務機 &5Self'
+  info_3: '&5Service Point'
+  prompt_add: '&eAdd Value'
+  prompt_bankin: '&eBank in Value'
+  prompt_auto_dailylimit: '&eNew Daily Limit'
+  prompt_auto_addamount: '&eNew AutoTopUp Amount'
+  success: '&eSuccess!'
+  fail: '&4An error occurred'
+  new_balance: '&eNew Card Balance: '
+
+validator:
+  enable: true
+  vanilla:
+    prefix: '[MetroFareValidator]'
+  train_carts:
+    prefix: 'validator'
+    name: 'Debit Card Validator'
+    description: 'validate a debit card to transfer fare zone'
+  complete: '&eClearance Complete!'
+  no_card: '&4Error, Cannot find Debit Card in your inventory. Please ignore if you are using ticket.'
+
+transfer_gate:
+  enable: true
+  prefix: '[MetroFareIC]'
+  info_1: '&6&l換乘 &b'
+  info_2: '&5to &b'
+  transient_1: '&6&l換乘  &5Interchange'
+  transient_2: ''
+  chat_ticket: '&eTransfer'
+  chat_ticket_error: '&4Error, Destination Company Mismatch!'
+
+one_time_payment_machine:
+  enable: true
+  prefix: '[MetroFareOTP]'
+  info_1: '&6&l請拍卡'
+  info_2: '&5Tap Card'
+  transient_1: '&6&l付款成功 &5Payment'
+  transient_2: '&5Successful'
+  chat: '&eFare: '
+  chat_remaining: '&eRemaining Balance: '
+  insufficient: '&4Error, Insufficient Balance in Debit Card!'
+
+# Customize the Default Debit Card
+debit_name: '&eDeb!t Card'
+owner_prefix: '&eOwner: '
+balance_prefix: '&eBalance: '
+
+# Customize the Default Ticket
+ticket:
+  name: '&eTicket'
+  from: '&eFrom'
+  to: '&eTo'
+  fare: '&eFare'
+
+# Customize the currency unit (Enter a Number, Default : 0)
+# 0:$  4:₩   8:₣
+# 1:£  5:฿   9:ரூ
+# 2:€  6:₫  10:RM
+# 3:¥  7:₽  11:₱
+currency_unit: 0
+
