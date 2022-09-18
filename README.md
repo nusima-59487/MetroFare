@@ -49,7 +49,7 @@ A few points to note:
 ```
 
 ## Download
-You can download the plugin from spigot-mc forum [here](https://google.com).
+You can download the plugin from spigot-mc forum [here](https://www.spigotmc.org/resources/metrofare.105346/).
 
 ## Usage example
 ### 1. Setup your own fare system
