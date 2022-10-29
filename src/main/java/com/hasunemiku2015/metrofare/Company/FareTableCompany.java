@@ -28,9 +28,6 @@ public class FareTableCompany extends AbstractCompany implements Serializable {
     String getFareTableName() {
         return FareTableName;
     }
-//    void setFareTable(String name) {
-//        FareTableObject = FareTableStore.FareTables.get(name);
-//    }
 
     @Override
     public int computeFare(String from, String to) {
