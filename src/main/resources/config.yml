@@ -89,6 +89,8 @@ transfer_gate:
   prefix: '[MetroFareIC]'
   info_1: '&6&l換乘 &b'
   info_2: '&5to &b'
+  info_3: ''
+  info_4: ''
   transient_1: '&6&l換乘  &5Interchange'
   transient_2: ''
   chat_ticket: '&eTransfer'

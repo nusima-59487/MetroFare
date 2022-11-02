@@ -79,6 +79,8 @@ public class MFConfig {
     private static String prefixTransfer;
     private static String info1Transfer;
     private static String info2Transfer;
+    private static String info3Transfer;
+    private static String info4Transfer;
     private static String transient1Transfer;
     private static String transient2Transfer;
     private static String chatTicketTransfer;
@@ -180,6 +182,8 @@ public class MFConfig {
         prefixTransfer = ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(MTFA.plugin.getConfig().getString("transfer_gate.prefix")));
         info1Transfer = ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(MTFA.plugin.getConfig().getString("transfer_gate.info_1")));
         info2Transfer = ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(MTFA.plugin.getConfig().getString("transfer_gate.info_2")));
+        info3Transfer = ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(MTFA.plugin.getConfig().getString("transfer_gate.info_3")));
+        info4Transfer = ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(MTFA.plugin.getConfig().getString("transfer_gate.info_4")));
         transient1Transfer = ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(MTFA.plugin.getConfig().getString("transfer_gate.transient_1")));
         transient2Transfer = ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(MTFA.plugin.getConfig().getString("transfer_gate.transient_2")));
         chatTicketTransfer = ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(MTFA.plugin.getConfig().getString("transfer_gate.chat_ticket")));
@@ -261,6 +265,12 @@ public class MFConfig {
     }
     public static String getInfo2Out() {
         return info2Out;
+    }
+    public static String getInfo3Transfer() {
+        return info3Transfer;
+    }
+    public static String getInfo4Transfer() {
+        return info4Transfer;
     }
     public static String getTransientOut1() {
         return transientOut1;

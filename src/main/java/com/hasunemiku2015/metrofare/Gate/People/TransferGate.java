@@ -126,8 +126,8 @@ public class TransferGate implements Listener {
                 sign.update();
 
                 Bukkit.getScheduler().runTaskLater(MTFA.plugin, () -> {
-                    sign.setLine(2, MFConfig.getInfo1Transfer() + enterCompany.getName());
-                    sign.setLine(3, MFConfig.getInfo2Transfer() + enterCompany.getName());
+                    sign.setLine(2, MFConfig.getInfo1Transfer() + enterCompany.getName() + MFConfig.getInfo3Transfer());
+                    sign.setLine(3, MFConfig.getInfo2Transfer() + enterCompany.getName() + MFConfig.getInfo4Transfer());
                     sign.update();
                 }, MFConfig.getOpenTime());
 
