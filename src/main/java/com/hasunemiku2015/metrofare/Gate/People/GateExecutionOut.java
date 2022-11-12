@@ -42,7 +42,7 @@ public class GateExecutionOut implements Listener {
                 }
 
                 if (hand.getType().equals(Material.PAPER)) {
-                    openGate = TicketExitLogic(company, hand, sign);
+                    openGate = TicketExitLogic(event.getPlayer(), company, hand, sign);
                     if (openGate) {
                         event.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.AIR, 1));
                         event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getChatOut()));
@@ -69,15 +69,18 @@ public class GateExecutionOut implements Listener {
     public static boolean DCExitLogic(Player p, AbstractCompany company, ItemStack hand, String inputData) {
         DebitCard card = new DebitCard(hand);
         if (!card.isValid()) {
-            // Return card Invalid message
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
+                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getDebitCardInvalidOut()));
             return false;
         }
         if (!card.getOwner().equals(p.getUniqueId().toString())) {
-            //Return wrong player error message
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
+                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getPlayerInvalidOut()));
             return false;
         }
         if (!card.hasEntered()) {
-            //Return card not yet entered error message
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
+                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getCardNotEnteredOut()));
             return false;
         }
 
@@ -108,18 +111,21 @@ public class GateExecutionOut implements Listener {
         return true;
     }
 
-    public static boolean TicketExitLogic(AbstractCompany company, ItemStack hand, Sign sign) {
+    public static boolean TicketExitLogic(Player p, AbstractCompany company, ItemStack hand, Sign sign) {
         Ticket ticket = new Ticket(hand);
         if (!ticket.isValid()) {
-            // Return ticket Invalid message
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
+                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getTicketInvalidOut()));
             return false;
         }
         if (!ticket.hasEntered()) {
-            //Return ticket entered error message
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
+                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getTicketNotEnteredOut()));
             return false;
         }
         if (!ticket.checkExitCompany(company)) {
-            //Return exiting from wrong company error
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
+                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getTicketWrongExitCompanyOut()));
             return false;
         }
 
@@ -128,12 +134,14 @@ public class GateExecutionOut implements Listener {
         }
 
         if (!ticket.checkExitCompany(CompanyStore.CompanyTable.get(ticket.getCompanyFrom()))) {
-            //not valid inter-company ticket
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
+                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getTicketInvalidInterCompanyOut()));
             return false;
         }
 
         if (ticket.getFare1000() < company.computeFare(ticket.getEntryData(), sign.getLine(1).split(",")[1])) {
-            //Return not enough fare error
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
+                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getTicketInsufficientFareOut()));
             return false;
         }
         return true;

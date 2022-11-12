@@ -39,7 +39,7 @@ public class GateExecutionIn implements Listener {
                 }
 
                 if (hand.getType().equals(Material.PAPER)) {
-                    openGate = TicketEntryLogic(hand, sign.getLine(1));
+                    openGate = TicketEntryLogic(event.getPlayer(), hand, sign.getLine(1));
                 }
 
                 if (openGate) {
@@ -63,20 +63,24 @@ public class GateExecutionIn implements Listener {
     public static boolean DCEntryLogic(Player p, ItemStack hand, String inputData, boolean isTransferGate) {
         DebitCard card = new DebitCard(hand);
         if (!card.isValid()) {
-            // Return card Invalid message
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
+                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getDebitCardInvalidIn()));
             return false;
         }
         String[] data = GateUtil.parseData(inputData);
         if (!CompanyStore.CompanyTable.containsKey(data[0])) {
-            // Return company Invalid message
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
+                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getCompanyInvalidIn()));
             return false;
         }
         if (!card.getOwner().equals(p.getUniqueId().toString())) {
-            //Return wrong player error message
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
+                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getPlayerInvalidIn()));
             return false;
         }
         if (card.hasEntered()) {
-            //Return card entered error message
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
+                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getCardEnteredIn()));
             return false;
         }
         if (card.getBalance() <= 0 && !isTransferGate) {
@@ -91,23 +95,27 @@ public class GateExecutionIn implements Listener {
         return true;
     }
 
-    public boolean TicketEntryLogic(ItemStack hand, String inputData) {
+    public boolean TicketEntryLogic(Player p, ItemStack hand, String inputData) {
         Ticket ticket = new Ticket(hand);
         if (!ticket.isValid()) {
-            // Return ticket Invalid message
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
+                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getTicketInvalidIn()));
             return false;
         }
         if (ticket.hasEntered()) {
-            // Return ticket entered error message
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
+                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getTicketEnteredIn()));
             return false;
         }
 
         if (!ticket.checkEntryCompany(CompanyStore.CompanyTable.get(inputData.split(",")[0]))) {
-            // Return entry company not valid error message
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
+                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getEntryCompanyInvalidIn()));
             return false;
         }
         if (!ticket.getEntryData().equals(inputData.split(",")[1])) {
-            // Return station invalid message
+            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
+                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getStationInvalidIn()));
             return false;
         }
         ticket.entryProcedure();
