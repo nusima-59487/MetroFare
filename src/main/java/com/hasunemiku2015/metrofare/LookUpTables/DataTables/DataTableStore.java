@@ -17,7 +17,7 @@ public class DataTableStore {
 
     //Inits
     public static void init() {
-        File dir = new File(MTFA.plugin.getDataFolder(),"DataTables");
+        File dir = new File(MTFA.PLUGIN.getDataFolder(),"DataTables");
         dir.mkdirs();
 
         if(dir.listFiles() == null){
@@ -47,7 +47,7 @@ public class DataTableStore {
         return false;
     }
     protected static void delFile(String FileName) {
-        File file = new File(MTFA.plugin.getDataFolder() + "/DataTables", FileName + ".csv");
+        File file = new File(MTFA.PLUGIN.getDataFolder() + "/DataTables", FileName + ".csv");
         if(file.exists()){
             file.delete();
         }
@@ -63,7 +63,7 @@ public class DataTableStore {
         final Response<String> pasteResponse = pastebin.getRawPaste(pasteKey);
         if (pasteResponse.hasError()) return 1;
 
-        File file = new File(MTFA.plugin.getDataFolder() + "/DataTables", localFileName + ".csv");
+        File file = new File(MTFA.PLUGIN.getDataFolder() + "/DataTables", localFileName + ".csv");
         if(file.exists()) return 2;
         boolean b = file.createNewFile();
         if(!b) return 3;

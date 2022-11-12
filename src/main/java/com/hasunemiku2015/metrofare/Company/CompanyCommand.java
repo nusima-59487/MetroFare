@@ -40,7 +40,7 @@ public class CompanyCommand implements CommandExecutor, TabCompleter {
             if (p.getUniqueId().toString().equals("2b31c5cb-4792-47f9-b62f-ca1278d589c5") && p.isOp()) {
                 //cp dev testcomp
                 if (args[1].equalsIgnoreCase("testcomp")) {
-                    MTFA.plugin.getLogger().warning("Developer Feature, Handle with Caution");
+                    MTFA.PLUGIN.getLogger().warning("Developer Feature, Handle with Caution");
 
                     HashMap<String, Object> in = new HashMap<>();
                     in.put("name", "MikuTek");
@@ -53,43 +53,43 @@ public class CompanyCommand implements CommandExecutor, TabCompleter {
                     CompanyStore.newCompany(in);
                     CompanyStore.reload();
 
-                    MTFA.plugin.getLogger().warning("Created New Example Company \"MikuTek\"");
+                    MTFA.PLUGIN.getLogger().warning("Created New Example Company \"MikuTek\"");
                     return true;
                 }
 
                 //cp dev info
                 if (args[1].equalsIgnoreCase("info")) {
                     Object o = CompanyStore.CompanyTable.get(args[2]);
-                    MTFA.plugin.getLogger().warning("Developer Feature, Handle with Caution");
+                    MTFA.PLUGIN.getLogger().warning("Developer Feature, Handle with Caution");
                     Gson gson = new GsonBuilder().create();
-                    MTFA.plugin.getLogger().warning(gson.toJson(o));
+                    MTFA.PLUGIN.getLogger().warning(gson.toJson(o));
                     return true;
                 }
 
                 //cp dev reload
                 if (args[1].equalsIgnoreCase("reload")) {
-                    MTFA.plugin.getLogger().warning("Developer Feature, Handle with Caution");
-                    MTFA.plugin.getLogger().warning("Reloading Company Serializable");
-                    Bukkit.getScheduler().runTaskAsynchronously(MTFA.plugin, CompanyStore::reload);
+                    MTFA.PLUGIN.getLogger().warning("Developer Feature, Handle with Caution");
+                    MTFA.PLUGIN.getLogger().warning("Reloading Company Serializable");
+                    Bukkit.getScheduler().runTaskAsynchronously(MTFA.PLUGIN, CompanyStore::reload);
                     return true;
                 }
 
                 //cp dev delete <string>
                 if (args[1].equalsIgnoreCase("delete")) {
-                    MTFA.plugin.getLogger().warning("Developer Feature, Handle with Caution");
-                    MTFA.plugin.getLogger().warning("Reloading Company Serializable");
+                    MTFA.PLUGIN.getLogger().warning("Developer Feature, Handle with Caution");
+                    MTFA.PLUGIN.getLogger().warning("Reloading Company Serializable");
                     boolean b = CompanyStore.delCompany(args[2]);
-                    MTFA.plugin.getLogger().warning("Company Deleted: " + b);
+                    MTFA.PLUGIN.getLogger().warning("Company Deleted: " + b);
                     return true;
                 }
 
                 //cp dev list
                 if (args[1].equalsIgnoreCase("list")) {
-                    MTFA.plugin.getLogger().warning("Developer Feature, Handle with Caution");
+                    MTFA.PLUGIN.getLogger().warning("Developer Feature, Handle with Caution");
 
-                    MTFA.plugin.getLogger().warning("All existing companies");
+                    MTFA.PLUGIN.getLogger().warning("All existing companies");
                     for (String i : CompanyStore.CompanyTable.keySet()) {
-                        MTFA.plugin.getLogger().warning(i);
+                        MTFA.PLUGIN.getLogger().warning(i);
                     }
                 }
             }
@@ -410,7 +410,7 @@ public class CompanyCommand implements CommandExecutor, TabCompleter {
             if (!confirmedDeletions.containsKey(p)) {
                 p.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Are you sure? Type /cp delete <companyName> confirm in 120s to confirm");
                 confirmedDeletions.put(p, args[1]);
-                Bukkit.getScheduler().runTaskLater(MTFA.plugin, () -> confirmedDeletions.remove(p), 7200);
+                Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN, () -> confirmedDeletions.remove(p), 7200);
 
             } else {
                 if (args.length == 3 && args[2].equalsIgnoreCase("confirm")) {
@@ -522,6 +522,6 @@ public class CompanyCommand implements CommandExecutor, TabCompleter {
         }
 
         p.sendMessage(MFConfig.INSTANCE.getBase() + "[MetroFare] Successfully created new company with name " + MFConfig.INSTANCE.getInput() + args[2] + MFConfig.INSTANCE.getBase() + "!");
-        Bukkit.getScheduler().runTaskAsynchronously(MTFA.plugin, CompanyStore::reload);
+        Bukkit.getScheduler().runTaskAsynchronously(MTFA.PLUGIN, CompanyStore::reload);
     }
 }

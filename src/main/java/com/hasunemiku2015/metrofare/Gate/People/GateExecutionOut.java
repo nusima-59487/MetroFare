@@ -55,7 +55,7 @@ public class GateExecutionOut implements Listener {
                     sign.setLine(3, MFConfig.INSTANCE.getTransient2Out());
                     sign.update();
 
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(MTFA.plugin, () -> {
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(MTFA.PLUGIN, () -> {
                         sign.setLine(2, MFConfig.INSTANCE.getInfo1Out());
                         sign.setLine(3, MFConfig.INSTANCE.getInfo2Out());
                         sign.update();
@@ -99,7 +99,7 @@ public class GateExecutionOut implements Listener {
         }
 
         p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getChatOut() + MFConfig.INSTANCE.getCurrencyUnit() + MFConfig.INSTANCE.getOutput() + fare));
-        Bukkit.getScheduler().runTaskLater(MTFA.plugin, () -> p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getChatRemaining() + MFConfig.INSTANCE.getCurrencyUnit() + MFConfig.INSTANCE.getOutput() + (card.getBalance() / 1000.0))), 20);
+        Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN, () -> p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getChatRemaining() + MFConfig.INSTANCE.getCurrencyUnit() + MFConfig.INSTANCE.getOutput() + (card.getBalance() / 1000.0))), 20);
 
         card.removeEntryData();
         card.removeCompany();

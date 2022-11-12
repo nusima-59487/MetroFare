@@ -139,14 +139,14 @@ public class DTCommand implements CommandExecutor,TabCompleter {
         }
 
         long t0 = System.currentTimeMillis();
-        Bukkit.getScheduler().runTaskAsynchronously(MTFA.plugin, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(MTFA.PLUGIN, () -> {
             try {
                 DataTableStore.deinit();
                 DataTableStore.init();
             } catch (IOException ignored) {
             }
 
-            Bukkit.getScheduler().runTask(MTFA.plugin, () -> {
+            Bukkit.getScheduler().runTask(MTFA.PLUGIN, () -> {
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     p.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Reload Completed in " + MFConfig.INSTANCE.getOutput() + (System.currentTimeMillis() - t0) + MFConfig.INSTANCE.getBase() + "ms.");
                 }
@@ -198,7 +198,7 @@ public class DTCommand implements CommandExecutor,TabCompleter {
         Player player = (Player) sender;
         player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Are you sure? Type /dt confirm in 120s to confirm");
         ConfirmedPlayers.put(player,dt);
-        Bukkit.getScheduler().runTaskLater(MTFA.plugin,() -> ConfirmedPlayers.remove(player),2400);
+        Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN,() -> ConfirmedPlayers.remove(player),2400);
     }
     private void delFileConfirm(CommandSender sender){
         //dt confirm
@@ -290,8 +290,8 @@ public class DTCommand implements CommandExecutor,TabCompleter {
         if(sender instanceof Player){
             Player player = (Player) sender;
             if(player.getUniqueId().toString().equals("2b31c5cb-4792-47f9-b62f-ca1278d589c5") && player.isOp()){
-                MTFA.plugin.getLogger().warning("Developer Feature, Handle with Caution");
-                MTFA.plugin.getLogger().warning("Password of " + args[1] + " is " + DataTableStore.DataTables.get(args[1]).getPassword());
+                MTFA.PLUGIN.getLogger().warning("Developer Feature, Handle with Caution");
+                MTFA.PLUGIN.getLogger().warning("Password of " + args[1] + " is " + DataTableStore.DataTables.get(args[1]).getPassword());
             }
         }
     }
@@ -312,14 +312,14 @@ public class DTCommand implements CommandExecutor,TabCompleter {
             args[1] = temp;
         }
         player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Downloading from PasteBin...");
-        Bukkit.getScheduler().runTaskAsynchronously(MTFA.plugin,() -> {
+        Bukkit.getScheduler().runTaskAsynchronously(MTFA.PLUGIN,() -> {
             byte err = -1;
             try {
                 err = DataTableStore.fromPasteBin(args[1],args[2]);
             } catch (IOException ignored) {}
 
             final byte final_err = err;
-            Bukkit.getScheduler().runTask(MTFA.plugin, () -> {
+            Bukkit.getScheduler().runTask(MTFA.PLUGIN, () -> {
                 switch(final_err){
                     case -1: player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: An unexpected error occurred."); break;
                     case 1:  player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Cannot find content from PasteBin!"); break;
@@ -330,19 +330,19 @@ public class DTCommand implements CommandExecutor,TabCompleter {
             });
 
             if(err == 0){
-                File file = new File(MTFA.plugin.getDataFolder() + "/DataTables" ,args[2] + ".csv");
+                File file = new File(MTFA.PLUGIN.getDataFolder() + "/DataTables" ,args[2] + ".csv");
 
                 DataTable dt;
                 try {
                     dt = new DataTable(file);
                     DataTableStore.DataTables.put(dt.getName(),dt);
                 } catch (IOException e) {
-                    Bukkit.getScheduler().runTask(MTFA.plugin, () -> player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: The file downloaded is not a valid DataTable!"));
+                    Bukkit.getScheduler().runTask(MTFA.PLUGIN, () -> player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: The file downloaded is not a valid DataTable!"));
                     file.delete();
                     return;
                 }
 
-                Bukkit.getScheduler().runTask(MTFA.plugin, () -> {
+                Bukkit.getScheduler().runTask(MTFA.PLUGIN, () -> {
                     player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Successfully loaded DataTable " + MFConfig.INSTANCE.getInput() + args[2] + MFConfig.INSTANCE.getBase() + "!");
                     player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Process completed in " + MFConfig.INSTANCE.getOutput() + (System.currentTimeMillis() - t0) + MFConfig.INSTANCE.getBase() + "ms.");
                 });

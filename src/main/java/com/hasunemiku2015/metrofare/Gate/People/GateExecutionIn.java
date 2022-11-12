@@ -48,7 +48,7 @@ public class GateExecutionIn implements Listener {
                     sign.setLine(2, MFConfig.INSTANCE.getTransient1In());
                     sign.setLine(3, MFConfig.INSTANCE.getTransient2In());
                     sign.update();
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(MTFA.plugin, () -> {
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(MTFA.PLUGIN, () -> {
                         sign.setLine(2, MFConfig.INSTANCE.getInfo1In());
                         sign.setLine(3, MFConfig.INSTANCE.getInfo2In());
                         sign.update();

@@ -37,7 +37,7 @@ public class OTPExecution implements Listener {
                         sign.setLine(2, MFConfig.INSTANCE.getTransient1OTP());
                         sign.setLine(3, MFConfig.INSTANCE.getTransient2OTP());
                         sign.update();
-                        Bukkit.getScheduler().scheduleSyncDelayedTask(MTFA.plugin, () -> {
+                        Bukkit.getScheduler().scheduleSyncDelayedTask(MTFA.PLUGIN, () -> {
                             sign.setLine(2, MFConfig.INSTANCE.getInfo1OTP());
                             sign.setLine(3, MFConfig.INSTANCE.getInfo2OTP());
                             sign.update();
@@ -75,7 +75,7 @@ public class OTPExecution implements Listener {
 
         int deductAmount1000 = (int) Math.round(Double.parseDouble(data[1]) * 1000);
         p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getChatFareOTP() + MFConfig.INSTANCE.getCurrencyUnit() + MFConfig.INSTANCE.getOutput() + (deductAmount1000 / 1000.0)));
-        Bukkit.getScheduler().runTaskLater(MTFA.plugin, () -> p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getChatRemainingOTP() + " " + MFConfig.INSTANCE.getCurrencyUnit() + card.getBalance() / 1000.0)), 20);
+        Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN, () -> p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getChatRemainingOTP() + " " + MFConfig.INSTANCE.getCurrencyUnit() + card.getBalance() / 1000.0)), 20);
 
         card.setBalance(card.getBalance() - deductAmount1000);
         card.addPaymentRecord(company.getName(), true, deductAmount1000);

@@ -23,11 +23,12 @@ import java.io.IOException;
 import java.util.Objects;
 
 public final class MTFA extends JavaPlugin {
-    public static MTFA plugin;
+    public static MTFA PLUGIN;
 
     @Override
     public void onEnable() {
-        plugin = this;
+        PLUGIN = this;
+        PLUGIN.saveDefaultConfig();
 
         if (Bukkit.getPluginManager().isPluginEnabled("Vault") || MFConfig.INSTANCE.isVaultIntegrationEnabled()) {
             VaultIntegration.init();

@@ -21,7 +21,7 @@ public class CompanyStore {
         CompanyTable = new HashMap<>();
 
         //Get Company Files
-        CompanyFolder = new File(MTFA.plugin.getDataFolder(), "Companies");
+        CompanyFolder = new File(MTFA.PLUGIN.getDataFolder(), "Companies");
         boolean created = CompanyFolder.mkdirs();
 
         //Load in Ser Files
@@ -48,7 +48,7 @@ public class CompanyStore {
     public static void deInit() throws IOException {
         if (CompanyTable != null) {
             for (String s : CompanyTable.keySet()) {
-                File file = new File(MTFA.plugin.getDataFolder() + "/Companies", s + ".jsonc");
+                File file = new File(MTFA.PLUGIN.getDataFolder() + "/Companies", s + ".jsonc");
 
                 boolean canCreateFile = false;
                 if (!file.exists()) {
@@ -65,7 +65,7 @@ public class CompanyStore {
     }
 
     public static void reload() {
-        Bukkit.getScheduler().runTaskAsynchronously(MTFA.plugin, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(MTFA.PLUGIN, () -> {
             try {
                 deInit();
                 init();
@@ -98,7 +98,7 @@ public class CompanyStore {
     }
 
     protected static boolean delCompany(String s) {
-        File file = new File(MTFA.plugin.getDataFolder() + "/Companies", s + ".jsonc");
+        File file = new File(MTFA.PLUGIN.getDataFolder() + "/Companies", s + ".jsonc");
         if (file.exists()) {
             boolean var = file.delete();
             CompanyStore.CompanyTable.remove(s);

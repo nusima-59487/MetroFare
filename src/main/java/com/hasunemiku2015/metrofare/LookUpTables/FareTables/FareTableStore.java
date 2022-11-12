@@ -13,7 +13,7 @@ public class FareTableStore {
 
     public static void init() throws FileNotFoundException, InvalidFareTableException {
         FareTables = new HashMap<>();
-        File dir = new File(MTFA.plugin.getDataFolder(), "FareTables");
+        File dir = new File(MTFA.PLUGIN.getDataFolder(), "FareTables");
         boolean b = dir.mkdirs();
         if (!b) {
             //Read the csv files
@@ -68,7 +68,7 @@ public class FareTableStore {
         final Response<String> pasteResponse = pastebin.getRawPaste(pasteKey);
         if (pasteResponse.hasError()) return 1;
 
-        File file = new File(MTFA.plugin.getDataFolder() + "/FareTables", localFileName + ".csv");
+        File file = new File(MTFA.PLUGIN.getDataFolder() + "/FareTables", localFileName + ".csv");
         if(file.exists()) return 2;
         boolean b = file.createNewFile();
         if(!b) return 3;

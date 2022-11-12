@@ -60,7 +60,7 @@ public class ClearanceTC extends SignAction {
                             }
 
                             if(done0 && done1){
-                                Bukkit.getScheduler().runTaskLater(MTFA.plugin,() -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR,new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getValidatorComplete())),10);
+                                Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN,() -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR,new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getValidatorComplete())),10);
                                 break;
                             } else if(i == 35) {
                                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR,new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " " + MFConfig.INSTANCE.getValidatorFail()));

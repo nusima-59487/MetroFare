@@ -42,19 +42,19 @@ public class DebitCard {
     private PaymentRecord Record;
 
     //NameSpacedKeys
-    private static final NamespacedKey UUIDKey = new NamespacedKey(MTFA.plugin, "UUID");
-    private static final NamespacedKey CompanyKey = new NamespacedKey(MTFA.plugin, "Company");
-    private static final NamespacedKey EntryDataKey = new NamespacedKey(MTFA.plugin, "EntryData");
-    private static final NamespacedKey OwnerKey = new NamespacedKey(MTFA.plugin, "Owner");
-    private static final NamespacedKey BalanceKey = new NamespacedKey(MTFA.plugin, "Balance");
-    private static final NamespacedKey ValidityKey = new NamespacedKey(MTFA.plugin, "Valid");
+    private static final NamespacedKey UUIDKey = new NamespacedKey(MTFA.PLUGIN, "UUID");
+    private static final NamespacedKey CompanyKey = new NamespacedKey(MTFA.PLUGIN, "Company");
+    private static final NamespacedKey EntryDataKey = new NamespacedKey(MTFA.PLUGIN, "EntryData");
+    private static final NamespacedKey OwnerKey = new NamespacedKey(MTFA.PLUGIN, "Owner");
+    private static final NamespacedKey BalanceKey = new NamespacedKey(MTFA.PLUGIN, "Balance");
+    private static final NamespacedKey ValidityKey = new NamespacedKey(MTFA.PLUGIN, "Valid");
 
-    private static final NamespacedKey LastAddedAutoKey = new NamespacedKey(MTFA.plugin, "LastAddedAuto");
-    private static final NamespacedKey AddAmountKey = new NamespacedKey(MTFA.plugin, "AddAmount");
-    private static final NamespacedKey AddedAmountKey = new NamespacedKey(MTFA.plugin, "AddedAmount");
-    private static final NamespacedKey DailyLimitKey = new NamespacedKey(MTFA.plugin, "DailyLimit");
+    private static final NamespacedKey LastAddedAutoKey = new NamespacedKey(MTFA.PLUGIN, "LastAddedAuto");
+    private static final NamespacedKey AddAmountKey = new NamespacedKey(MTFA.PLUGIN, "AddAmount");
+    private static final NamespacedKey AddedAmountKey = new NamespacedKey(MTFA.PLUGIN, "AddedAmount");
+    private static final NamespacedKey DailyLimitKey = new NamespacedKey(MTFA.PLUGIN, "DailyLimit");
 
-    private static final NamespacedKey PaymentRecordKey = new NamespacedKey(MTFA.plugin, "PaymentRecord");
+    private static final NamespacedKey PaymentRecordKey = new NamespacedKey(MTFA.PLUGIN, "PaymentRecord");
 
     //Constructor
     public DebitCard(ItemStack stack) {
@@ -247,7 +247,7 @@ public class DebitCard {
     }
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    private boolean autoTopUp() {
+    private void autoTopUp() {
         boolean b = true;
         if (AddedAmount + AddAmount > DailyLimit) {
             b = false;
@@ -263,10 +263,8 @@ public class DebitCard {
                     setBalance(Balance + AddAmount);
                     setAddedAmount(AddedAmount + AddAmount);
                     setLastAddedAuto(System.currentTimeMillis());
-                    return true;
                 }
             }
         }
-        return false;
     }
 }

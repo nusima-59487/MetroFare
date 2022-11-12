@@ -35,20 +35,20 @@ public class Ticket {
         assert itm != null;
         PersistentDataContainer pdc = itm.getPersistentDataContainer();
 
-        String enter = pdc.has(new NamespacedKey(MTFA.plugin, "EntryData"), PersistentDataType.STRING) ? pdc.get(new NamespacedKey(MTFA.plugin, "EntryData"), PersistentDataType.STRING) : ",";
+        String enter = pdc.has(new NamespacedKey(MTFA.PLUGIN, "EntryData"), PersistentDataType.STRING) ? pdc.get(new NamespacedKey(MTFA.PLUGIN, "EntryData"), PersistentDataType.STRING) : ",";
         assert enter != null;
         EntryData = enter.split(",")[0];
         CompanyFrom = enter.split(",")[1];
 
-        String exit = pdc.has(new NamespacedKey(MTFA.plugin, "ExitData"), PersistentDataType.STRING) ? pdc.get(new NamespacedKey(MTFA.plugin, "ExitData"), PersistentDataType.STRING) : ",";
+        String exit = pdc.has(new NamespacedKey(MTFA.PLUGIN, "ExitData"), PersistentDataType.STRING) ? pdc.get(new NamespacedKey(MTFA.PLUGIN, "ExitData"), PersistentDataType.STRING) : ",";
         assert exit != null;
         ExitData = exit.split(",")[0];
         CompanyTo = exit.split(",")[1];
 
-        fare1000 = pdc.has(new NamespacedKey(MTFA.plugin, "Fare"), PersistentDataType.INTEGER) ? pdc.get(new NamespacedKey(MTFA.plugin, "Fare"), PersistentDataType.INTEGER) : -1;
+        fare1000 = pdc.has(new NamespacedKey(MTFA.PLUGIN, "Fare"), PersistentDataType.INTEGER) ? pdc.get(new NamespacedKey(MTFA.PLUGIN, "Fare"), PersistentDataType.INTEGER) : -1;
 
-        entered = pdc.has(new NamespacedKey(MTFA.plugin, "Entered"), PersistentDataType.INTEGER) ? pdc.get(new NamespacedKey(MTFA.plugin, "Entered"), PersistentDataType.INTEGER) : 1;
-        String check = pdc.has(new NamespacedKey(MTFA.plugin, "Valid"), PersistentDataType.STRING) ? pdc.get(new NamespacedKey(MTFA.plugin, "Valid"), PersistentDataType.STRING) : null;
+        entered = pdc.has(new NamespacedKey(MTFA.PLUGIN, "Entered"), PersistentDataType.INTEGER) ? pdc.get(new NamespacedKey(MTFA.PLUGIN, "Entered"), PersistentDataType.INTEGER) : 1;
+        String check = pdc.has(new NamespacedKey(MTFA.PLUGIN, "Valid"), PersistentDataType.STRING) ? pdc.get(new NamespacedKey(MTFA.PLUGIN, "Valid"), PersistentDataType.STRING) : null;
         valid = check != null && check.equals(VALIDITY_KEY);
     }
 
@@ -92,7 +92,7 @@ public class Ticket {
         ItemMeta itm = stack.getItemMeta();
         assert itm != null;
         PersistentDataContainer pdc = itm.getPersistentDataContainer();
-        pdc.set(new NamespacedKey(MTFA.plugin, "Entered"), PersistentDataType.INTEGER, 1);
+        pdc.set(new NamespacedKey(MTFA.PLUGIN, "Entered"), PersistentDataType.INTEGER, 1);
         stack.setItemMeta(itm);
     }
 
@@ -112,12 +112,12 @@ public class Ticket {
         itm.setLore(lore);
 
         PersistentDataContainer pdc = itm.getPersistentDataContainer();
-        pdc.set(new NamespacedKey(MTFA.plugin, "EntryData"), PersistentDataType.STRING, EntryData + "," + entryCompany.getName());
-        pdc.set(new NamespacedKey(MTFA.plugin, "ExitData"), PersistentDataType.STRING, ExitData + "," + exitCompany.getName());
-        pdc.set(new NamespacedKey(MTFA.plugin, "Valid"), PersistentDataType.STRING, VALIDITY_KEY);
-        pdc.set(new NamespacedKey(MTFA.plugin, "UUID"), PersistentDataType.STRING, UUID.randomUUID().toString());
-        pdc.set(new NamespacedKey(MTFA.plugin, "Entered"), PersistentDataType.INTEGER, 0);
-        pdc.set(new NamespacedKey(MTFA.plugin, "Fare"), PersistentDataType.INTEGER, Fare);
+        pdc.set(new NamespacedKey(MTFA.PLUGIN, "EntryData"), PersistentDataType.STRING, EntryData + "," + entryCompany.getName());
+        pdc.set(new NamespacedKey(MTFA.PLUGIN, "ExitData"), PersistentDataType.STRING, ExitData + "," + exitCompany.getName());
+        pdc.set(new NamespacedKey(MTFA.PLUGIN, "Valid"), PersistentDataType.STRING, VALIDITY_KEY);
+        pdc.set(new NamespacedKey(MTFA.PLUGIN, "UUID"), PersistentDataType.STRING, UUID.randomUUID().toString());
+        pdc.set(new NamespacedKey(MTFA.PLUGIN, "Entered"), PersistentDataType.INTEGER, 0);
+        pdc.set(new NamespacedKey(MTFA.PLUGIN, "Fare"), PersistentDataType.INTEGER, Fare);
 
         its.setItemMeta(itm);
         return its;

@@ -45,13 +45,13 @@ public class DataTable {
         this.name = name;
         this.password = password;
 
-        File file = new File(MTFA.plugin.getDataFolder() + "/DataTables", name + ".csv");
+        File file = new File(MTFA.PLUGIN.getDataFolder() + "/DataTables", name + ".csv");
         file.createNewFile();
         ObjInit();
     }
 
     protected void exportToCSV() throws IOException {
-        File file = new File(MTFA.plugin.getDataFolder() + "/DataTables", name + ".csv");
+        File file = new File(MTFA.PLUGIN.getDataFolder() + "/DataTables", name + ".csv");
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, false))) {
             writer.write("Password:," + password);
             writer.newLine();

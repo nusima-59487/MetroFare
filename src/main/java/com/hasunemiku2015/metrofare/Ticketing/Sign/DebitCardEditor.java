@@ -63,7 +63,7 @@ public class DebitCardEditor implements Listener {
                         card.updateCard();
 
                         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getSuccessDCE()));
-                        Bukkit.getScheduler().runTaskLater(MTFA.plugin, () -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getNewBalanceDCE() + card.getBalance() / 1000.0)), 5);
+                        Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN, () -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getNewBalanceDCE() + card.getBalance() / 1000.0)), 5);
                         return AnvilGUI.Response.close();
                     }
                 }
@@ -85,7 +85,7 @@ public class DebitCardEditor implements Listener {
                     VaultIntegration.add(player, value);
 
                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getSuccessDCE()));
-                    Bukkit.getScheduler().runTaskLater(MTFA.plugin, () -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getNewBalanceDCE() + card.getBalance() / 1000.0)), 5);
+                    Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN, () -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getNewBalanceDCE() + card.getBalance() / 1000.0)), 5);
                     return AnvilGUI.Response.close();
                 }
             } catch (Exception ignored) {
@@ -147,7 +147,7 @@ public class DebitCardEditor implements Listener {
 
     private static AnvilGUI.Builder newInputInventory(String name) {
         AnvilGUI.Builder var0 = new AnvilGUI.Builder();
-        var0.plugin(MTFA.plugin);
+        var0.plugin(MTFA.PLUGIN);
         var0.itemLeft(new ItemStack(Material.PAPER, 1));
         var0.title(name);
         return var0;
@@ -197,7 +197,7 @@ public class DebitCardEditor implements Listener {
     @EventHandler
     public void onIGUIClose(InventoryCloseEvent event) {
         if (event.getInventory().equals(inventoryGUI)) {
-            Bukkit.getScheduler().runTaskLater(MTFA.plugin, () -> ((Player)event.getPlayer()).updateInventory(), 1);
+            Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN, () -> ((Player)event.getPlayer()).updateInventory(), 1);
         }
     }
 

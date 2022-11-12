@@ -60,7 +60,7 @@ public class GateUtil {
         }
 
         setBlockNBT(transientState, l0);
-        Bukkit.getScheduler().runTaskLater(MTFA.plugin, () -> setBlockNBT(baseState, l0), MFConfig.INSTANCE.getOpenTime());
+        Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN, () -> setBlockNBT(baseState, l0), MFConfig.INSTANCE.getOpenTime());
     }
 
     private static Vector getDirectionalOffset(Sign sign, int breath, int height, int depth) {

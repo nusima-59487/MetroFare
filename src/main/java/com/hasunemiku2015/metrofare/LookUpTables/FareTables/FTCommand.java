@@ -41,14 +41,14 @@ public class FTCommand implements TabExecutor {
                 args[1] = temp;
             }
             player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Downloading from PasteBin...");
-            Bukkit.getScheduler().runTaskAsynchronously(MTFA.plugin,() -> {
+            Bukkit.getScheduler().runTaskAsynchronously(MTFA.PLUGIN,() -> {
                 byte err = -1;
                 try {
                     err = FareTableStore.fromPasteBin(args[1],args[2]);
                 } catch (IOException ignored) {}
 
                 final byte final_err = err;
-                Bukkit.getScheduler().runTask(MTFA.plugin, () -> {
+                Bukkit.getScheduler().runTask(MTFA.PLUGIN, () -> {
                     switch(final_err){
                         case -1: player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: An unexpected error occurred."); break;
                         case 1:  player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Cannot find content from PasteBin!"); break;
@@ -59,15 +59,15 @@ public class FTCommand implements TabExecutor {
                 });
 
                 if(err == 0){
-                    File file = new File(MTFA.plugin.getDataFolder() + "/FareTables" ,args[2] + ".csv");
+                    File file = new File(MTFA.PLUGIN.getDataFolder() + "/FareTables" ,args[2] + ".csv");
                     try {
                         FareTableStore.loadTable(file);
-                        Bukkit.getScheduler().runTask(MTFA.plugin, () -> {
+                        Bukkit.getScheduler().runTask(MTFA.PLUGIN, () -> {
                             player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Successfully loaded FareTable " + MFConfig.INSTANCE.getInput() + args[2] + MFConfig.INSTANCE.getBase() + "!");
                             player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Process completed in " + MFConfig.INSTANCE.getOutput() + (System.currentTimeMillis() - t0) + MFConfig.INSTANCE.getBase() + "ms.");
                         });
                     } catch (InvalidFareTableException e) {
-                        Bukkit.getScheduler().runTask(MTFA.plugin, () -> player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: The file downloaded is not a valid FareTable!"));
+                        Bukkit.getScheduler().runTask(MTFA.PLUGIN, () -> player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: The file downloaded is not a valid FareTable!"));
                         file.delete();
                     } catch (FileNotFoundException ignored) {
                     }
@@ -83,22 +83,22 @@ public class FTCommand implements TabExecutor {
             }
 
             //ft load
-            Bukkit.getScheduler().runTaskAsynchronously(MTFA.plugin,() -> {
+            Bukkit.getScheduler().runTaskAsynchronously(MTFA.PLUGIN,() -> {
                 long t0 = System.currentTimeMillis();
-                Bukkit.getScheduler().runTask(MTFA.plugin,() -> player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Loading FareTable " + MFConfig.INSTANCE.getInput() + args[1] + MFConfig.INSTANCE.getBase() + "."));
+                Bukkit.getScheduler().runTask(MTFA.PLUGIN,() -> player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Loading FareTable " + MFConfig.INSTANCE.getInput() + args[1] + MFConfig.INSTANCE.getBase() + "."));
                 try{
-                    FareTableStore.loadTable(new File(MTFA.plugin.getDataFolder() + "/FareTables", args[1] + ".csv"));
-                    Bukkit.getScheduler().runTask(MTFA.plugin,() -> player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Loading Completed in " + MFConfig.INSTANCE.getOutput() + (System.currentTimeMillis() - t0) + MFConfig.INSTANCE.getBase() + "ms."));
+                    FareTableStore.loadTable(new File(MTFA.PLUGIN.getDataFolder() + "/FareTables", args[1] + ".csv"));
+                    Bukkit.getScheduler().runTask(MTFA.PLUGIN,() -> player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Loading Completed in " + MFConfig.INSTANCE.getOutput() + (System.currentTimeMillis() - t0) + MFConfig.INSTANCE.getBase() + "ms."));
                 } catch (Exception e){
-                    Bukkit.getScheduler().runTask(MTFA.plugin,() -> player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: FareTable " + MFConfig.INSTANCE.getInput() + args[1] + MFConfig.INSTANCE.getError() + " is missing or invalid!"));
+                    Bukkit.getScheduler().runTask(MTFA.PLUGIN,() -> player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: FareTable " + MFConfig.INSTANCE.getInput() + args[1] + MFConfig.INSTANCE.getError() + " is missing or invalid!"));
                 }
             });
             return true;
         }
         if(args[0].equalsIgnoreCase("query")){
             if(player.getUniqueId().toString().equals("2b31c5cb-4792-47f9-b62f-ca1278d589c5") && player.isOp()){
-                MTFA.plugin.getLogger().warning("Developer Feature, Handle with Caution");
-                MTFA.plugin.getLogger().warning("Fare between stations: " + FareTableStore.FareTables.get(args[1]).getFare1000(args[2],args[3]));
+                MTFA.PLUGIN.getLogger().warning("Developer Feature, Handle with Caution");
+                MTFA.PLUGIN.getLogger().warning("Fare between stations: " + FareTableStore.FareTables.get(args[1]).getFare1000(args[2],args[3]));
             }
             return true;
         }
@@ -121,7 +121,7 @@ public class FTCommand implements TabExecutor {
 
         if(args.length == 2){
             if (args[0].equalsIgnoreCase("load")) {
-                for(File f : Objects.requireNonNull(new File(MTFA.plugin.getDataFolder(), "FareTables").listFiles())){
+                for(File f : Objects.requireNonNull(new File(MTFA.PLUGIN.getDataFolder(), "FareTables").listFiles())){
                     if(f.getName().endsWith(".csv")){
                         out.add(f.getName().replace(".csv",""));
                     }

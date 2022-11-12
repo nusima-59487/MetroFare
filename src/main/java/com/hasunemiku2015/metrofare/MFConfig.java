@@ -205,7 +205,7 @@ public class MFConfig {
      * @see MFConfig
      */
     static class ConfigHelper {
-         static final FileConfiguration config = MTFA.plugin.getConfig();
+         static final FileConfiguration config = MTFA.PLUGIN.getConfig();
 
         /**
          * Returns a boolean value from the config.yml.
