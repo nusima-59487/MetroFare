@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 @Value
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MFConfig {
-    public static final MFConfig INSTANCE = new MFConfig();
+    public static MFConfig INSTANCE = new MFConfig();
 
     // ============================================================================================================== //
     //                                                General                                                         //
@@ -48,10 +48,10 @@ public class MFConfig {
     // ============================================================================================================== //
      String prefix = ConfigHelper.getString("prefix");
 
-     ChatColor base = ChatColor.valueOf("theme.main");
-     ChatColor error = ChatColor.valueOf("theme.error");
-     ChatColor input = ChatColor.valueOf("theme.input_values");
-     ChatColor output = ChatColor.valueOf("theme.results");
+     ChatColor base = ConfigHelper.getChatColor("theme.main");
+     ChatColor error = ConfigHelper.getChatColor("theme.error");
+     ChatColor input = ConfigHelper.getChatColor("theme.input_values");
+     ChatColor output = ConfigHelper.getChatColor("theme.results");
 
      String currencyUnit = INSTANCE.getCurrencyUnit(ConfigHelper.getInt("currency_unit"));
      String getCurrencyUnit(int value) {
@@ -253,6 +253,17 @@ public class MFConfig {
         @NotNull
         protected static String getColoredString(String configKey) {
             return ChatColor.translateAlternateColorCodes('&', getString(configKey));
+        }
+
+        /**
+         * Returns a ChatColor from the config.yml.
+         * @param configKey Specified key to read the value from.
+         * @return ChatColor value of the specified key, defaults to RESET if null;
+         */
+        @NotNull
+        protected static ChatColor getChatColor(String configKey) {
+            String chatColorString = config.getString(configKey);
+            return chatColorString == null ? ChatColor.RESET : ChatColor.valueOf(chatColorString);
         }
     }
 }

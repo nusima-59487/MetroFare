@@ -2,12 +2,12 @@ package com.hasunemiku2015.metrofare;
 
 import com.hasunemiku2015.metrofare.Company.CompanyCommand;
 import com.hasunemiku2015.metrofare.Company.CompanyStore;
+import com.hasunemiku2015.metrofare.Gate.FenceGate;
 import com.hasunemiku2015.metrofare.Gate.People.*;
 import com.hasunemiku2015.metrofare.Gate.Train.Clearance;
 import com.hasunemiku2015.metrofare.Gate.Train.TCSignToggle;
 import com.hasunemiku2015.metrofare.LookUpTables.DataTables.DTCommand;
 import com.hasunemiku2015.metrofare.LookUpTables.DataTables.DataTableStore;
-import com.hasunemiku2015.metrofare.Gate.FenceGate;
 import com.hasunemiku2015.metrofare.LookUpTables.FareTables.FTCommand;
 import com.hasunemiku2015.metrofare.LookUpTables.FareTables.FareTableStore;
 import com.hasunemiku2015.metrofare.LookUpTables.FareTables.InvalidFareTableException;
@@ -17,9 +17,11 @@ import com.hasunemiku2015.metrofare.Ticketing.Commands.TicketCBlkCommand;
 import com.hasunemiku2015.metrofare.Ticketing.Commands.TicketCommand;
 import com.hasunemiku2015.metrofare.Ticketing.Sign.DebitCardEditor;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Objects;
 
 public final class MTFA extends JavaPlugin {
@@ -106,5 +108,23 @@ public final class MTFA extends JavaPlugin {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void initConfig() {
+        PLUGIN.saveDefaultConfig();
+        YamlConfiguration oldConfig = (YamlConfiguration) PLUGIN.getConfig();
+        YamlConfiguration newConfig = YamlConfiguration.loadConfiguration(
+                new InputStreamReader(Objects.requireNonNull(PLUGIN.getResource("config.yml"))));
+
+        if (newConfig.getKeys(true).containsAll(oldConfig.getKeys(true))) {
+            return;
+        }
+
+        PLUGIN.saveResource("config.yml", true);
+        PLUGIN.reloadConfig();
+        for (String key: oldConfig.getKeys(true)) {
+            PLUGIN.getConfig().set(key, oldConfig.get(key));
+        }
+        PLUGIN.saveConfig();
     }
 }
