@@ -31,7 +31,7 @@ public class GateExecutionOut implements Listener {
             ItemStack hand = event.getItem();
             String[] data = GateUtil.parseData(sign.getLine(1));
 
-            if (GateUtil.checkValid(sign, MFConfig.getPrefixOut()) && GateUtil.validFace(sign, event.getBlockFace())) {
+            if (GateUtil.checkValid(sign, MFConfig.INSTANCE.getPrefixOut()) && GateUtil.validFace(sign, event.getBlockFace())) {
                 boolean openGate = false;
                 if (hand == null) return;
                 AbstractCompany company = CompanyStore.CompanyTable.get(data[0]);
@@ -45,21 +45,21 @@ public class GateExecutionOut implements Listener {
                     openGate = TicketExitLogic(company, hand, sign);
                     if (openGate) {
                         event.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.AIR, 1));
-                        event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getChatOut()));
+                        event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getChatOut()));
                     }
                 }
 
 
                 if (openGate) {
-                    sign.setLine(2, MFConfig.getTransientOut1());
-                    sign.setLine(3, MFConfig.getTransientOut2());
+                    sign.setLine(2, MFConfig.INSTANCE.getTransient1Out());
+                    sign.setLine(3, MFConfig.INSTANCE.getTransient2Out());
                     sign.update();
 
                     Bukkit.getScheduler().scheduleSyncDelayedTask(MTFA.plugin, () -> {
-                        sign.setLine(2, MFConfig.getInfo1Out());
-                        sign.setLine(3, MFConfig.getInfo2Out());
+                        sign.setLine(2, MFConfig.INSTANCE.getInfo1Out());
+                        sign.setLine(3, MFConfig.INSTANCE.getInfo2Out());
                         sign.update();
-                    }, MFConfig.getOpenTime());
+                    }, MFConfig.INSTANCE.getOpenTime());
                     GateUtil.setBlock(sign);
                 }
             }
@@ -82,7 +82,7 @@ public class GateExecutionOut implements Listener {
         }
 
         String s = card.getEntryData();
-        double fare = MFConfig.getDefaultFare();
+        double fare = MFConfig.INSTANCE.getDefaultFare();
 
         String dat = "";
         try {
@@ -95,8 +95,8 @@ public class GateExecutionOut implements Listener {
             fare = fareUpdate;
         }
 
-        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getChatFareOut() + MFConfig.getCurrencyUnit() + MFConfig.getOutput() + fare));
-        Bukkit.getScheduler().runTaskLater(MTFA.plugin, () -> p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getChatRemaining() + MFConfig.getCurrencyUnit() + MFConfig.getOutput() + (card.getBalance() / 1000.0))), 20);
+        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getChatOut() + MFConfig.INSTANCE.getCurrencyUnit() + MFConfig.INSTANCE.getOutput() + fare));
+        Bukkit.getScheduler().runTaskLater(MTFA.plugin, () -> p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getChatRemaining() + MFConfig.INSTANCE.getCurrencyUnit() + MFConfig.INSTANCE.getOutput() + (card.getBalance() / 1000.0))), 20);
 
         card.removeEntryData();
         card.removeCompany();
@@ -111,7 +111,7 @@ public class GateExecutionOut implements Listener {
     public static boolean TicketExitLogic(AbstractCompany company, ItemStack hand, Sign sign) {
         Ticket ticket = new Ticket(hand);
         if (!ticket.isValid()) {
-            // Return  ticket Invalid message
+            // Return ticket Invalid message
             return false;
         }
         if (!ticket.hasEntered()) {

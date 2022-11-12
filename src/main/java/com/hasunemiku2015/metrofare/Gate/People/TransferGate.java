@@ -27,7 +27,7 @@ public class TransferGate implements Listener {
         if (event.getLine(0) == null) {
             return;
         }
-        if (!MFConfig.getPrefixTransfer().equalsIgnoreCase(event.getLine(0))) {
+        if (!MFConfig.INSTANCE.getPrefixTransfer().equalsIgnoreCase(event.getLine(0))) {
             return;
         }
 
@@ -35,7 +35,7 @@ public class TransferGate implements Listener {
             event.getBlock().setType(Material.AIR);
             return;
         }
-        if (!MFConfig.hasBuildGatePermission(event.getPlayer())) {
+        if (!MFConfig.INSTANCE.hasBuildGatePermission(event.getPlayer())) {
             event.getBlock().setType(Material.AIR);
             return;
         }
@@ -69,8 +69,8 @@ public class TransferGate implements Listener {
         String line2 = event.getLine(1);
         String line3 = event.getLine(2);
         event.setLine(1, line2 + ";" + line3);
-        event.setLine(2, MFConfig.getInfo1Transfer() + data2[0]);
-        event.setLine(3, MFConfig.getInfo2Transfer() + data2[0]);
+        event.setLine(2, MFConfig.INSTANCE.getInfo1Transfer() + data2[0]);
+        event.setLine(3, MFConfig.INSTANCE.getInfo2Transfer() + data2[0]);
     }
 
     @EventHandler
@@ -86,7 +86,7 @@ public class TransferGate implements Listener {
         }
         Sign sign = (Sign) event.getClickedBlock().getState();
 
-        if (GateUtil.checkValid(sign, MFConfig.getPrefixTransfer()) && GateUtil.validFace(sign, event.getBlockFace())) {
+        if (GateUtil.checkValid(sign, MFConfig.INSTANCE.getPrefixTransfer()) && GateUtil.validFace(sign, event.getBlockFace())) {
             String[] var0 = sign.getLine(1).split(";");
             AbstractCompany exitCompany = CompanyStore.CompanyTable.get(var0[0].split(",")[0]);
             AbstractCompany enterCompany = CompanyStore.CompanyTable.get(var0[1].split(",")[0]);
@@ -112,24 +112,24 @@ public class TransferGate implements Listener {
 
                 if (ticket.checkExitCompany(enterCompany)) {
                     event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
-                            MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getChatTicketTransfer()));
+                            MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getChatTicketTransfer()));
                     openGate = true;
                 } else {
                     event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
-                            MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getChatTicketErrorTransfer()));
+                            MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getChatTicketErrorTransfer()));
                 }
             }
 
             if (openGate) {
-                sign.setLine(2, MFConfig.getTransient1Transfer());
-                sign.setLine(3, MFConfig.getTransient2Transfer());
+                sign.setLine(2, MFConfig.INSTANCE.getTransient1Transfer());
+                sign.setLine(3, MFConfig.INSTANCE.getTransient2Transfer());
                 sign.update();
 
                 Bukkit.getScheduler().runTaskLater(MTFA.plugin, () -> {
-                    sign.setLine(2, MFConfig.getInfo1Transfer() + enterCompany.getName() + MFConfig.getInfo3Transfer());
-                    sign.setLine(3, MFConfig.getInfo2Transfer() + enterCompany.getName() + MFConfig.getInfo4Transfer());
+                    sign.setLine(2, MFConfig.INSTANCE.getInfo1Transfer() + enterCompany.getName() + MFConfig.INSTANCE.getInfo3Transfer());
+                    sign.setLine(3, MFConfig.INSTANCE.getInfo2Transfer() + enterCompany.getName() + MFConfig.INSTANCE.getInfo4Transfer());
                     sign.update();
-                }, MFConfig.getOpenTime());
+                }, MFConfig.INSTANCE.getOpenTime());
 
                 GateUtil.setBlock(sign);
             }

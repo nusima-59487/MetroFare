@@ -30,7 +30,7 @@ public class GateExecutionIn implements Listener {
             Sign sign = (Sign) event.getClickedBlock().getState();
             ItemStack hand = event.getItem();
 
-            if (GateUtil.checkValid(sign, MFConfig.getPrefixIn()) && GateUtil.validFace(sign, event.getBlockFace())) {
+            if (GateUtil.checkValid(sign, MFConfig.INSTANCE.getPrefixIn()) && GateUtil.validFace(sign, event.getBlockFace())) {
                 boolean openGate = false;
 
                 if (hand == null) return;
@@ -43,16 +43,16 @@ public class GateExecutionIn implements Listener {
                 }
 
                 if (openGate) {
-                    event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getChatIn()));
+                    event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getChatIn()));
 
-                    sign.setLine(2, MFConfig.getTransientIn1());
-                    sign.setLine(3, MFConfig.getTransientIn2());
+                    sign.setLine(2, MFConfig.INSTANCE.getTransient1In());
+                    sign.setLine(3, MFConfig.INSTANCE.getTransient2In());
                     sign.update();
                     Bukkit.getScheduler().scheduleSyncDelayedTask(MTFA.plugin, () -> {
-                        sign.setLine(2, MFConfig.getInfo1In());
-                        sign.setLine(3, MFConfig.getInfo2In());
+                        sign.setLine(2, MFConfig.INSTANCE.getInfo1In());
+                        sign.setLine(3, MFConfig.INSTANCE.getInfo2In());
                         sign.update();
-                    }, MFConfig.getOpenTime());
+                    }, MFConfig.INSTANCE.getOpenTime());
 
                     GateUtil.setBlock(sign);
                 }
@@ -81,7 +81,7 @@ public class GateExecutionIn implements Listener {
         }
         if (card.getBalance() <= 0 && !isTransferGate) {
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
-                    MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getInsufficientIn()));
+                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getInsufficientIn()));
             return false;
         }
 
@@ -98,16 +98,16 @@ public class GateExecutionIn implements Listener {
             return false;
         }
         if (ticket.hasEntered()) {
-            //Return ticket entered error message
+            // Return ticket entered error message
             return false;
         }
 
         if (!ticket.checkEntryCompany(CompanyStore.CompanyTable.get(inputData.split(",")[0]))) {
-            //return entry company not valid error message
+            // Return entry company not valid error message
             return false;
         }
         if (!ticket.getEntryData().equals(inputData.split(",")[1])) {
-            //return entering from wrong company gate line error message
+            // Return station invalid message
             return false;
         }
         ticket.entryProcedure();

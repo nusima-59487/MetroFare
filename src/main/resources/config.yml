@@ -44,7 +44,17 @@ entry_gate:
   info_2: '&5Tap Card/Ticket'
   transient_1: '&6&l請進  &5Please Enter'
   transient_2: ''
-  insufficient: '&4Error, Insufficient Balance in Debit Card!'
+  debit_card:
+    card_invalid: '&4Error, This is not a valid DebitCard!'
+    company_invalid: '&4Error, Invalid Entry Company!'
+    player_invalid: '&4Error, This Debit Card is not yours!'
+    card_entered: '&4Error, Debit Card already had an entry record!'
+    insufficient: '&4Error, Insufficient Balance in Debit Card!'
+  ticket:
+    ticket_invalid: '&4Error, This is not a valid ticket!'
+    ticket_entered: '&4Error, This ticket already had an entry record!'
+    entry_company_invalid: '&4Error, This ticket is not for this company!'
+    station_invalid: '&4Error, This ticket is not for this station!'
   chat: '&ePlease Enter'
 
 exit_gate:
@@ -54,9 +64,42 @@ exit_gate:
   info_2: '&5Tap Card/Ticket'
   transient_1: '&6&l請出  &5Please Exit'
   transient_2: ''
+  debit_card:
+    card_invalid: '&4Error, This is not a valid DebitCard!'
+    player_invalid: '&4Error, This Debit Card is not yours!'
+    card_not_entered: '&4Error, Debit Card does not have an entry record!'
+  ticket:
+    ticket_invalid: '&4Error, This is not a valid ticket!'
+    ticket_not_entered: '&4Error, This ticket does not have an entry record!'
+    wrong_exit_company: '&4Error, This ticket is not for this exit company!'
+    invalid_inter-company: '&4Error, Invalid inter-company ticket!'
+    ticket_insufficient_fare: '&4Error, Insufficient Fare for the journey!'
   chat: '&ePlease Exit'
   chat_fare: '&eFare: '
   chat_remaining: '&eRemaining Balance: '
+
+one_time_payment_machine:
+  enable: true
+  prefix: '[MetroFareOTP]'
+  info_1: '&6&l請拍卡'
+  info_2: '&5Tap Card'
+  transient_1: '&6&l付款成功 &5Payment'
+  transient_2: '&5Successful'
+  chat: '&eFare: '
+  chat_remaining: '&eRemaining Balance: '
+  insufficient: '&4Error, Insufficient Balance in Debit Card!'
+
+transfer_gate:
+  enable: true
+  prefix: '[MetroFareIC]'
+  info_1: '&6&l換乘 &b'
+  info_2: '&5to &b'
+  info_3: ''
+  info_4: ''
+  transient_1: '&6&l換乘  &5Interchange'
+  transient_2: ''
+  chat_ticket: '&eTransfer'
+  chat_ticket_error: '&4Error, Destination Company Mismatch!'
 
 card_editor:
   enable: true
@@ -83,29 +126,6 @@ validator:
     description: 'validate a debit card to transfer fare zone'
   complete: '&eClearance Complete!'
   no_card: '&4Error, Cannot find Debit Card in your inventory. Please ignore if you are using ticket.'
-
-transfer_gate:
-  enable: true
-  prefix: '[MetroFareIC]'
-  info_1: '&6&l換乘 &b'
-  info_2: '&5to &b'
-  info_3: ''
-  info_4: ''
-  transient_1: '&6&l換乘  &5Interchange'
-  transient_2: ''
-  chat_ticket: '&eTransfer'
-  chat_ticket_error: '&4Error, Destination Company Mismatch!'
-
-one_time_payment_machine:
-  enable: true
-  prefix: '[MetroFareOTP]'
-  info_1: '&6&l請拍卡'
-  info_2: '&5Tap Card'
-  transient_1: '&6&l付款成功 &5Payment'
-  transient_2: '&5Successful'
-  chat: '&eFare: '
-  chat_remaining: '&eRemaining Balance: '
-  insufficient: '&4Error, Insufficient Balance in Debit Card!'
 
 # Customize the Default Debit Card
 debit_name: '&eDeb!t Card'

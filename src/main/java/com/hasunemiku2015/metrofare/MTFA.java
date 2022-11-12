@@ -28,17 +28,15 @@ public final class MTFA extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
-        //Note: Config should be initialized before everything!
-        MFConfig.init();
 
-        if (Bukkit.getPluginManager().isPluginEnabled("Vault") || MFConfig.isEnableVaultIntegration()) {
+        if (Bukkit.getPluginManager().isPluginEnabled("Vault") || MFConfig.INSTANCE.isVaultIntegrationEnabled()) {
             VaultIntegration.init();
         } else {
             VaultIntegration.vault = false;
         }
 
         DataTableStore.init();
-        if (VaultIntegration.vault && MFConfig.isDceEnabled()) {
+        if (VaultIntegration.vault && MFConfig.INSTANCE.isDceEnabled()) {
             //Note: MUST be after Config (cuz need to use ChatColor from Config)
             DebitCardEditor.init();
         }
@@ -52,32 +50,32 @@ public final class MTFA extends JavaPlugin {
         //Note: MUST be after DataTable and FareTable cuz DataTable/FareTable Object is Transient
         CompanyStore.init();
 
-        if (Bukkit.getPluginManager().isPluginEnabled("Train_Carts") && MFConfig.isValidatorEnabled()) {
+        if (Bukkit.getPluginManager().isPluginEnabled("Train_Carts") && MFConfig.INSTANCE.isValidatorEnabled()) {
             TCSignToggle.init();
         }
 
         //Events
         this.getServer().getPluginManager().registerEvents(new GateConstruct(), this);
 
-        if (MFConfig.isEntryGateEnabled()) {
+        if (MFConfig.INSTANCE.isEntryGateEnabled()) {
             this.getServer().getPluginManager().registerEvents(new GateExecutionIn(), this);
         }
-        if (MFConfig.isExitGateEnabled()) {
+        if (MFConfig.INSTANCE.isExitGateEnabled()) {
             this.getServer().getPluginManager().registerEvents(new GateExecutionOut(), this);
         }
-        if (MFConfig.isOtpEnabled()) {
+        if (MFConfig.INSTANCE.isOtpEnabled()) {
             this.getServer().getPluginManager().registerEvents(new OTPExecution(), this);
         }
-        if (MFConfig.isTransferGateEnabled()) {
+        if (MFConfig.INSTANCE.isTransferGateEnabled()) {
             this.getServer().getPluginManager().registerEvents(new TransferGate(), this);
         }
 
         this.getServer().getPluginManager().registerEvents(new FenceGate(), this);
 
-        if (Bukkit.getPluginManager().isPluginEnabled("MikuCore") && MFConfig.isValidatorEnabled()) {
+        if (Bukkit.getPluginManager().isPluginEnabled("MikuCore") && MFConfig.INSTANCE.isValidatorEnabled()) {
             this.getServer().getPluginManager().registerEvents(new Clearance(), this);
         }
-        if (VaultIntegration.vault && MFConfig.isDceEnabled()) {
+        if (VaultIntegration.vault && MFConfig.INSTANCE.isDceEnabled()) {
             this.getServer().getPluginManager().registerEvents(new DebitCardEditor(), this);
         }
 

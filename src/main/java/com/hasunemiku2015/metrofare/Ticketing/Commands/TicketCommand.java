@@ -22,7 +22,7 @@ public class TicketCommand implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) return true;
-        if (MFConfig.noTicketingPermission((Player) sender)) return true;
+        if (MFConfig.INSTANCE.noTicketingPermission((Player) sender)) return true;
         Player player = (Player) sender;
         if (args.length == 0) {
             help(player);
@@ -48,7 +48,7 @@ public class TicketCommand implements TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (!(sender instanceof Player)) return new ArrayList<>();
-        if (MFConfig.noTicketingPermission((Player) sender)) return new ArrayList<>();
+        if (MFConfig.INSTANCE.noTicketingPermission((Player) sender)) return new ArrayList<>();
 
         List<String> out = new ArrayList<>();
         if (args.length == 1) {
@@ -95,11 +95,11 @@ public class TicketCommand implements TabExecutor {
     //Private methods for every cmds
     private void help(Player player) {
         //ticket help
-        player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Ticket Commands: ");
-        player.sendMessage(MFConfig.getBase() + "-help: Display this page.");
-        player.sendMessage(MFConfig.getBase() + "-info: Check the info of the ticket held");
-        player.sendMessage(MFConfig.getBase() + "-issue: Issue a new ticket");
-        player.sendMessage(MFConfig.getBase() + "-buy: Buy a new ticket (Travel within one company)");
+        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Ticket Commands: ");
+        player.sendMessage(MFConfig.INSTANCE.getBase() + "-help: Display this page.");
+        player.sendMessage(MFConfig.INSTANCE.getBase() + "-info: Check the info of the ticket held");
+        player.sendMessage(MFConfig.INSTANCE.getBase() + "-issue: Issue a new ticket");
+        player.sendMessage(MFConfig.INSTANCE.getBase() + "-buy: Buy a new ticket (Travel within one company)");
     }
     private void info(Player player) {
         //ticket info
@@ -108,26 +108,26 @@ public class TicketCommand implements TabExecutor {
         try {
             ticket = new Ticket(hand);
         } catch (Exception ex) {
-            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: You are not holding a ticket!");
+            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: You are not holding a ticket!");
             return;
         }
 
         if (ticket.isValid()) {
-            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Ticket has the following properties: ");
-            player.sendMessage(MFConfig.getBase() + "-source company: " + ticket.getCompanyFrom());
-            player.sendMessage(MFConfig.getBase() + "-source info: " + ticket.getEntryData());
-            player.sendMessage(MFConfig.getBase() + "-destination company: " + ticket.getCompanyTo());
-            player.sendMessage(MFConfig.getBase() + "-destination info: " + ticket.getExitData());
-            player.sendMessage(MFConfig.getBase() + "-ticket price: " + ticket.getFare1000() / 1000.0);
-            player.sendMessage(MFConfig.getBase() + "-entered gate: " + ticket.hasEntered());
+            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Ticket has the following properties: ");
+            player.sendMessage(MFConfig.INSTANCE.getBase() + "-source company: " + ticket.getCompanyFrom());
+            player.sendMessage(MFConfig.INSTANCE.getBase() + "-source info: " + ticket.getEntryData());
+            player.sendMessage(MFConfig.INSTANCE.getBase() + "-destination company: " + ticket.getCompanyTo());
+            player.sendMessage(MFConfig.INSTANCE.getBase() + "-destination info: " + ticket.getExitData());
+            player.sendMessage(MFConfig.INSTANCE.getBase() + "-ticket price: " + ticket.getFare1000() / 1000.0);
+            player.sendMessage(MFConfig.INSTANCE.getBase() + "-entered gate: " + ticket.hasEntered());
             return;
         }
 
-        player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: You are not holding a ticket!");
+        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: You are not holding a ticket!");
     }
     private void issue(Player player, String[] args) {
         if (args.length < 5) {
-            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Insufficient Arguments!");
+            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Insufficient Arguments!");
             return;
         }
 
@@ -138,12 +138,12 @@ public class TicketCommand implements TabExecutor {
             sourceComp = CompanyStore.CompanyTable.get(args[1]);
             destComp = CompanyStore.CompanyTable.get(args[3]);
         } else {
-            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Company(s) not found");
+            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Company(s) not found");
             return;
         }
 
         if(!(sourceComp.hasOwner(player.getUniqueId().toString()) && destComp.hasOwner(player.getUniqueId().toString()))){
-            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: You are not owner of both companies!");
+            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: You are not owner of both companies!");
             return;
         }
 
@@ -168,15 +168,15 @@ public class TicketCommand implements TabExecutor {
         for (int i = 0; i < 36; i++) {
             if (inv.getItem(i) == null) {
                 inv.setItem(i, its);
-                player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Successfully issued a new ticket from " + MFConfig.getInput() + args[2] + MFConfig.getBase() + " to " + MFConfig.getInput() + args[4] + MFConfig.getBase() + " with price " + MFConfig.getCurrencyUnit() + MFConfig.getInput() + fare1000 / 1000.0 + MFConfig.getBase() + "!");
+                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Successfully issued a new ticket from " + MFConfig.INSTANCE.getInput() + args[2] + MFConfig.INSTANCE.getBase() + " to " + MFConfig.INSTANCE.getInput() + args[4] + MFConfig.INSTANCE.getBase() + " with price " + MFConfig.INSTANCE.getCurrencyUnit() + MFConfig.INSTANCE.getInput() + fare1000 / 1000.0 + MFConfig.INSTANCE.getBase() + "!");
                 return;
             }
         }
-        player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Your inventory is full!");
+        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Your inventory is full!");
     }
     protected static void buy(Player player, String[] args) {
         if (args.length < 4) {
-            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Insufficient Arguments!");
+            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Insufficient Arguments!");
             return;
         }
 
@@ -185,13 +185,13 @@ public class TicketCommand implements TabExecutor {
         if (CompanyStore.CompanyTable.containsKey(args[1])) {
             sourceComp = CompanyStore.CompanyTable.get(args[1]);
         } else {
-            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Company not found");
+            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Company not found");
             return;
         }
 
         int fare1000 = sourceComp.computeFare(args[2], args[3]);
         if (fare1000 < 0) {
-            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Invalid entry/exit data!");
+            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Invalid entry/exit data!");
             return;
         }
 
@@ -204,21 +204,21 @@ public class TicketCommand implements TabExecutor {
                         if (VaultIntegration.hasEnough(player,fare1000 / 1000.0)) {
                             VaultIntegration.deduct(player,fare1000 / 1000.0);
                         } else {
-                            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: You don't have enough money!");
+                            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: You don't have enough money!");
                         }
                     } catch (Exception ex) {
-                        player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: An unexpected error occurred.");
+                        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: An unexpected error occurred.");
                         return;
                     }
                 }
 
                 inv.setItem(i, its);
                 sourceComp.addRevenue(fare1000/1000.0);
-                player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Successfully issued a new ticket from " + MFConfig.getInput() + args[2] + MFConfig.getBase() + " to " + MFConfig.getInput() + args[3] + MFConfig.getBase() + "!");
+                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Successfully issued a new ticket from " + MFConfig.INSTANCE.getInput() + args[2] + MFConfig.INSTANCE.getBase() + " to " + MFConfig.INSTANCE.getInput() + args[3] + MFConfig.INSTANCE.getBase() + "!");
                 return;
             }
         }
-        player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Your inventory is full!");
+        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Your inventory is full!");
     }
 
     //Protected method for duplicated code

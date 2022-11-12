@@ -26,7 +26,7 @@ public class Clearance implements Listener {
         if (!"[MetroFareValidator]".equalsIgnoreCase(event.getLine(0))) {
             return;
         }
-        if (!MFConfig.hasBuildGatePermission(event.getPlayer())) {
+        if (!MFConfig.INSTANCE.hasBuildGatePermission(event.getPlayer())) {
             event.getBlock().setType(Material.AIR);
             return;
         }
@@ -44,7 +44,7 @@ public class Clearance implements Listener {
 
     @EventHandler
     public void onClearance(MinecartSignEvent event) {
-        if (!event.getHeader().equalsIgnoreCase(MFConfig.getValidatorVanillaPrefix())) return;
+        if (!event.getHeader().equalsIgnoreCase(MFConfig.INSTANCE.getValidatorVanillaPrefix())) return;
         if (!(event.getCart().getPassengers().get(0) instanceof Player)) return;
 
         Player player = (Player) event.getCart().getPassengers().get(0);
@@ -53,7 +53,7 @@ public class Clearance implements Listener {
 
             if (stack == null) {
                 if (i == 35) {
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " " + MFConfig.getValidatorFail()));
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " " + MFConfig.INSTANCE.getValidatorFail()));
                     break;
                 } else {
                     continue;
@@ -63,7 +63,7 @@ public class Clearance implements Listener {
                 if (i != 35) {
                     continue;
                 } else {
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " " + MFConfig.getValidatorFail()));
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " " + MFConfig.INSTANCE.getValidatorFail()));
                     break;
                 }
             }
@@ -75,10 +75,10 @@ public class Clearance implements Listener {
             }
 
             if (done0 && done1) {
-                Bukkit.getScheduler().runTaskLater(MTFA.plugin, () -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getValidatorComplete())), 10);
+                Bukkit.getScheduler().runTaskLater(MTFA.plugin, () -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getValidatorComplete())), 10);
                 break;
             } else if (i == 35) {
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " " + MFConfig.getValidatorFail()));
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " " + MFConfig.INSTANCE.getValidatorFail()));
             }
         }
     }

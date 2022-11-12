@@ -27,21 +27,21 @@ public class OTPExecution implements Listener {
             Sign sign = (Sign) event.getClickedBlock().getState();
             ItemStack hand = event.getItem();
 
-            if (GateUtil.checkValid(sign, MFConfig.getPrefixOTP()) && GateUtil.validFace(sign, event.getBlockFace())) {
+            if (GateUtil.checkValid(sign, MFConfig.INSTANCE.getPrefixOTP()) && GateUtil.validFace(sign, event.getBlockFace())) {
                 if (hand == null) {
                     return;
                 }
 
                 if (hand.getType().equals(Material.NAME_TAG)) {
                     if (dcOtpLogic(event.getPlayer(), hand, sign.getLine(1))) {
-                        sign.setLine(2, MFConfig.getTransient1OTP());
-                        sign.setLine(3, MFConfig.getTransient2OTP());
+                        sign.setLine(2, MFConfig.INSTANCE.getTransient1OTP());
+                        sign.setLine(3, MFConfig.INSTANCE.getTransient2OTP());
                         sign.update();
                         Bukkit.getScheduler().scheduleSyncDelayedTask(MTFA.plugin, () -> {
-                            sign.setLine(2, MFConfig.getInfo1OTP());
-                            sign.setLine(3, MFConfig.getInfo2OTP());
+                            sign.setLine(2, MFConfig.INSTANCE.getInfo1OTP());
+                            sign.setLine(3, MFConfig.INSTANCE.getInfo2OTP());
                             sign.update();
-                        }, MFConfig.getOpenTime());
+                        }, MFConfig.INSTANCE.getOpenTime());
                         GateUtil.setBlock(sign);
                     }
                 }
@@ -69,13 +69,13 @@ public class OTPExecution implements Listener {
 
         if (card.getBalance() <= 0) {
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
-                    MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getInsufficientOTP()));
+                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getInsufficientOTP()));
             return false;
         }
 
         int deductAmount1000 = (int) Math.round(Double.parseDouble(data[1]) * 1000);
-        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getChatFareOTP() + MFConfig.getCurrencyUnit() + MFConfig.getOutput() + (deductAmount1000 / 1000.0)));
-        Bukkit.getScheduler().runTaskLater(MTFA.plugin, () -> p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getChatRemainingOTP() + " " + MFConfig.getCurrencyUnit() + card.getBalance() / 1000.0)), 20);
+        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getChatFareOTP() + MFConfig.INSTANCE.getCurrencyUnit() + MFConfig.INSTANCE.getOutput() + (deductAmount1000 / 1000.0)));
+        Bukkit.getScheduler().runTaskLater(MTFA.plugin, () -> p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getChatRemainingOTP() + " " + MFConfig.INSTANCE.getCurrencyUnit() + card.getBalance() / 1000.0)), 20);
 
         card.setBalance(card.getBalance() - deductAmount1000);
         card.addPaymentRecord(company.getName(), true, deductAmount1000);

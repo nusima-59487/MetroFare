@@ -128,18 +128,18 @@ public class DebitCard {
 
     public void updateCard() {
         List<String> lore = new ArrayList<>();
-        lore.add(MFConfig.getOwnerPrefix() + MFConfig.getInput() + Objects.requireNonNull(Bukkit.getPlayer(UUID.fromString(Owner))).getName());
+        lore.add(MFConfig.INSTANCE.getOwnerPrefix() + MFConfig.INSTANCE.getInput() + Objects.requireNonNull(Bukkit.getPlayer(UUID.fromString(Owner))).getName());
 
         if (Balance <= 0) {
             autoTopUp();
         }
 
         if (Balance > 0) {
-            lore.add(MFConfig.getBalancePrefix() + ChatColor.GREEN + MFConfig.getCurrencyUnit()  + Balance / 1000.0);
+            lore.add(MFConfig.INSTANCE.getBalancePrefix() + ChatColor.GREEN + MFConfig.INSTANCE.getCurrencyUnit()  + Balance / 1000.0);
         } else if (Balance < 0) {
-            lore.add(MFConfig.getBalancePrefix() + ChatColor.RED + MFConfig.getCurrencyUnit() + Balance / 1000.0);
+            lore.add(MFConfig.INSTANCE.getBalancePrefix() + ChatColor.RED + MFConfig.INSTANCE.getCurrencyUnit() + Balance / 1000.0);
         } else {
-            lore.add(MFConfig.getBalancePrefix() + ChatColor.DARK_GRAY + MFConfig.getCurrencyUnit() + "0");
+            lore.add(MFConfig.INSTANCE.getBalancePrefix() + ChatColor.DARK_GRAY + MFConfig.INSTANCE.getCurrencyUnit() + "0");
         }
 
         meta.setLore(lore);
@@ -209,9 +209,9 @@ public class DebitCard {
 
     public void addPaymentRecord(String Company, boolean isDeduct, int amount) {
         if (isDeduct) {
-            Record.addPaymentRecord(Company, StringUtils.rightPad("-" + MFConfig.getCurrencyUnit() + amount / 1000.0, 10));
+            Record.addPaymentRecord(Company, StringUtils.rightPad("-" + MFConfig.INSTANCE.getCurrencyUnit() + amount / 1000.0, 10));
         } else {
-            Record.addPaymentRecord(Company, StringUtils.rightPad("+" + MFConfig.getCurrencyUnit() + amount / 1000.0, 10));
+            Record.addPaymentRecord(Company, StringUtils.rightPad("+" + MFConfig.INSTANCE.getCurrencyUnit() + amount / 1000.0, 10));
         }
 
         cardDataCache.set(PaymentRecordKey, PersistentDataType.STRING, Record.toString());
@@ -228,12 +228,12 @@ public class DebitCard {
 
         ItemMeta itm = card.getItemMeta();
         assert itm != null;
-        itm.setDisplayName(MFConfig.getDebitCardName());
+        itm.setDisplayName(MFConfig.INSTANCE.getDebitCardName());
         itm.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
         List<String> lore = new ArrayList<>();
-        lore.add(MFConfig.getOwnerPrefix() + MFConfig.getInput() + p.getName());
-        lore.add(MFConfig.getBalancePrefix() + ChatColor.DARK_GRAY + MFConfig.getCurrencyUnit() + 0);
+        lore.add(MFConfig.INSTANCE.getOwnerPrefix() + MFConfig.INSTANCE.getInput() + p.getName());
+        lore.add(MFConfig.INSTANCE.getBalancePrefix() + ChatColor.DARK_GRAY + MFConfig.INSTANCE.getCurrencyUnit() + 0);
         itm.setLore(lore);
 
         PersistentDataContainer pdc = itm.getPersistentDataContainer();

@@ -103,12 +103,12 @@ public class Ticket {
 
         ItemMeta itm = its.getItemMeta();
         assert itm != null;
-        itm.setDisplayName(MFConfig.getTicketName());
+        itm.setDisplayName(MFConfig.INSTANCE.getTicketName());
 
         List<String> lore = new ArrayList<>();
-        lore.add(MFConfig.getTicketPrefixIn() + ": " + MFConfig.getBase() + EntryData + " (" + entryCompany.getName() + ")");
-        lore.add(MFConfig.getTicketPrefixOut() + ": " + MFConfig.getBase() + ExitData + " (" + exitCompany.getName() + ")");
-        lore.add(MFConfig.getTicketPrefixFare() + ": " + MFConfig.getBase() + MFConfig.getCurrencyUnit() + Fare / 1000.0);
+        lore.add(MFConfig.INSTANCE.getTicketPrefixIn() + ": " + MFConfig.INSTANCE.getBase() + EntryData + " (" + entryCompany.getName() + ")");
+        lore.add(MFConfig.INSTANCE.getTicketPrefixOut() + ": " + MFConfig.INSTANCE.getBase() + ExitData + " (" + exitCompany.getName() + ")");
+        lore.add(MFConfig.INSTANCE.getTicketPrefixFare() + ": " + MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getCurrencyUnit() + Fare / 1000.0);
         itm.setLore(lore);
 
         PersistentDataContainer pdc = itm.getPersistentDataContainer();

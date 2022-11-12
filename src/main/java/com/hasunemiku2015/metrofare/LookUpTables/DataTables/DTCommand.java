@@ -20,8 +20,8 @@ public class DTCommand implements CommandExecutor,TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(!(sender instanceof Player)) return false;
-        if(!MFConfig.hasDataTablePermission((Player) sender)){
-            sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Insufficient Permission.");
+        if(!MFConfig.INSTANCE.hasDataTablePermission((Player) sender)){
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Insufficient Permission.");
         }
 
         if(args.length == 0){
@@ -122,20 +122,20 @@ public class DTCommand implements CommandExecutor,TabCompleter {
 
     //Command Method
     private void help(CommandSender sender){
-        sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " DataTable Commands:");
-        sender.sendMessage(MFConfig.getBase() + "- help: Display this page");
-        sender.sendMessage(MFConfig.getBase() + "- save: Saves all current datatable edits to files");
-        sender.sendMessage(MFConfig.getBase() + "- new: Creates new datatable file");
-        sender.sendMessage(MFConfig.getBase() + "- delete: Deletes a datatable file");
-        sender.sendMessage(MFConfig.getBase() + "- add: Add a new edge entry to the datatable specified");
-        sender.sendMessage(MFConfig.getBase() + "- remove: Remove a edge entry from the datatable specified");
-        sender.sendMessage(MFConfig.getBase() + "- calculate: Calculate the minimum weight from a vertex to a vertex in a datatable");
-        sender.sendMessage(MFConfig.getBase() + "- download: Download new datatable from PasteBin");
+        sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " DataTable Commands:");
+        sender.sendMessage(MFConfig.INSTANCE.getBase() + "- help: Display this page");
+        sender.sendMessage(MFConfig.INSTANCE.getBase() + "- save: Saves all current datatable edits to files");
+        sender.sendMessage(MFConfig.INSTANCE.getBase() + "- new: Creates new datatable file");
+        sender.sendMessage(MFConfig.INSTANCE.getBase() + "- delete: Deletes a datatable file");
+        sender.sendMessage(MFConfig.INSTANCE.getBase() + "- add: Add a new edge entry to the datatable specified");
+        sender.sendMessage(MFConfig.INSTANCE.getBase() + "- remove: Remove a edge entry from the datatable specified");
+        sender.sendMessage(MFConfig.INSTANCE.getBase() + "- calculate: Calculate the minimum weight from a vertex to a vertex in a datatable");
+        sender.sendMessage(MFConfig.INSTANCE.getBase() + "- download: Download new datatable from PasteBin");
     }
 
     private void reload() {
         for (Player p : Bukkit.getOnlinePlayers()) {
-            p.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Reloading DataTables, Server may lag a bit!");
+            p.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Reloading DataTables, Server may lag a bit!");
         }
 
         long t0 = System.currentTimeMillis();
@@ -148,7 +148,7 @@ public class DTCommand implements CommandExecutor,TabCompleter {
 
             Bukkit.getScheduler().runTask(MTFA.plugin, () -> {
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    p.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Reload Completed in " + MFConfig.getOutput() + (System.currentTimeMillis() - t0) + MFConfig.getBase() + "ms.");
+                    p.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Reload Completed in " + MFConfig.INSTANCE.getOutput() + (System.currentTimeMillis() - t0) + MFConfig.INSTANCE.getBase() + "ms.");
                 }
             });
         });
@@ -157,46 +157,46 @@ public class DTCommand implements CommandExecutor,TabCompleter {
     private void createFile(CommandSender sender, String[] args) throws IOException {
         //dt new <FileName> <password> <confirm password>
         if(args.length < 4){
-            sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix()  + MFConfig.getError() + " Error: Insufficient Arguments!");
-            sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Usage: /data new <FileName> <password> <confirm password>");
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix()  + MFConfig.INSTANCE.getError() + " Error: Insufficient Arguments!");
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Usage: /data new <FileName> <password> <confirm password>");
             return;
         }
         if(!args[2].equals(args[3])){
-            sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix()  + MFConfig.getError() + " Error: The passwords do not match!");
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix()  + MFConfig.INSTANCE.getError() + " Error: The passwords do not match!");
             return;
         }
         if(DataTableStore.DataTables.containsKey(args[1])){
-            sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix()  + MFConfig.getError() + " Error: Cannot create file, file name already exist!");
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix()  + MFConfig.INSTANCE.getError() + " Error: Cannot create file, file name already exist!");
             return;
         }
 
         DataTable dt = new DataTable(args[1],args[2]);
         DataTableStore.DataTables.put(args[1],dt);
 
-        sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Successfully created a new data table named " + MFConfig.getInput() + args[1] + MFConfig.getBase() + "!");
+        sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Successfully created a new data table named " + MFConfig.INSTANCE.getInput() + args[1] + MFConfig.INSTANCE.getBase() + "!");
     }
 
     private static final HashMap<Player,DataTable> ConfirmedPlayers = new HashMap<>();
     private void delFile(CommandSender sender, String[] args){
         //dt delete <FileName> <password>
         if(args.length < 3){
-            sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Insufficient Arguments!");
-            sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Usage: /data delete <FileName> <password>");
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Insufficient Arguments!");
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Usage: /data delete <FileName> <password>");
             return;
         }
         DataTable dt = DataTableStore.DataTables.get(args[1]);
         if(dt == null){
-            sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: The specified datatable does not exist!");
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: The specified datatable does not exist!");
             return;
         }
         if(dt.checkWrongPassword(args[2])){
-            sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Incorrect Password!");
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Incorrect Password!");
             return;
         }
 
         if(!(sender instanceof Player)) return;
         Player player = (Player) sender;
-        player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Are you sure? Type /dt confirm in 120s to confirm");
+        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Are you sure? Type /dt confirm in 120s to confirm");
         ConfirmedPlayers.put(player,dt);
         Bukkit.getScheduler().runTaskLater(MTFA.plugin,() -> ConfirmedPlayers.remove(player),2400);
     }
@@ -206,7 +206,7 @@ public class DTCommand implements CommandExecutor,TabCompleter {
         Player player = (Player) sender;
         if(!ConfirmedPlayers.containsKey(player)) return;
         DataTableStore.delFile(ConfirmedPlayers.get(player).getName());
-        player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Successfully deleted file " + MFConfig.getInput() + ConfirmedPlayers.get(player).getName() + MFConfig.getBase() + "!");
+        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Successfully deleted file " + MFConfig.INSTANCE.getInput() + ConfirmedPlayers.get(player).getName() + MFConfig.INSTANCE.getBase() + "!");
 
         DataTableStore.DataTables.remove(ConfirmedPlayers.get(player).getName());
     }
@@ -214,17 +214,17 @@ public class DTCommand implements CommandExecutor,TabCompleter {
     private void addEdge(CommandSender sender, String[] args){
         //dt add <FileName> <password> <source> <destination> <weight>
         if(args.length < 6){
-            sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Insufficient Arguments!");
-            sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Usage: /data add <FileName> <password> <source> <destination> <cost>");
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Insufficient Arguments!");
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Usage: /data add <FileName> <password> <source> <destination> <cost>");
             return;
         }
         DataTable dt = DataTableStore.DataTables.get(args[1]);
         if(dt == null){
-            sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix()  + MFConfig.getError() + " Error: The datatable specified does not exist!");
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix()  + MFConfig.INSTANCE.getError() + " Error: The datatable specified does not exist!");
             return;
         }
         if(dt.checkWrongPassword(args[2])){
-            sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Incorrect Password!");
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Incorrect Password!");
             return;
         }
 
@@ -232,58 +232,58 @@ public class DTCommand implements CommandExecutor,TabCompleter {
         try {
             weight = (int)(Double.parseDouble(args[5]) * 1000);
         } catch (NumberFormatException e) {
-            sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Incorrect number format, cost need to be a number!");
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Incorrect number format, cost need to be a number!");
             return;
         }
         dt.addEdge(args[3],args[4],weight);
-        sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Successfully created edge with source " + MFConfig.getInput() + args[3] + MFConfig.getBase() + " and destination " + MFConfig.getInput() + args[4] + MFConfig.getBase() + " with weight " + MFConfig.getInput() + weight/1000.0 + MFConfig.getBase() + "!");
+        sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Successfully created edge with source " + MFConfig.INSTANCE.getInput() + args[3] + MFConfig.INSTANCE.getBase() + " and destination " + MFConfig.INSTANCE.getInput() + args[4] + MFConfig.INSTANCE.getBase() + " with weight " + MFConfig.INSTANCE.getInput() + weight/1000.0 + MFConfig.INSTANCE.getBase() + "!");
     }
     private void removeEdge(CommandSender sender, String[] args){
         //dt remove <FileName> <password> <source> <destination>
         if(args.length < 5){
-            sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix()  + MFConfig.getError() + " Error: Insufficient Arguments!");
-            sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Usage: /data add <FileName> <password> <source> <destination> <cost>");
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix()  + MFConfig.INSTANCE.getError() + " Error: Insufficient Arguments!");
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Usage: /data add <FileName> <password> <source> <destination> <cost>");
             return;
         }
         DataTable dt = DataTableStore.DataTables.get(args[1]);
         if(dt == null){
-            sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: The datatable specified does not exist!");
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: The datatable specified does not exist!");
             return;
         }
 
         if(dt.checkWrongPassword(args[2])){
-            sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Incorrect Password!");
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Incorrect Password!");
             return;
         }
 
         dt.removeEdge(args[3],args[4]);
-        sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Successfully removed edge with source " + MFConfig.getInput() + args[3] + MFConfig.getBase() + " and destination " + MFConfig.getInput() + args[4] + MFConfig.getBase() + "!");
+        sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Successfully removed edge with source " + MFConfig.INSTANCE.getInput() + args[3] + MFConfig.INSTANCE.getBase() + " and destination " + MFConfig.INSTANCE.getInput() + args[4] + MFConfig.INSTANCE.getBase() + "!");
     }
 
     private void calculate(CommandSender sender, String[] args){
         //dt calculate <FileName> <password> <source> <destination>
         if(args.length < 5){
-            sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Insufficient Arguments!");
-            sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Usage: /data calculate <FileName> <password> <source> <destination>");
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Insufficient Arguments!");
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Usage: /data calculate <FileName> <password> <source> <destination>");
             return;
         }
         DataTable dt = DataTableStore.DataTables.get(args[1]);
 
         if(dt == null){
-            sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: The datatable specified does not exist!");
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: The datatable specified does not exist!");
         }
         assert dt != null;
         if(dt.checkWrongPassword(args[2])){
-            sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Incorrect Password!");
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Incorrect Password!");
             return;
         }
 
         double dist = dt.ComputeFare(args[3],args[4]);
         if(dist > 0){
-            sender.sendMessage(MFConfig.getBase() + "Cost for shortest path from " + MFConfig.getInput() + args[3] + MFConfig.getBase() + " to " + MFConfig.getInput() + args[4] + MFConfig.getBase() + " is " + MFConfig.getCurrencyUnit() + MFConfig.getOutput() + dist + MFConfig.getBase() + ".");
+            sender.sendMessage(MFConfig.INSTANCE.getBase() + "Cost for shortest path from " + MFConfig.INSTANCE.getInput() + args[3] + MFConfig.INSTANCE.getBase() + " to " + MFConfig.INSTANCE.getInput() + args[4] + MFConfig.INSTANCE.getBase() + " is " + MFConfig.INSTANCE.getCurrencyUnit() + MFConfig.INSTANCE.getOutput() + dist + MFConfig.INSTANCE.getBase() + ".");
             return;
         }
-        sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: " + args[4] + " is unreachable from " + args[3] + "!");
+        sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: " + args[4] + " is unreachable from " + args[3] + "!");
     }
 
     private void checkPW(CommandSender sender, String[] args){
@@ -300,9 +300,9 @@ public class DTCommand implements CommandExecutor,TabCompleter {
         Player player = (Player) sender;
 
         if(args.length < 3){
-            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Invalid Format");
-            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Correct Format: ");
-            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " - datatable download <key/link> <name_of_file>");
+            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Invalid Format");
+            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Correct Format: ");
+            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " - datatable download <key/link> <name_of_file>");
             return;
         }
 
@@ -311,7 +311,7 @@ public class DTCommand implements CommandExecutor,TabCompleter {
             String temp = args[1].replace("https://pastebin.com/","");
             args[1] = temp;
         }
-        player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Downloading from PasteBin...");
+        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Downloading from PasteBin...");
         Bukkit.getScheduler().runTaskAsynchronously(MTFA.plugin,() -> {
             byte err = -1;
             try {
@@ -321,11 +321,11 @@ public class DTCommand implements CommandExecutor,TabCompleter {
             final byte final_err = err;
             Bukkit.getScheduler().runTask(MTFA.plugin, () -> {
                 switch(final_err){
-                    case -1: player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: An unexpected error occurred."); break;
-                    case 1:  player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Cannot find content from PasteBin!"); break;
-                    case 2:  player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: File with name " + MFConfig.getInput() + args[2] + MFConfig.getBase() + "already exist!"); break;
-                    case 3:  player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Cannot create file with name " + MFConfig.getInput() + args[2] + MFConfig.getBase() + "!"); break;
-                    case 0:  player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Successfully Created File... Loading into Game...");
+                    case -1: player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: An unexpected error occurred."); break;
+                    case 1:  player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Cannot find content from PasteBin!"); break;
+                    case 2:  player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: File with name " + MFConfig.INSTANCE.getInput() + args[2] + MFConfig.INSTANCE.getBase() + "already exist!"); break;
+                    case 3:  player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Cannot create file with name " + MFConfig.INSTANCE.getInput() + args[2] + MFConfig.INSTANCE.getBase() + "!"); break;
+                    case 0:  player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Successfully Created File... Loading into Game...");
                 }
             });
 
@@ -337,14 +337,14 @@ public class DTCommand implements CommandExecutor,TabCompleter {
                     dt = new DataTable(file);
                     DataTableStore.DataTables.put(dt.getName(),dt);
                 } catch (IOException e) {
-                    Bukkit.getScheduler().runTask(MTFA.plugin, () -> player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: The file downloaded is not a valid DataTable!"));
+                    Bukkit.getScheduler().runTask(MTFA.plugin, () -> player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: The file downloaded is not a valid DataTable!"));
                     file.delete();
                     return;
                 }
 
                 Bukkit.getScheduler().runTask(MTFA.plugin, () -> {
-                    player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Successfully loaded DataTable " + MFConfig.getInput() + args[2] + MFConfig.getBase() + "!");
-                    player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Process completed in " + MFConfig.getOutput() + (System.currentTimeMillis() - t0) + MFConfig.getBase() + "ms.");
+                    player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Successfully loaded DataTable " + MFConfig.INSTANCE.getInput() + args[2] + MFConfig.INSTANCE.getBase() + "!");
+                    player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Process completed in " + MFConfig.INSTANCE.getOutput() + (System.currentTimeMillis() - t0) + MFConfig.INSTANCE.getBase() + "ms.");
                 });
             }
         });

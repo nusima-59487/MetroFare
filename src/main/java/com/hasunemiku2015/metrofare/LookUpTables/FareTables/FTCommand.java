@@ -19,7 +19,7 @@ public class FTCommand implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(!(sender instanceof Player)) return true;
-        if(MFConfig.noTicketingPermission((Player) sender)) return true;
+        if(MFConfig.INSTANCE.noTicketingPermission((Player) sender)) return true;
         if(args.length == 0){
             help(sender);
             return true;
@@ -29,9 +29,9 @@ public class FTCommand implements TabExecutor {
 
         if(args[0].equalsIgnoreCase("download")){
             if(args.length < 3){
-                player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Invalid Format");
-                player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Correct Format: ");
-                player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " - faretable download <key/link> <name_of_file>");
+                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Invalid Format");
+                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Correct Format: ");
+                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " - faretable download <key/link> <name_of_file>");
                 return true;
             }
 
@@ -40,7 +40,7 @@ public class FTCommand implements TabExecutor {
                 String temp = args[1].replace("https://pastebin.com/","");
                 args[1] = temp;
             }
-            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Downloading from PasteBin...");
+            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Downloading from PasteBin...");
             Bukkit.getScheduler().runTaskAsynchronously(MTFA.plugin,() -> {
                 byte err = -1;
                 try {
@@ -50,11 +50,11 @@ public class FTCommand implements TabExecutor {
                 final byte final_err = err;
                 Bukkit.getScheduler().runTask(MTFA.plugin, () -> {
                     switch(final_err){
-                        case -1: player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: An unexpected error occurred."); break;
-                        case 1:  player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Cannot find content from PasteBin!"); break;
-                        case 2:  player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: File with name " + MFConfig.getInput() + args[2] + MFConfig.getBase() + "already exist!"); break;
-                        case 3:  player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Cannot create file with name " + MFConfig.getInput() + args[2] + MFConfig.getBase() + "!"); break;
-                        case 0:  player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Successfully Created File... Loading into Game...");
+                        case -1: player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: An unexpected error occurred."); break;
+                        case 1:  player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Cannot find content from PasteBin!"); break;
+                        case 2:  player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: File with name " + MFConfig.INSTANCE.getInput() + args[2] + MFConfig.INSTANCE.getBase() + "already exist!"); break;
+                        case 3:  player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Cannot create file with name " + MFConfig.INSTANCE.getInput() + args[2] + MFConfig.INSTANCE.getBase() + "!"); break;
+                        case 0:  player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Successfully Created File... Loading into Game...");
                     }
                 });
 
@@ -63,11 +63,11 @@ public class FTCommand implements TabExecutor {
                     try {
                         FareTableStore.loadTable(file);
                         Bukkit.getScheduler().runTask(MTFA.plugin, () -> {
-                            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Successfully loaded FareTable " + MFConfig.getInput() + args[2] + MFConfig.getBase() + "!");
-                            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Process completed in " + MFConfig.getOutput() + (System.currentTimeMillis() - t0) + MFConfig.getBase() + "ms.");
+                            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Successfully loaded FareTable " + MFConfig.INSTANCE.getInput() + args[2] + MFConfig.INSTANCE.getBase() + "!");
+                            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Process completed in " + MFConfig.INSTANCE.getOutput() + (System.currentTimeMillis() - t0) + MFConfig.INSTANCE.getBase() + "ms.");
                         });
                     } catch (InvalidFareTableException e) {
-                        Bukkit.getScheduler().runTask(MTFA.plugin, () -> player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: The file downloaded is not a valid FareTable!"));
+                        Bukkit.getScheduler().runTask(MTFA.plugin, () -> player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: The file downloaded is not a valid FareTable!"));
                         file.delete();
                     } catch (FileNotFoundException ignored) {
                     }
@@ -78,19 +78,19 @@ public class FTCommand implements TabExecutor {
 
         if(args[0].equalsIgnoreCase("load")){
             if(args.length < 2){
-                player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Please specify which FareTable to load/reload!");
+                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Please specify which FareTable to load/reload!");
                 return true;
             }
 
             //ft load
             Bukkit.getScheduler().runTaskAsynchronously(MTFA.plugin,() -> {
                 long t0 = System.currentTimeMillis();
-                Bukkit.getScheduler().runTask(MTFA.plugin,() -> player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Loading FareTable " + MFConfig.getInput() + args[1] + MFConfig.getBase() + "."));
+                Bukkit.getScheduler().runTask(MTFA.plugin,() -> player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Loading FareTable " + MFConfig.INSTANCE.getInput() + args[1] + MFConfig.INSTANCE.getBase() + "."));
                 try{
                     FareTableStore.loadTable(new File(MTFA.plugin.getDataFolder() + "/FareTables", args[1] + ".csv"));
-                    Bukkit.getScheduler().runTask(MTFA.plugin,() -> player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Loading Completed in " + MFConfig.getOutput() + (System.currentTimeMillis() - t0) + MFConfig.getBase() + "ms."));
+                    Bukkit.getScheduler().runTask(MTFA.plugin,() -> player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Loading Completed in " + MFConfig.INSTANCE.getOutput() + (System.currentTimeMillis() - t0) + MFConfig.INSTANCE.getBase() + "ms."));
                 } catch (Exception e){
-                    Bukkit.getScheduler().runTask(MTFA.plugin,() -> player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: FareTable " + MFConfig.getInput() + args[1] + MFConfig.getError() + " is missing or invalid!"));
+                    Bukkit.getScheduler().runTask(MTFA.plugin,() -> player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: FareTable " + MFConfig.INSTANCE.getInput() + args[1] + MFConfig.INSTANCE.getError() + " is missing or invalid!"));
                 }
             });
             return true;
@@ -110,7 +110,7 @@ public class FTCommand implements TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if(!(sender instanceof Player)) return new ArrayList<>();
-        if(MFConfig.noTicketingPermission((Player) sender)) return new ArrayList<>();
+        if(MFConfig.INSTANCE.noTicketingPermission((Player) sender)) return new ArrayList<>();
         List<String> out = new ArrayList<>();
 
         if(args.length == 1){
@@ -134,8 +134,8 @@ public class FTCommand implements TabExecutor {
     }
 
     private void help(CommandSender sender){
-        sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " FareTable Commands:");
-        sender.sendMessage(MFConfig.getBase() + "- load: Load/Reload the FareTable to server.");
-        sender.sendMessage(MFConfig.getBase() + "- download: Download FareTable from PasteBin.");
+        sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " FareTable Commands:");
+        sender.sendMessage(MFConfig.INSTANCE.getBase() + "- load: Load/Reload the FareTable to server.");
+        sender.sendMessage(MFConfig.INSTANCE.getBase() + "- download: Download FareTable from PasteBin.");
     }
 }

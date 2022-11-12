@@ -42,7 +42,7 @@ public class DebitCardCBlkCommand implements CommandExecutor {
             } else {
                 Player p = Bukkit.getPlayer(args[1]);
                 if(p == null){
-                    sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Cannot find the affected player!");
+                    sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Cannot find the affected player!");
                     return true;
                 }
                 affectedPlayers.add(p);
@@ -50,7 +50,7 @@ public class DebitCardCBlkCommand implements CommandExecutor {
         } else if (sender instanceof ConsoleCommandSender) {
             Player p = Bukkit.getPlayer(args[1]);
             if(p == null){
-                sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Cannot find the affected player!");
+                sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Cannot find the affected player!");
                 return true;
             }
             affectedPlayers.add(p);
@@ -67,11 +67,11 @@ public class DebitCardCBlkCommand implements CommandExecutor {
                 for(int i = 0 ; i < 36 ; i++){
                     if(inv.getItem(i) == null){
                         inv.setItem(i,its);
-                        player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Successfully issued a new debit card!");
+                        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Successfully issued a new debit card!");
                         return true;
                     }
                 }
-                player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Your inventory is full!");
+                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Your inventory is full!");
             }
         }
 
@@ -80,7 +80,7 @@ public class DebitCardCBlkCommand implements CommandExecutor {
             for(Player player: affectedPlayers){
                 DebitCard dc = new DebitCard(player.getInventory().getItemInMainHand());
                 if(!dc.isValid()){
-                    player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: You are not holding a " + MFConfig.getDebitCardName() + MFConfig.getBase() + "!");
+                    player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: You are not holding a " + MFConfig.INSTANCE.getDebitCardName() + MFConfig.INSTANCE.getBase() + "!");
                     continue;
                 }
 
@@ -101,7 +101,7 @@ public class DebitCardCBlkCommand implements CommandExecutor {
             for(Player player: affectedPlayers){
                 DebitCard dc = new DebitCard(player.getInventory().getItemInMainHand());
                 if(!dc.isValid()){
-                    player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: You are not holding a " + MFConfig.getDebitCardName() + MFConfig.getBase() + "!");
+                    player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: You are not holding a " + MFConfig.INSTANCE.getDebitCardName() + MFConfig.INSTANCE.getBase() + "!");
                     continue;
                 }
 
@@ -122,13 +122,13 @@ public class DebitCardCBlkCommand implements CommandExecutor {
             for(Player player: affectedPlayers){
                 DebitCard dc = new DebitCard(player.getInventory().getItemInMainHand());
                 if(!dc.isValid()){
-                    player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: You are not holding a " + MFConfig.getDebitCardName() + MFConfig.getBase() + "!");
+                    player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: You are not holding a " + MFConfig.INSTANCE.getDebitCardName() + MFConfig.INSTANCE.getBase() + "!");
                     continue;
                 }
 
                 dc.removeEntryData();
                 dc.updateCard();
-                player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Successfully removed the entry data of " + MFConfig.getDebitCardName() + MFConfig.getBase() + "!");
+                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Successfully removed the entry data of " + MFConfig.INSTANCE.getDebitCardName() + MFConfig.INSTANCE.getBase() + "!");
             }
             return true;
         }
@@ -138,7 +138,7 @@ public class DebitCardCBlkCommand implements CommandExecutor {
             for(Player player: affectedPlayers){
                 DebitCard dc = new DebitCard(player.getInventory().getItemInMainHand());
                 if(!dc.isValid()){
-                    player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: You are not holding a " + MFConfig.getDebitCardName() + MFConfig.getBase() + "!");
+                    player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: You are not holding a " + MFConfig.INSTANCE.getDebitCardName() + MFConfig.INSTANCE.getBase() + "!");
                     continue;
                 }
 
@@ -150,37 +150,37 @@ public class DebitCardCBlkCommand implements CommandExecutor {
         if(args[0].equalsIgnoreCase("auto")){
             for(Player player: affectedPlayers){
                 if (args.length < 3) {
-                    sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Unknown selector!");
-                    sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Possible Selectors:");
-                    sender.sendMessage(MFConfig.getBase() + "- dailylimit");
-                    sender.sendMessage(MFConfig.getBase() + "- addamount");
-                    sender.sendMessage(MFConfig.getBase() + "- info");
-                    sender.sendMessage(MFConfig.getBase() + "- enable");
-                    sender.sendMessage(MFConfig.getBase() + "- disable");
+                    sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Unknown selector!");
+                    sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Possible Selectors:");
+                    sender.sendMessage(MFConfig.INSTANCE.getBase() + "- dailylimit");
+                    sender.sendMessage(MFConfig.INSTANCE.getBase() + "- addamount");
+                    sender.sendMessage(MFConfig.INSTANCE.getBase() + "- info");
+                    sender.sendMessage(MFConfig.INSTANCE.getBase() + "- enable");
+                    sender.sendMessage(MFConfig.INSTANCE.getBase() + "- disable");
                     return true;
                 }
 
                 DebitCard dc = new DebitCard(player.getInventory().getItemInMainHand());
                 if (!dc.isValid()) {
-                    player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: You are not holding a " + MFConfig.getDebitCardName() + "!");
+                    player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: You are not holding a " + MFConfig.INSTANCE.getDebitCardName() + "!");
                     return true;
                 }
 
                 switch (args[2]) {
                     case "info": {
-                        player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getDebitCardName() + MFConfig.getBase() + " Info (Auto Top Up):");
+                        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getDebitCardName() + MFConfig.INSTANCE.getBase() + " Info (Auto Top Up):");
                         if (dc.getLastAddedAuto() != 0) {
-                            player.sendMessage(MFConfig.getBase() + "Add Amount: " + MFConfig.getCurrencyUnit() + MFConfig.getOutput() + dc.getAddAmount() / 1000.0);
-                            player.sendMessage(MFConfig.getBase() + "Daily Limit: " + MFConfig.getCurrencyUnit() + MFConfig.getOutput() + dc.getDailyLimit() / 1000.0);
-                            player.sendMessage(MFConfig.getBase() + "Last Auto Value Add Trigger Time (Unix Time): " + MFConfig.getOutput() + dc.getLastAddedAuto());
+                            player.sendMessage(MFConfig.INSTANCE.getBase() + "Add Amount: " + MFConfig.INSTANCE.getCurrencyUnit() + MFConfig.INSTANCE.getOutput() + dc.getAddAmount() / 1000.0);
+                            player.sendMessage(MFConfig.INSTANCE.getBase() + "Daily Limit: " + MFConfig.INSTANCE.getCurrencyUnit() + MFConfig.INSTANCE.getOutput() + dc.getDailyLimit() / 1000.0);
+                            player.sendMessage(MFConfig.INSTANCE.getBase() + "Last Auto Value Add Trigger Time (Unix Time): " + MFConfig.INSTANCE.getOutput() + dc.getLastAddedAuto());
                         } else {
-                            player.sendMessage(MFConfig.getBase() + "This card doesn't have auto top up enabled.");
+                            player.sendMessage(MFConfig.INSTANCE.getBase() + "This card doesn't have auto top up enabled.");
                         }
                         return true;
                     }
                     case "dailylimit": {
                         if (dc.getLastAddedAuto() == 0) {
-                            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: This " + MFConfig.getDebitCardName() + MFConfig.getError() + "doesn't have auto top up enabled.");
+                            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: This " + MFConfig.INSTANCE.getDebitCardName() + MFConfig.INSTANCE.getError() + "doesn't have auto top up enabled.");
                             return true;
                         }
 
@@ -188,11 +188,11 @@ public class DebitCardCBlkCommand implements CommandExecutor {
                         try {
                             limit = (int) (Double.parseDouble(args[3]) * 1000);
                             if (dc.getAddAmount() >= limit) {
-                                player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Add amount cannot be lower than Daily Limit.");
+                                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Add amount cannot be lower than Daily Limit.");
                                 return true;
                             }
                         } catch (Exception ex) {
-                            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Daily limit must be a number!");
+                            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Daily limit must be a number!");
                             return true;
                         }
 
@@ -203,7 +203,7 @@ public class DebitCardCBlkCommand implements CommandExecutor {
 
                     case "addamount": {
                         if (dc.getLastAddedAuto() == 0) {
-                            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: This " + MFConfig.getDebitCardName() + MFConfig.getError() + "doesn't have auto top up enabled.");
+                            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: This " + MFConfig.INSTANCE.getDebitCardName() + MFConfig.INSTANCE.getError() + "doesn't have auto top up enabled.");
                             return true;
                         }
 
@@ -212,16 +212,16 @@ public class DebitCardCBlkCommand implements CommandExecutor {
                             amount = (int) (Double.parseDouble(args[3]) * 1000);
 
                             if (amount <= 0) {
-                                player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Add amount must be greater than 0.");
+                                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Add amount must be greater than 0.");
                                 return true;
                             }
 
                             if (amount >= dc.getDailyLimit()) {
-                                player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Add amount cannot be lower than Daily Limit.");
+                                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Add amount cannot be lower than Daily Limit.");
                                 return true;
                             }
                         } catch (Exception ex) {
-                            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Add amount must be a number!");
+                            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Add amount must be a number!");
                             return true;
                         }
 
@@ -232,7 +232,7 @@ public class DebitCardCBlkCommand implements CommandExecutor {
 
                     case "enable": {
                         if (dc.getLastAddedAuto() != 0) {
-                            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Auto top-up is already enabled on this " + MFConfig.getDebitCardName() + MFConfig.getBase() + ".");
+                            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Auto top-up is already enabled on this " + MFConfig.INSTANCE.getDebitCardName() + MFConfig.INSTANCE.getBase() + ".");
                             return true;
                         }
 
@@ -242,17 +242,17 @@ public class DebitCardCBlkCommand implements CommandExecutor {
                             limit = (int) (Double.parseDouble(args[4]) * 1000);
 
                             if (amount <= 0) {
-                                player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Add amount must be greater than 0.");
+                                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Add amount must be greater than 0.");
                                 return true;
                             }
 
                             if (amount > limit) {
-                                player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Add amount cannot be lower than Daily Limit.");
+                                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Add amount cannot be lower than Daily Limit.");
                                 return true;
                             }
                         } catch (Exception ex) {
-                            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Insufficient/Invalid Arguments");
-                            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + "debitcard auto enable <add amount(Number)> <daily limit(Number)>");
+                            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Insufficient/Invalid Arguments");
+                            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + "debitcard auto enable <add amount(Number)> <daily limit(Number)>");
                             return true;
                         }
 
@@ -262,13 +262,13 @@ public class DebitCardCBlkCommand implements CommandExecutor {
                         dc.setDailyLimit(limit);
                         dc.updateCard();
 
-                        player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Successfully enabled auto top-up for this " + MFConfig.getDebitCardName() + MFConfig.getBase() + "!");
+                        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Successfully enabled auto top-up for this " + MFConfig.INSTANCE.getDebitCardName() + MFConfig.INSTANCE.getBase() + "!");
                         return true;
                     }
 
                     case "disable": {
                         if (dc.getLastAddedAuto() == 0) {
-                            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Auto top-up is already disabled on this " + MFConfig.getDebitCardName() + MFConfig.getBase() + ".");
+                            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Auto top-up is already disabled on this " + MFConfig.INSTANCE.getDebitCardName() + MFConfig.INSTANCE.getBase() + ".");
                             return true;
                         }
 
@@ -278,18 +278,18 @@ public class DebitCardCBlkCommand implements CommandExecutor {
                         dc.removeLastAddedAuto();
                         dc.updateCard();
 
-                        player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Successfully disabled auto top-up for this " + MFConfig.getDebitCardName() + MFConfig.getBase() + "!");
+                        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Successfully disabled auto top-up for this " + MFConfig.INSTANCE.getDebitCardName() + MFConfig.INSTANCE.getBase() + "!");
                         return true;
                     }
                 }
 
-                sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Unknown selector!");
-                sender.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + "Possible Selectors:");
-                sender.sendMessage(MFConfig.getBase() + "- dailylimit");
-                sender.sendMessage(MFConfig.getBase() + "- addamount");
-                sender.sendMessage(MFConfig.getBase() + "- info");
-                sender.sendMessage(MFConfig.getBase() + "- enable");
-                sender.sendMessage(MFConfig.getBase() + "- disable");
+                sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Unknown selector!");
+                sender.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + "Possible Selectors:");
+                sender.sendMessage(MFConfig.INSTANCE.getBase() + "- dailylimit");
+                sender.sendMessage(MFConfig.INSTANCE.getBase() + "- addamount");
+                sender.sendMessage(MFConfig.INSTANCE.getBase() + "- info");
+                sender.sendMessage(MFConfig.INSTANCE.getBase() + "- enable");
+                sender.sendMessage(MFConfig.INSTANCE.getBase() + "- disable");
                 return true;
             }
         }

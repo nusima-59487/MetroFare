@@ -130,7 +130,7 @@ public class TicketCBlkCommand implements CommandExecutor {
     //Copied from TicketCmd
     private void issue(Player player, String[] args) {
         if (args.length < 5) {
-            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Insufficient Arguments!");
+            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Insufficient Arguments!");
         }
 
         //ticket issue <company> <from> <company> <to> <cost>(Optional) <hasEntered>(Optional)
@@ -140,7 +140,7 @@ public class TicketCBlkCommand implements CommandExecutor {
             sourceComp = CompanyStore.CompanyTable.get(args[1]);
             destComp = CompanyStore.CompanyTable.get(args[3]);
         } else {
-            player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Company(s) not found");
+            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Company(s) not found");
             return;
         }
 
@@ -165,10 +165,10 @@ public class TicketCBlkCommand implements CommandExecutor {
         for (int i = 0; i < 36; i++) {
             if (inv.getItem(i) == null) {
                 inv.setItem(i, its);
-                player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + " Successfully issued a new ticket from " + MFConfig.getInput() + args[2] + MFConfig.getBase() + " to " + MFConfig.getInput() + args[4] + MFConfig.getBase() + " with price " + MFConfig.getCurrencyUnit() + MFConfig.getInput() + fare1000 / 1000.0 + MFConfig.getBase() + "!");
+                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Successfully issued a new ticket from " + MFConfig.INSTANCE.getInput() + args[2] + MFConfig.INSTANCE.getBase() + " to " + MFConfig.INSTANCE.getInput() + args[4] + MFConfig.INSTANCE.getBase() + " with price " + MFConfig.INSTANCE.getCurrencyUnit() + MFConfig.INSTANCE.getInput() + fare1000 / 1000.0 + MFConfig.INSTANCE.getBase() + "!");
                 return;
             }
         }
-        player.sendMessage(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " Error: Your inventory is full!");
+        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Your inventory is full!");
     }
 }

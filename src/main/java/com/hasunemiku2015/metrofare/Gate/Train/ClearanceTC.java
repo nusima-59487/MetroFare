@@ -22,7 +22,7 @@ import org.bukkit.inventory.ItemStack;
 public class ClearanceTC extends SignAction {
     @Override
     public boolean match(SignActionEvent info) {
-        return info.isType(MFConfig.getValidatorTrainCartsPrefix());
+        return info.isType(MFConfig.INSTANCE.getValidatorTrainCartsPrefix());
     }
 
     @Override
@@ -38,7 +38,7 @@ public class ClearanceTC extends SignAction {
 
                             if(stack == null){
                                 if(i == 35){
-                                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR,new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " " + MFConfig.getValidatorFail()));
+                                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR,new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " " + MFConfig.INSTANCE.getValidatorFail()));
                                     break;
                                 } else {
                                     continue;
@@ -48,7 +48,7 @@ public class ClearanceTC extends SignAction {
                                 if(i != 35){
                                     continue;
                                 } else {
-                                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR,new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " " + MFConfig.getValidatorFail()));
+                                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR,new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " " + MFConfig.INSTANCE.getValidatorFail()));
                                     break;
                                 }
                             }
@@ -60,10 +60,10 @@ public class ClearanceTC extends SignAction {
                             }
 
                             if(done0 && done1){
-                                Bukkit.getScheduler().runTaskLater(MTFA.plugin,() -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR,new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getValidatorComplete())),10);
+                                Bukkit.getScheduler().runTaskLater(MTFA.plugin,() -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR,new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getValidatorComplete())),10);
                                 break;
                             } else if(i == 35) {
-                                player.spigot().sendMessage(ChatMessageType.ACTION_BAR,new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + MFConfig.getError() + " " + MFConfig.getValidatorFail()));
+                                player.spigot().sendMessage(ChatMessageType.ACTION_BAR,new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " " + MFConfig.INSTANCE.getValidatorFail()));
                             }
                         }
                     }
@@ -77,10 +77,10 @@ public class ClearanceTC extends SignAction {
         String[] infoOut = GateUtil.parseData(info.getLine(2));
         String[] infoIn = GateUtil.parseData(info.getLine(3));
 
-        if(CompanyStore.CompanyTable.containsKey(infoOut[0]) && CompanyStore.CompanyTable.containsKey(infoIn[0]) && MFConfig.hasBuildGatePermission(info.getPlayer())){
+        if(CompanyStore.CompanyTable.containsKey(infoOut[0]) && CompanyStore.CompanyTable.containsKey(infoIn[0]) && MFConfig.INSTANCE.hasBuildGatePermission(info.getPlayer())){
             SignBuildOptions opt = SignBuildOptions.create()
-                    .setName(MFConfig.getOutput() + MFConfig.getValidatorTrainCartsName());
-            opt.setDescription(MFConfig.getValidatorTrainCartsDescription());
+                    .setName(MFConfig.INSTANCE.getOutput() + MFConfig.INSTANCE.getValidatorTrainCartsName());
+            opt.setDescription(MFConfig.INSTANCE.getValidatorTrainCartsDescription());
             return opt.handle(info.getPlayer());
         }
 

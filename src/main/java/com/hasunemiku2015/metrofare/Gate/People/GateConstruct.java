@@ -20,9 +20,9 @@ public class GateConstruct implements Listener {
             return;
         }
 
-        boolean entryGate = MFConfig.getPrefixIn().equalsIgnoreCase(event.getLine(0)) && MFConfig.isEntryGateEnabled();
-        boolean exitGate = MFConfig.getPrefixOut().equalsIgnoreCase(event.getLine(0)) && MFConfig.isExitGateEnabled();
-        boolean oneTimePaymentMachine = MFConfig.getPrefixOTP().equalsIgnoreCase(event.getLine(0)) && MFConfig.isOtpEnabled();
+        boolean entryGate = MFConfig.INSTANCE.getPrefixIn().equalsIgnoreCase(event.getLine(0)) && MFConfig.INSTANCE.isEntryGateEnabled();
+        boolean exitGate = MFConfig.INSTANCE.getPrefixOut().equalsIgnoreCase(event.getLine(0)) && MFConfig.INSTANCE.isExitGateEnabled();
+        boolean oneTimePaymentMachine = MFConfig.INSTANCE.getPrefixOTP().equalsIgnoreCase(event.getLine(0)) && MFConfig.INSTANCE.isOtpEnabled();
         if (!entryGate && !exitGate && !oneTimePaymentMachine) {
             return;
         }
@@ -31,7 +31,7 @@ public class GateConstruct implements Listener {
             event.getBlock().setType(Material.AIR);
             return;
         }
-        if (!MFConfig.hasBuildGatePermission(event.getPlayer())) {
+        if (!MFConfig.INSTANCE.hasBuildGatePermission(event.getPlayer())) {
             event.getBlock().setType(Material.AIR);
             return;
         }
@@ -51,7 +51,7 @@ public class GateConstruct implements Listener {
             return;
         }
 
-        if (MFConfig.getPrefixOTP().equalsIgnoreCase(event.getLine(0))) {
+        if (MFConfig.INSTANCE.getPrefixOTP().equalsIgnoreCase(event.getLine(0))) {
             try {
                 Double.parseDouble(data[1]);
             } catch (Exception ex) {
@@ -66,19 +66,19 @@ public class GateConstruct implements Listener {
         }
 
         //Prettify
-        if (MFConfig.getPrefixIn().equalsIgnoreCase(event.getLine(0))) {
-            event.setLine(2, MFConfig.getInfo1In());
-            event.setLine(3, MFConfig.getInfo2In());
+        if (MFConfig.INSTANCE.getPrefixIn().equalsIgnoreCase(event.getLine(0))) {
+            event.setLine(2, MFConfig.INSTANCE.getInfo1In());
+            event.setLine(3, MFConfig.INSTANCE.getInfo2In());
         }
 
-        if (MFConfig.getPrefixOut().equalsIgnoreCase(event.getLine(0))) {
-            event.setLine(2, MFConfig.getInfo1Out());
-            event.setLine(3, MFConfig.getInfo2Out());
+        if (MFConfig.INSTANCE.getPrefixOut().equalsIgnoreCase(event.getLine(0))) {
+            event.setLine(2, MFConfig.INSTANCE.getInfo1Out());
+            event.setLine(3, MFConfig.INSTANCE.getInfo2Out());
         }
 
-        if (MFConfig.getPrefixOTP().equalsIgnoreCase(event.getLine(0))) {
-            event.setLine(2, MFConfig.getInfo1OTP());
-            event.setLine(3, MFConfig.getInfo2OTP());
+        if (MFConfig.INSTANCE.getPrefixOTP().equalsIgnoreCase(event.getLine(0))) {
+            event.setLine(2, MFConfig.INSTANCE.getInfo1OTP());
+            event.setLine(3, MFConfig.INSTANCE.getInfo2OTP());
         }
     }
 }

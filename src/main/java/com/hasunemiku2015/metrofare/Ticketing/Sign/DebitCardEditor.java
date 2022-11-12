@@ -38,19 +38,19 @@ public class DebitCardEditor implements Listener {
     private static AnvilGUI.Builder dailyLimit;
 
     public static void init() {
-        inventoryGUI = Bukkit.createInventory(null, 9, MFConfig.getBase() + MFConfig.getPrefix());
+        inventoryGUI = Bukkit.createInventory(null, 9, MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix());
 
-        inventoryGUI.setItem(0, newItem(Material.NAME_TAG, MFConfig.getBase() + "New " + MFConfig.getDebitCardName()));
-        inventoryGUI.setItem(1, newItem(Material.GOLD_INGOT, MFConfig.getBase() + "Add Value to " + MFConfig.getDebitCardName()));
-        inventoryGUI.setItem(2, newItem(Material.IRON_INGOT, MFConfig.getBase() + "Bank in from " + MFConfig.getDebitCardName()));
-        inventoryGUI.setItem(3, newItem(Material.BOOK, MFConfig.getBase() + "View Transaction Records"));
-        inventoryGUI.setItem(4, newItem(Material.REDSTONE, MFConfig.getBase() + "Enable/Disable Auto Top-Up"));
-        inventoryGUI.setItem(5, newItem(Material.REPEATER, MFConfig.getBase() + "Change Add Amount of Auto Top-Up"));
-        inventoryGUI.setItem(6, newItem(Material.COMPARATOR, MFConfig.getBase() + "Change Daily Limit of Auto Top-Up"));
-        inventoryGUI.setItem(7, newItem(Material.CAULDRON, MFConfig.getBase() + "Reset Entry data of " + MFConfig.getDebitCardName()));
+        inventoryGUI.setItem(0, newItem(Material.NAME_TAG, MFConfig.INSTANCE.getBase() + "New " + MFConfig.INSTANCE.getDebitCardName()));
+        inventoryGUI.setItem(1, newItem(Material.GOLD_INGOT, MFConfig.INSTANCE.getBase() + "Add Value to " + MFConfig.INSTANCE.getDebitCardName()));
+        inventoryGUI.setItem(2, newItem(Material.IRON_INGOT, MFConfig.INSTANCE.getBase() + "Bank in from " + MFConfig.INSTANCE.getDebitCardName()));
+        inventoryGUI.setItem(3, newItem(Material.BOOK, MFConfig.INSTANCE.getBase() + "View Transaction Records"));
+        inventoryGUI.setItem(4, newItem(Material.REDSTONE, MFConfig.INSTANCE.getBase() + "Enable/Disable Auto Top-Up"));
+        inventoryGUI.setItem(5, newItem(Material.REPEATER, MFConfig.INSTANCE.getBase() + "Change Add Amount of Auto Top-Up"));
+        inventoryGUI.setItem(6, newItem(Material.COMPARATOR, MFConfig.INSTANCE.getBase() + "Change Daily Limit of Auto Top-Up"));
+        inventoryGUI.setItem(7, newItem(Material.CAULDRON, MFConfig.INSTANCE.getBase() + "Reset Entry data of " + MFConfig.INSTANCE.getDebitCardName()));
         inventoryGUI.setItem(8, newItem(Material.BARRIER, ChatColor.RED + "Cancel"));
 
-        valueAdd = newInputInventory(MFConfig.getPromptAddDCE());
+        valueAdd = newInputInventory(MFConfig.INSTANCE.getPromptAddDCE());
         valueAdd.onComplete((Player player, String text) -> {
             try {
                 double value = Double.parseDouble(text);
@@ -59,49 +59,49 @@ public class DebitCardEditor implements Listener {
                     if (VaultIntegration.hasEnough(player, value)) {
                         VaultIntegration.deduct(player, value);
                         card.setBalance(card.getBalance() + (int) (value * 1000));
-                        card.addPaymentRecord(MFConfig.getNameDCE(), false, (int) (value * 1000));
+                        card.addPaymentRecord(MFConfig.INSTANCE.getNameDCE(), false, (int) (value * 1000));
                         card.updateCard();
 
-                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getSuccessDCE()));
-                        Bukkit.getScheduler().runTaskLater(MTFA.plugin, () -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getNewBalanceDCE() + card.getBalance() / 1000.0)), 5);
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getSuccessDCE()));
+                        Bukkit.getScheduler().runTaskLater(MTFA.plugin, () -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getNewBalanceDCE() + card.getBalance() / 1000.0)), 5);
                         return AnvilGUI.Response.close();
                     }
                 }
             } catch (Exception ignored) {
             }
 
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getFailDCE()));
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
             return AnvilGUI.Response.close();
         });
-        bankIn = newInputInventory(MFConfig.getPromptRemoveDCE());
+        bankIn = newInputInventory(MFConfig.INSTANCE.getPromptRemoveDCE());
         bankIn.onComplete((Player player, String text) -> {
             try {
                 double value = Double.parseDouble(text);
                 DebitCard card = new DebitCard(player.getInventory().getItemInMainHand());
                 if (card.getBalance() / 1000.0 >= value) {
                     card.setBalance(card.getBalance() - (int) (value * 1000));
-                    card.addPaymentRecord(MFConfig.getNameDCE(), true, (int) (value * 1000));
+                    card.addPaymentRecord(MFConfig.INSTANCE.getNameDCE(), true, (int) (value * 1000));
                     card.updateCard();
                     VaultIntegration.add(player, value);
 
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getSuccessDCE()));
-                    Bukkit.getScheduler().runTaskLater(MTFA.plugin, () -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getNewBalanceDCE() + card.getBalance() / 1000.0)), 5);
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getSuccessDCE()));
+                    Bukkit.getScheduler().runTaskLater(MTFA.plugin, () -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getNewBalanceDCE() + card.getBalance() / 1000.0)), 5);
                     return AnvilGUI.Response.close();
                 }
             } catch (Exception ignored) {
             }
 
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getFailDCE()));
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
             return AnvilGUI.Response.close();
         });
-        addAmount = newInputInventory(MFConfig.getPromptAutoAddAmountDCE());
+        addAmount = newInputInventory(MFConfig.INSTANCE.getPromptAutoAddAmountDCE());
         addAmount.onComplete((Player player, String text) -> {
             DebitCard card = new DebitCard(player.getInventory().getItemInMainHand());
             try {
                 double value = Double.parseDouble(text);
                 if (value <= card.getDailyLimit() / 1000.0) {
                     if (value > 0 && value < 2000000) {
-                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getSuccessDCE()));
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getSuccessDCE()));
                         card.setAddAmount((int) (value * 1000));
                         card.updateCard();
                         return AnvilGUI.Response.close();
@@ -110,10 +110,10 @@ public class DebitCardEditor implements Listener {
             } catch (Exception ignored) {
             }
 
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getFailDCE()));
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
             return AnvilGUI.Response.close();
         });
-        dailyLimit = newInputInventory(MFConfig.getPromptAutoDailyLimitDCE());
+        dailyLimit = newInputInventory(MFConfig.INSTANCE.getPromptAutoDailyLimitDCE());
         dailyLimit.onComplete((Player player, String text) -> {
             DebitCard card = new DebitCard(player.getInventory().getItemInMainHand());
             try {
@@ -121,7 +121,7 @@ public class DebitCardEditor implements Listener {
 
                 if (value >= card.getAddAmount() / 1000.0) {
                     if (value > 0 && value < 2000000) {
-                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getSuccessDCE()));
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getSuccessDCE()));
                         card.setDailyLimit((int) (value * 1000));
                         card.updateCard();
                         return AnvilGUI.Response.close();
@@ -129,7 +129,7 @@ public class DebitCardEditor implements Listener {
                 }
             } catch (Exception ignored) {
             }
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getFailDCE()));
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
             return AnvilGUI.Response.close();
         });
     }
@@ -164,15 +164,15 @@ public class DebitCardEditor implements Listener {
     @EventHandler
     public void onBuild(SignChangeEvent event) {
         if (!(event.getBlock().getBlockData() instanceof WallSign)) return;
-        if (!Objects.requireNonNull(event.getLine(0)).equalsIgnoreCase(MFConfig.getPrefixDCE())) return;
-        if (MFConfig.hasBuildEditorPermission(event.getPlayer())) {
+        if (!Objects.requireNonNull(event.getLine(0)).equalsIgnoreCase(MFConfig.INSTANCE.getPrefixDCE())) return;
+        if (MFConfig.INSTANCE.hasBuildEditorPermission(event.getPlayer())) {
             event.getBlock().setType(Material.AIR);
             return;
         }
 
-        event.setLine(1, MFConfig.getInfo1DCE());
-        event.setLine(2, MFConfig.getInfo2DCE());
-        event.setLine(3, MFConfig.getInfo3DCE());
+        event.setLine(1, MFConfig.INSTANCE.getInfo1DCE());
+        event.setLine(2, MFConfig.INSTANCE.getInfo2DCE());
+        event.setLine(3, MFConfig.INSTANCE.getInfo3DCE());
     }
 
     @EventHandler
@@ -182,7 +182,7 @@ public class DebitCardEditor implements Listener {
         if (event.getClickedBlock() == null || !(event.getClickedBlock().getBlockData() instanceof WallSign)) return;
         if (((WallSign) event.getClickedBlock().getBlockData()).getFacing() != event.getBlockFace()) return;
         Sign sign = (Sign) event.getClickedBlock().getState();
-        if (!sign.getLine(0).equalsIgnoreCase(MFConfig.getPrefixDCE())) return;
+        if (!sign.getLine(0).equalsIgnoreCase(MFConfig.INSTANCE.getPrefixDCE())) return;
 
         event.getPlayer().openInventory(inventoryGUI);
     }
@@ -218,18 +218,18 @@ public class DebitCardEditor implements Listener {
                 for (int i = 0; i < 36; i++) {
                     if (player.getInventory().getItem(i) == null) {
                         player.getInventory().setItem(i, newCard);
-                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getSuccessDCE()));
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getSuccessDCE()));
                         return;
                     }
                 }
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getFailDCE()));
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
                 return;
             }
             case 1: {
                 if (valid) {
                     valueAdd.open(player);
                 } else {
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getFailDCE()));
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
                     player.closeInventory();
                 }
                 return;
@@ -238,7 +238,7 @@ public class DebitCardEditor implements Listener {
                 if (valid) {
                     bankIn.open(player);
                 } else {
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getFailDCE()));
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
                     player.closeInventory();
                 }
                 return;
@@ -250,7 +250,7 @@ public class DebitCardEditor implements Listener {
                     player.closeInventory();
                     return;
                 }
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getFailDCE()));
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
                 player.closeInventory();
                 return;
             }
@@ -263,11 +263,11 @@ public class DebitCardEditor implements Listener {
                     } else {
                         removeAutoTopUp(card);
                     }
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getSuccessDCE()));
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getSuccessDCE()));
                     player.closeInventory();
                     return;
                 }
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getFailDCE()));
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
                 player.closeInventory();
                 break;
             }
@@ -276,7 +276,7 @@ public class DebitCardEditor implements Listener {
                 if (valid && card.getLastAddedAuto() != 0) {
                     addAmount.open(player);
                 } else {
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getFailDCE()));
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
                     player.closeInventory();
                 }
                 return;
@@ -286,7 +286,7 @@ public class DebitCardEditor implements Listener {
                 if (valid && card.getLastAddedAuto() != 0) {
                     dailyLimit.open(player);
                 } else {
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getFailDCE()));
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
                     player.closeInventory();
                 }
                 return;
@@ -296,11 +296,11 @@ public class DebitCardEditor implements Listener {
                 if (valid) {
                     card.removeEntryData();
                     card.updateCard();
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getSuccessDCE()));
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getSuccessDCE()));
                     player.closeInventory();
                     return;
                 }
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.getBase() + MFConfig.getPrefix() + " " + MFConfig.getFailDCE()));
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
                 player.closeInventory();
             }
             case 8: {
