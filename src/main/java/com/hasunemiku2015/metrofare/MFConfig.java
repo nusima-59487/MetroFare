@@ -53,8 +53,8 @@ public class MFConfig {
      ChatColor input = ConfigHelper.getChatColor("theme.input_values");
      ChatColor output = ConfigHelper.getChatColor("theme.results");
 
-     String currencyUnit = INSTANCE.getCurrencyUnit(ConfigHelper.getInt("currency_unit"));
-     String getCurrencyUnit(int value) {
+     String currencyUnit = getCurrencyUnit(ConfigHelper.getInt("currency_unit"));
+     private static String getCurrencyUnit(int value) {
         String currencyUnit = "$";
         switch(value){
             case 0: currencyUnit = "$"; break;
@@ -99,7 +99,7 @@ public class MFConfig {
     // ============================================================================================================== //
     //                                                Exit Gate                                                       //
     // ============================================================================================================== //
-     boolean exitGateEnabled = ConfigHelper.getBoolean("exit_gate.enabled");
+     boolean exitGateEnabled = ConfigHelper.getBoolean("exit_gate.enable");
      String prefixOut = ConfigHelper.getString("exit_gate.prefix");
      String info1Out = ConfigHelper.getColoredString("exit_gate.info_1");
      String info2Out = ConfigHelper.getColoredString("exit_gate.info_2");

@@ -49,7 +49,6 @@ public class GateExecutionOut implements Listener {
                     }
                 }
 
-
                 if (openGate) {
                     sign.setLine(2, MFConfig.INSTANCE.getTransient1Out());
                     sign.setLine(3, MFConfig.INSTANCE.getTransient2Out());
