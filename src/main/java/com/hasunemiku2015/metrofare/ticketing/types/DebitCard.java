@@ -61,19 +61,19 @@ public class DebitCard {
     // ============================================================================================================== //
     //                                                  NamespaceKey                                                  //
     // ============================================================================================================== //
-    private static final NamespacedKey UUIDKey = new NamespacedKey(MTFA.PLUGIN, "UUID");
-    private static final NamespacedKey CompanyKey = new NamespacedKey(MTFA.PLUGIN, "Company");
-    private static final NamespacedKey EntryDataKey = new NamespacedKey(MTFA.PLUGIN, "EntryData");
-    private static final NamespacedKey OwnerKey = new NamespacedKey(MTFA.PLUGIN, "Owner");
-    private static final NamespacedKey BalanceKey = new NamespacedKey(MTFA.PLUGIN, "Balance");
-    private static final NamespacedKey ValidityKey = new NamespacedKey(MTFA.PLUGIN, "Valid");
+    private static final NamespacedKey UUID_KEY = new NamespacedKey(MTFA.PLUGIN, "UUID");
+    private static final NamespacedKey COMPANY_KEY = new NamespacedKey(MTFA.PLUGIN, "Company");
+    private static final NamespacedKey ENTRY_DATA_KEY = new NamespacedKey(MTFA.PLUGIN, "EntryData");
+    private static final NamespacedKey OWNER_KEY = new NamespacedKey(MTFA.PLUGIN, "Owner");
+    private static final NamespacedKey BALANCE_KEY = new NamespacedKey(MTFA.PLUGIN, "Balance");
+    private static final NamespacedKey VALIDITY_KEY = new NamespacedKey(MTFA.PLUGIN, "Valid");
 
-    private static final NamespacedKey LastAddedAutoKey = new NamespacedKey(MTFA.PLUGIN, "LastAddedAuto");
-    private static final NamespacedKey AddAmountKey = new NamespacedKey(MTFA.PLUGIN, "AddAmount");
-    private static final NamespacedKey AddedAmountKey = new NamespacedKey(MTFA.PLUGIN, "AddedAmount");
-    private static final NamespacedKey DailyLimitKey = new NamespacedKey(MTFA.PLUGIN, "DailyLimit");
+    private static final NamespacedKey LAST_ADDED_AUTO_KEY = new NamespacedKey(MTFA.PLUGIN, "LastAddedAuto");
+    private static final NamespacedKey ADD_AMOUNT_KEY = new NamespacedKey(MTFA.PLUGIN, "AddAmount");
+    private static final NamespacedKey ADDED_AMOUNT_KEY = new NamespacedKey(MTFA.PLUGIN, "AddedAmount");
+    private static final NamespacedKey DAILY_LIMIT_KEY = new NamespacedKey(MTFA.PLUGIN, "DailyLimit");
 
-    private static final NamespacedKey PaymentRecordKey = new NamespacedKey(MTFA.PLUGIN, "PaymentRecord");
+    private static final NamespacedKey PAYMENT_RECORD_KEY = new NamespacedKey(MTFA.PLUGIN, "PaymentRecord");
 
     // ============================================================================================================== //
     //                                                  API Methods                                                   //
@@ -91,19 +91,19 @@ public class DebitCard {
             valid = false;
         } else {
             cardDataCache = meta.getPersistentDataContainer();
-            entryData = cardDataCache.has(EntryDataKey, PersistentDataType.STRING) ? cardDataCache.get(EntryDataKey, PersistentDataType.STRING) : null;
-            company = cardDataCache.has(CompanyKey, PersistentDataType.STRING) ? cardDataCache.get(CompanyKey, PersistentDataType.STRING) : null;
-            owner = cardDataCache.has(OwnerKey, PersistentDataType.STRING) ? cardDataCache.get(OwnerKey, PersistentDataType.STRING) : null;
-            balance = cardDataCache.has(BalanceKey, PersistentDataType.INTEGER) ? cardDataCache.get(BalanceKey, PersistentDataType.INTEGER) : 0;
+            entryData = cardDataCache.has(ENTRY_DATA_KEY, PersistentDataType.STRING) ? cardDataCache.get(ENTRY_DATA_KEY, PersistentDataType.STRING) : null;
+            company = cardDataCache.has(COMPANY_KEY, PersistentDataType.STRING) ? cardDataCache.get(COMPANY_KEY, PersistentDataType.STRING) : null;
+            owner = cardDataCache.has(OWNER_KEY, PersistentDataType.STRING) ? cardDataCache.get(OWNER_KEY, PersistentDataType.STRING) : null;
+            balance = cardDataCache.has(BALANCE_KEY, PersistentDataType.INTEGER) ? cardDataCache.get(BALANCE_KEY, PersistentDataType.INTEGER) : 0;
 
-            lastAddedAuto = cardDataCache.has(LastAddedAutoKey, PersistentDataType.LONG) ? cardDataCache.get(LastAddedAutoKey, PersistentDataType.LONG) : 0;
-            addAmount = cardDataCache.has(AddAmountKey, PersistentDataType.INTEGER) ? cardDataCache.get(AddAmountKey, PersistentDataType.INTEGER) : 0;
-            addedAmount = cardDataCache.has(AddedAmountKey, PersistentDataType.INTEGER) ? cardDataCache.get(AddedAmountKey, PersistentDataType.INTEGER) : 0;
-            dailyLimit = cardDataCache.has(DailyLimitKey, PersistentDataType.INTEGER) ? cardDataCache.get(DailyLimitKey, PersistentDataType.INTEGER) : 0;
+            lastAddedAuto = cardDataCache.has(LAST_ADDED_AUTO_KEY, PersistentDataType.LONG) ? cardDataCache.get(LAST_ADDED_AUTO_KEY, PersistentDataType.LONG) : 0;
+            addAmount = cardDataCache.has(ADD_AMOUNT_KEY, PersistentDataType.INTEGER) ? cardDataCache.get(ADD_AMOUNT_KEY, PersistentDataType.INTEGER) : 0;
+            addedAmount = cardDataCache.has(ADDED_AMOUNT_KEY, PersistentDataType.INTEGER) ? cardDataCache.get(ADDED_AMOUNT_KEY, PersistentDataType.INTEGER) : 0;
+            dailyLimit = cardDataCache.has(DAILY_LIMIT_KEY, PersistentDataType.INTEGER) ? cardDataCache.get(DAILY_LIMIT_KEY, PersistentDataType.INTEGER) : 0;
 
-            record = cardDataCache.has(PaymentRecordKey, PersistentDataType.STRING) ? new PaymentRecord(cardDataCache.get(PaymentRecordKey, PersistentDataType.STRING)) : PaymentRecord.newInstance();
+            record = cardDataCache.has(PAYMENT_RECORD_KEY, PersistentDataType.STRING) ? new PaymentRecord(cardDataCache.get(PAYMENT_RECORD_KEY, PersistentDataType.STRING)) : PaymentRecord.newInstance();
 
-            String validityCheck = cardDataCache.has(ValidityKey, PersistentDataType.STRING) ? cardDataCache.get(ValidityKey, PersistentDataType.STRING) : "";
+            String validityCheck = cardDataCache.has(VALIDITY_KEY, PersistentDataType.STRING) ? cardDataCache.get(VALIDITY_KEY, PersistentDataType.STRING) : "";
             valid = validity.equals(validityCheck);
         }
     }
@@ -120,7 +120,6 @@ public class DebitCard {
     /**
      * Check if a DebitCard contain an entry record.
      * @return True if the card contains an entry record, false otherwise.
-     * @see DebitCard
      */
     public boolean hasEntered() {
         return entryData != null && company != null;
@@ -184,7 +183,7 @@ public class DebitCard {
             entryData = "";
         }
         this.entryData = entryData;
-        cardDataCache.set(EntryDataKey, PersistentDataType.STRING, entryData);
+        cardDataCache.set(ENTRY_DATA_KEY, PersistentDataType.STRING, entryData);
     }
 
     /**
@@ -193,7 +192,7 @@ public class DebitCard {
      */
     public void removeEntryData() {
         entryData = null;
-        cardDataCache.remove(EntryDataKey);
+        cardDataCache.remove(ENTRY_DATA_KEY);
     }
 
     /**
@@ -214,7 +213,7 @@ public class DebitCard {
      */
     public void setCompany(String company) {
         this.company = company;
-        cardDataCache.set(CompanyKey, PersistentDataType.STRING, company);
+        cardDataCache.set(COMPANY_KEY, PersistentDataType.STRING, company);
     }
 
     /**
@@ -225,7 +224,7 @@ public class DebitCard {
      */
     public void removeCompany() {
         company = null;
-        cardDataCache.remove(CompanyKey);
+        cardDataCache.remove(COMPANY_KEY);
     }
 
     /**
@@ -297,7 +296,7 @@ public class DebitCard {
      */
     public void setBalance(int balance) {
         this.balance = balance;
-        cardDataCache.set(BalanceKey, PersistentDataType.INTEGER, balance);
+        cardDataCache.set(BALANCE_KEY, PersistentDataType.INTEGER, balance);
     }
 
     /**
@@ -318,7 +317,7 @@ public class DebitCard {
 
         int balanceData = (int) balance / 1000;
         this.balance = balanceData;
-        cardDataCache.set(BalanceKey, PersistentDataType.INTEGER, balanceData);
+        cardDataCache.set(BALANCE_KEY, PersistentDataType.INTEGER, balanceData);
         return true;
     }
 
@@ -351,7 +350,7 @@ public class DebitCard {
      */
     public void setAddAmount(int addAmount) {
         this.addedAmount = addAmount;
-        cardDataCache.set(AddAmountKey, PersistentDataType.INTEGER, addAmount);
+        cardDataCache.set(ADD_AMOUNT_KEY, PersistentDataType.INTEGER, addAmount);
     }
 
     /**
@@ -380,7 +379,7 @@ public class DebitCard {
      */
     public void removeAddAmount() {
         addAmount = 0;
-        cardDataCache.remove(AddAmountKey);
+        cardDataCache.remove(ADD_AMOUNT_KEY);
     }
 
     public int getDailyLimit() {
@@ -389,12 +388,12 @@ public class DebitCard {
 
     public void setDailyLimit(int DailyLimit) {
         this.dailyLimit = DailyLimit;
-        cardDataCache.set(DailyLimitKey, PersistentDataType.INTEGER, DailyLimit);
+        cardDataCache.set(DAILY_LIMIT_KEY, PersistentDataType.INTEGER, DailyLimit);
     }
 
     public void removeDailyLimit() {
         dailyLimit = 0;
-        cardDataCache.remove(DailyLimitKey);
+        cardDataCache.remove(DAILY_LIMIT_KEY);
     }
 
     /**
@@ -413,7 +412,7 @@ public class DebitCard {
             record.addPaymentRecord(company, StringUtils.rightPad("+" + MFConfig.INSTANCE.getCurrencyUnit() + amount / 1000.0, 10));
         }
 
-        cardDataCache.set(PaymentRecordKey, PersistentDataType.STRING, record.toString());
+        cardDataCache.set(PAYMENT_RECORD_KEY, PersistentDataType.STRING, record.toString());
     }
 
     /**
@@ -439,12 +438,12 @@ public class DebitCard {
     // ============================================================================================================== //
     public void setAddedAmount(int AddedAmount) {
         this.addedAmount = AddedAmount;
-        cardDataCache.set(AddedAmountKey, PersistentDataType.INTEGER, AddedAmount);
+        cardDataCache.set(ADDED_AMOUNT_KEY, PersistentDataType.INTEGER, AddedAmount);
     }
 
     public void removeAddedAmount() {
         addedAmount = 0;
-        cardDataCache.remove(AddedAmountKey);
+        cardDataCache.remove(ADDED_AMOUNT_KEY);
     }
 
     public long getLastAddedAuto() {
@@ -453,12 +452,12 @@ public class DebitCard {
 
     public void setLastAddedAuto(long LastAddedAuto) {
         this.lastAddedAuto = LastAddedAuto;
-        cardDataCache.set(LastAddedAutoKey, PersistentDataType.LONG, LastAddedAuto);
+        cardDataCache.set(LAST_ADDED_AUTO_KEY, PersistentDataType.LONG, LastAddedAuto);
     }
 
     public void removeLastAddedAuto() {
         lastAddedAuto = 0;
-        cardDataCache.remove(LastAddedAutoKey);
+        cardDataCache.remove(LAST_ADDED_AUTO_KEY);
     }
 
     private void autoTopUp() {
@@ -505,10 +504,10 @@ public class DebitCard {
         itm.setLore(lore);
 
         PersistentDataContainer pdc = itm.getPersistentDataContainer();
-        pdc.set(UUIDKey, PersistentDataType.STRING, UUID.randomUUID().toString());
-        pdc.set(ValidityKey, PersistentDataType.STRING, validity);
-        pdc.set(OwnerKey, PersistentDataType.STRING, player.getUniqueId().toString());
-        pdc.set(BalanceKey, PersistentDataType.INTEGER, 0);
+        pdc.set(UUID_KEY, PersistentDataType.STRING, UUID.randomUUID().toString());
+        pdc.set(VALIDITY_KEY, PersistentDataType.STRING, validity);
+        pdc.set(OWNER_KEY, PersistentDataType.STRING, player.getUniqueId().toString());
+        pdc.set(BALANCE_KEY, PersistentDataType.INTEGER, 0);
 
         card.setItemMeta(itm);
         return card;

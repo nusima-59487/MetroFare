@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.*;
 
 public class PaymentRecord {
-
     private Queue<String> record;
     private static final int maxSize = 10;
 

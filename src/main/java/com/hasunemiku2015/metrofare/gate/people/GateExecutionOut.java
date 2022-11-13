@@ -138,7 +138,7 @@ public class GateExecutionOut implements Listener {
             return false;
         }
 
-        if (ticket.getFare1000() < company.computeFare(ticket.getEntryData(), sign.getLine(1).split(",")[1])) {
+        if (ticket.getFare() < company.computeFare(ticket.getEntryData(), sign.getLine(1).split(",")[1])) {
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
                     MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getTicketInsufficientFareOut()));
             return false;

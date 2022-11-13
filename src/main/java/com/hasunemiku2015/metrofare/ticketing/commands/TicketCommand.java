@@ -118,7 +118,7 @@ public class TicketCommand implements TabExecutor {
             player.sendMessage(MFConfig.INSTANCE.getBase() + "-source info: " + ticket.getEntryData());
             player.sendMessage(MFConfig.INSTANCE.getBase() + "-destination company: " + ticket.getCompanyTo());
             player.sendMessage(MFConfig.INSTANCE.getBase() + "-destination info: " + ticket.getExitData());
-            player.sendMessage(MFConfig.INSTANCE.getBase() + "-ticket price: " + ticket.getFare1000() / 1000.0);
+            player.sendMessage(MFConfig.INSTANCE.getBase() + "-ticket price: " + ticket.getFare() / 1000.0);
             player.sendMessage(MFConfig.INSTANCE.getBase() + "-entered gate: " + ticket.hasEntered());
             return;
         }
