@@ -17,10 +17,13 @@ vault_integration: true
 # Security
 # Set if Permission is required for each part of the plugin (Default: false)
 permission:
-  gate: false
-  editor: false
+  company:
+    create: false
+    admin: true
   database: false
+  editor: false
   fence: false
+  gate: false
   ticketing: false
 
 # Personalization

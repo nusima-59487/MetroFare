@@ -27,20 +27,32 @@ public class MFConfig {
      boolean ticketingPermissionEnabled = ConfigHelper.getBoolean("permission.ticketing");
      boolean fenceGatePermissionEnabled = ConfigHelper.getBoolean("permission.fence");
 
+     boolean createCompanyPermissionEnabled = ConfigHelper.getBoolean("permission.company.create");
+
+     boolean adminCompanyPermissionEnabled = ConfigHelper.getBoolean("permission.company.admin");
+
     public boolean hasBuildGatePermission(Player player) {
-        return gatePermissionEnabled || player.hasPermission("mtfa.buildgate");
+        return gatePermissionEnabled || player.hasPermission("metro_fare.build_gate");
     }
     public boolean hasBuildEditorPermission(Player player) {
-        return editorPermissionEnabled || player.hasPermission("mtfa.buildeditor");
+        return editorPermissionEnabled || player.hasPermission("metro_fare.build_editor");
     }
     public boolean hasDataTablePermission(Player player){
-        return dataBasePermissionEnabled || player.hasPermission("mtfa.database");
+        return dataBasePermissionEnabled || player.hasPermission("metro_fare.database");
     }
     public boolean noTicketingPermission(Player player) {
-        return !ticketingPermissionEnabled && !player.hasPermission("mtfa.ticketing");
+        return !ticketingPermissionEnabled && !player.hasPermission("metro_fare.ticketing");
     }
     public boolean hasFenceGatePermission(Player player) {
-        return fenceGatePermissionEnabled || player.hasPermission("mtfa.fence");
+        return fenceGatePermissionEnabled || player.hasPermission("metro_fare.fence");
+    }
+
+    public boolean hasCreateCompanyPermission(Player player) {
+        return createCompanyPermissionEnabled || player.hasPermission("metro_fare.create_company");
+    }
+
+    public boolean hasAdminCompanyPermission(Player player) {
+        return adminCompanyPermissionEnabled || player.hasPermission("metro_fare.admin_company");
     }
 
     // ============================================================================================================== //

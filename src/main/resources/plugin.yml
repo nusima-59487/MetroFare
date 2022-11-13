@@ -33,18 +33,24 @@ commands:
     usage: /faretable
     aliases: [ft,fare]
 permissions:
-  mtfa.buildgate:
+  metro_fare.create_company:
+    description: Allows a player to create a MetroFare Company.
+    default: op
+  metro_fare.admin_company:
+    description: Allows a player to use MetroFare Company Admin Command.
+    default: op
+  metro_fare.build_gate:
     description: Allows a player to build MetroFate gates and one-time-payment machines.
     default: op
-  mtfa.buildeditor:
+  metro_fare.build_editor:
     description: Allows a player to build MetroFare debit-card editors.
     default: op
-  mtfa.database:
+  metro_fare.database:
     description: Allows a player to edit and download data-table and fare-table.
     default: op
-  mtfa.fence:
+  metro_fare.fence:
     description: Allows a player to lock fence gates.
     default: op
-  mtfa.ticketing:
+  metro_fare.ticketing:
     description: Allows a player to use ticket and debit-card related commands.
     default: op
