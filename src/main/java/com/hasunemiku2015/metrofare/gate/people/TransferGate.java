@@ -2,7 +2,7 @@ package com.hasunemiku2015.metrofare.gate.people;
 
 import com.hasunemiku2015.metrofare.company.AbstractCompany;
 import com.hasunemiku2015.metrofare.company.CompanyStore;
-import com.hasunemiku2015.metrofare.gate.GateType;
+import com.hasunemiku2015.metrofare.company.CompanyType;
 import com.hasunemiku2015.metrofare.MFConfig;
 import com.hasunemiku2015.metrofare.MTFA;
 import com.hasunemiku2015.metrofare.ticketing.types.Ticket;
@@ -56,11 +56,11 @@ public class TransferGate implements Listener {
             return;
         }
 
-        if ((CompanyStore.CompanyTable.get(data1[0])).getType() != GateType.UNIFORM && data1[1] == null) {
+        if ((CompanyStore.CompanyTable.get(data1[0])).getType() != CompanyType.UNIFORM && data1[1] == null) {
             event.getBlock().setType(Material.AIR);
             return;
         }
-        if ((CompanyStore.CompanyTable.get(data2[0])).getType() != GateType.UNIFORM && data2[1] == null) {
+        if ((CompanyStore.CompanyTable.get(data2[0])).getType() != CompanyType.UNIFORM && data2[1] == null) {
             event.getBlock().setType(Material.AIR);
             return;
         }

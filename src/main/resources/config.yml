@@ -2,7 +2,7 @@
 #           If you mess up the file, DELETE it, and the plugin will generate a new one upon reload
 #              Please DO NOT edit any .jsonc files and DataTables, use in-game-commands instead
 #-----------------------------------------------------------------------------------------------------------------------
-# This Configuration File is generated as of MetroFare version 0.8
+# This Configuration File is generated as of MetroFare version 0.9
 
 # General Settings
 # Set the Default Fare if Algorithm returns an error. (Range : from 0 to 2,147,483.647 , Default : 0)

@@ -1,6 +1,5 @@
 package com.hasunemiku2015.metrofare.company;
 
-import com.hasunemiku2015.metrofare.gate.GateType;
 import com.hasunemiku2015.metrofare.lookuptables.datatables.DataTableStore;
 import com.hasunemiku2015.metrofare.lookuptables.faretables.FareTableStore;
 import com.hasunemiku2015.metrofare.MFConfig;
@@ -70,10 +69,10 @@ public class CompanyCommand implements CommandExecutor, TabCompleter {
                 player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Invalid Format");
                 player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Correct Format: ");
 
-                GateType gateType;
+                CompanyType gateType;
                 try {
                     player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Invalid Company Type");
-                    gateType = GateType.valueOf(args[1]);
+                    gateType = CompanyType.valueOf(args[1]);
                 } catch (Exception ex) {
                     return true;
                 }
@@ -103,7 +102,7 @@ public class CompanyCommand implements CommandExecutor, TabCompleter {
                 }
             }
             if (args.length >= 4) {
-                switch (GateType.valueOf(args[1])) {
+                switch (CompanyType.valueOf(args[1])) {
                     case ZONE:
                     case ABS_COORDINATE: {
                         player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Invalid Format");
@@ -122,7 +121,7 @@ public class CompanyCommand implements CommandExecutor, TabCompleter {
                             player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Cannot find DataTable with name: " + MFConfig.INSTANCE.getInput() + args[3] + MFConfig.INSTANCE.getError() + "!");
                             return true;
                         }
-                        newCompany.put("type", GateType.DIJKSTRA);
+                        newCompany.put("type", CompanyType.DIJKSTRA);
 
                         List<String> playerNames = new ArrayList<>();
                         playerNames.add(player.getUniqueId().toString());
@@ -141,7 +140,7 @@ public class CompanyCommand implements CommandExecutor, TabCompleter {
                         } catch (NumberFormatException e) {
                             player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Fare must be a number!");
                         }
-                        newCompany.put("type", GateType.UNIFORM);
+                        newCompany.put("type", CompanyType.UNIFORM);
 
                         List<String> playerNames = new ArrayList<>();
                         playerNames.add(player.getUniqueId().toString());
@@ -161,7 +160,7 @@ public class CompanyCommand implements CommandExecutor, TabCompleter {
                             player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Cannot find FareTable with name: " + MFConfig.INSTANCE.getInput() + args[3] + MFConfig.INSTANCE.getError() + "!");
                             return true;
                         }
-                        newCompany.put("type", GateType.FARE_TABLE);
+                        newCompany.put("type", CompanyType.FARE_TABLE);
 
                         List<String> playerNames = new ArrayList<>();
                         playerNames.add(player.getUniqueId().toString());
@@ -403,7 +402,7 @@ public class CompanyCommand implements CommandExecutor, TabCompleter {
 
                 case "new" : {
                     if (createCompany) {
-                        for (GateType i : GateType.values()) {
+                        for (CompanyType i : CompanyType.values()) {
                             out.add(i.name());
                         }
 

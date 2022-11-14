@@ -1,7 +1,5 @@
 package com.hasunemiku2015.metrofare.company;
 
-import com.hasunemiku2015.metrofare.gate.GateType;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -13,13 +11,13 @@ public abstract class AbstractCompany implements Serializable {
 
     //Vars
     private final String name;
-    private final GateType type;
+    private final CompanyType type;
     private List<String> owners;
     private int revenue;
 
     AbstractCompany(HashMap<String, Object> input) {
         name = (String) input.get("name");
-        type = (GateType) input.get("type");
+        type = (CompanyType) input.get("type");
         owners = (List<String>) input.get("owners");
         revenue = 0;
     }
@@ -28,7 +26,7 @@ public abstract class AbstractCompany implements Serializable {
         return name;
     }
 
-    public GateType getType() {
+    public CompanyType getType() {
         return type;
     }
 

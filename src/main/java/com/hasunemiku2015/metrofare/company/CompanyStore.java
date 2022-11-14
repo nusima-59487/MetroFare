@@ -2,7 +2,6 @@ package com.hasunemiku2015.metrofare.company;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.hasunemiku2015.metrofare.gate.GateType;
 import com.hasunemiku2015.metrofare.MTFA;
 import org.bukkit.Bukkit;
 
@@ -75,7 +74,7 @@ public class CompanyStore {
     }
     public static boolean newCompany(HashMap<String, Object> in) {
         AbstractCompany company;
-        switch ((GateType) in.get("type")) {
+        switch ((CompanyType) in.get("type")) {
             case ZONE:
             case ABS_COORDINATE:
                 company = new ZoneAbsCompany(in);

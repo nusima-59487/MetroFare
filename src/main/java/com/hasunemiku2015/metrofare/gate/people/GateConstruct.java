@@ -1,8 +1,8 @@
 package com.hasunemiku2015.metrofare.gate.people;
 
-import com.hasunemiku2015.metrofare.company.CompanyStore;
-import com.hasunemiku2015.metrofare.gate.GateType;
 import com.hasunemiku2015.metrofare.MFConfig;
+import com.hasunemiku2015.metrofare.company.CompanyStore;
+import com.hasunemiku2015.metrofare.company.CompanyType;
 import org.bukkit.Material;
 import org.bukkit.block.data.type.WallSign;
 import org.bukkit.event.EventHandler;
@@ -59,7 +59,7 @@ public class GateConstruct implements Listener {
                 return;
             }
         } else {
-            if ((CompanyStore.CompanyTable.get(data[0])).getType() != GateType.UNIFORM && data[1] == null) {
+            if ((CompanyStore.CompanyTable.get(data[0])).getType() != CompanyType.UNIFORM && data[1] == null) {
                 event.getBlock().setType(Material.AIR);
                 return;
             }
