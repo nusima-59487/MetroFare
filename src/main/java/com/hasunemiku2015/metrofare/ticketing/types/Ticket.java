@@ -61,7 +61,7 @@ public class Ticket {
     private static final NamespacedKey EXIT_DATA_KEY = new NamespacedKey(MTFA.PLUGIN, "EntryData");
 
     private static final NamespacedKey FARE_KEY = new NamespacedKey(MTFA.PLUGIN, "Fare");
-    private static final NamespacedKey VALID_KEY = new NamespacedKey(MTFA.PLUGIN, "Fare");
+    private static final NamespacedKey VALID_KEY = new NamespacedKey(MTFA.PLUGIN, "Valid");
 
     // ============================================================================================================== //
     //                                                  API Methods                                                   //
@@ -173,13 +173,13 @@ public class Ticket {
         itm.setLore(lore);
 
         PersistentDataContainer pdc = itm.getPersistentDataContainer();
-        pdc.set(new NamespacedKey(MTFA.PLUGIN, "EntryData"), PersistentDataType.STRING, entryData + "," + entryCompany.getName());
-        pdc.set(new NamespacedKey(MTFA.PLUGIN, "ExitData"), PersistentDataType.STRING, exitData + "," + exitCompany.getName());
-        pdc.set(new NamespacedKey(MTFA.PLUGIN, "Valid"), PersistentDataType.STRING, VALIDITY_KEY);
-        pdc.set(new NamespacedKey(MTFA.PLUGIN, "UUID"), PersistentDataType.STRING, UUID.randomUUID().toString());
-        pdc.set(new NamespacedKey(MTFA.PLUGIN, "Entered"), PersistentDataType.INTEGER, 0);
-        pdc.set(new NamespacedKey(MTFA.PLUGIN, "Fare"), PersistentDataType.INTEGER, fare);
+        pdc.set(ENTRY_DATA_KEY, PersistentDataType.STRING, entryData + "," + entryCompany.getName());
+        pdc.set(EXIT_DATA_KEY, PersistentDataType.STRING, exitData + "," + exitCompany.getName());
+        pdc.set(VALID_KEY, PersistentDataType.STRING, VALIDITY_KEY);
+        pdc.set(ENTERED_KEY, PersistentDataType.INTEGER, 0);
+        pdc.set(FARE_KEY, PersistentDataType.INTEGER, fare);
 
+        pdc.set(new NamespacedKey(MTFA.PLUGIN, "UUID"), PersistentDataType.STRING, UUID.randomUUID().toString());
         its.setItemMeta(itm);
         return its;
     }

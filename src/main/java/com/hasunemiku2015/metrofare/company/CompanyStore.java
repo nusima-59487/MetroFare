@@ -23,7 +23,7 @@ public class CompanyStore {
         CompanyFolder = new File(MTFA.PLUGIN.getDataFolder(), "Companies");
         boolean created = CompanyFolder.mkdirs();
 
-        //Load in Ser Files
+        //Load in json Files
         if (created) return;
         if (CompanyFolder.listFiles() == null) return;
         for (File f : Objects.requireNonNull(CompanyFolder.listFiles())) {
