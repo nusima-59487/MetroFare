@@ -55,7 +55,7 @@ public class Ticket {
     // ============================================================================================================== //
     //                                                  NamespaceKey                                                  //
     // ============================================================================================================== //
-    private static final NamespacedKey ENTERED_KEY = new NamespacedKey(MTFA.PLUGIN, "Fare");
+    private static final NamespacedKey ENTERED_KEY = new NamespacedKey(MTFA.PLUGIN, "Entered");
 
     private static final NamespacedKey ENTRY_DATA_KEY = new NamespacedKey(MTFA.PLUGIN, "EntryData");
     private static final NamespacedKey EXIT_DATA_KEY = new NamespacedKey(MTFA.PLUGIN, "ExitData");
