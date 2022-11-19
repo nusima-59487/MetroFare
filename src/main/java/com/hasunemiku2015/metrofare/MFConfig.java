@@ -118,9 +118,9 @@ public class MFConfig {
      String transient1Out = ConfigHelper.getColoredString("exit_gate.transient_1");
      String transient2Out = ConfigHelper.getColoredString("exit_gate.transient_2");
 
-     String debitCardInvalidOut = ConfigHelper.getColoredString("entry_gate.debit_card.card_invalid");
-     String playerInvalidOut = ConfigHelper.getColoredString("entry_gate.debit_card.player_invalid");
-     String cardNotEnteredOut = ConfigHelper.getColoredString("entry_gate.debit_card.card_not_entered");
+     String debitCardInvalidOut = ConfigHelper.getColoredString("exit_gate.debit_card.card_invalid");
+     String playerInvalidOut = ConfigHelper.getColoredString("exit_gate.debit_card.player_invalid");
+     String cardNotEnteredOut = ConfigHelper.getColoredString("exit_gate.debit_card.card_not_entered");
 
      String ticketInvalidOut = ConfigHelper.getColoredString("exit_gate.ticket.ticket_invalid");
      String ticketNotEnteredOut = ConfigHelper.getColoredString("exit_gate.ticket.ticket_not_entered");
