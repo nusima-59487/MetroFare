@@ -4,6 +4,7 @@ import com.hasunemiku2015.metrofare.company.AbstractCompany;
 import com.hasunemiku2015.metrofare.company.CompanyStore;
 import com.hasunemiku2015.metrofare.MFConfig;
 import com.hasunemiku2015.metrofare.MTFA;
+import com.hasunemiku2015.metrofare.company.UniformCompany;
 import com.hasunemiku2015.metrofare.ticketing.types.DebitCard;
 import com.hasunemiku2015.metrofare.ticketing.types.Ticket;
 import net.md_5.bungee.api.ChatMessageType;
@@ -128,7 +129,16 @@ public class GateExecutionOut implements Listener {
             return false;
         }
 
-        if (ticket.getExitData().equals(sign.getLine(1).split(",")[1])) {
+        String[] var0 = GateUtil.parseData(sign.getLine(1));
+        String companyName = var0[0];
+        String stationName = var0[1];
+
+        // Do not check stationName if UniformCompany
+        if (CompanyStore.CompanyTable.get(companyName) instanceof UniformCompany) {
+            return true;
+        }
+
+        if (ticket.getExitData().equals(stationName)) {
             return true;
         }
 
@@ -138,7 +148,7 @@ public class GateExecutionOut implements Listener {
             return false;
         }
 
-        if (ticket.getFare() < company.computeFare(ticket.getEntryData(), sign.getLine(1).split(",")[1])) {
+        if (ticket.getFare() < company.computeFare(ticket.getEntryData(), stationName)) {
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
                     MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getTicketInsufficientFareOut()));
             return false;

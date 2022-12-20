@@ -3,6 +3,7 @@ package com.hasunemiku2015.metrofare.gate.people;
 import com.hasunemiku2015.metrofare.company.CompanyStore;
 import com.hasunemiku2015.metrofare.MFConfig;
 import com.hasunemiku2015.metrofare.MTFA;
+import com.hasunemiku2015.metrofare.company.UniformCompany;
 import com.hasunemiku2015.metrofare.ticketing.types.DebitCard;
 import com.hasunemiku2015.metrofare.ticketing.types.Ticket;
 import net.md_5.bungee.api.ChatMessageType;
@@ -113,13 +114,21 @@ public class GateExecutionIn implements Listener {
                     MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getEntryCompanyInvalidIn()));
             return false;
         }
-        if (!ticket.getEntryData().equals(inputData.split(",")[1])) {
-            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
-                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getStationInvalidIn()));
-            return false;
+
+        String[] var0 = GateUtil.parseData(inputData);
+        String companyName = var0[0];
+        String stationName = var0[1];
+
+        // Do not check invalid station if UniformCompany
+        if (!(CompanyStore.CompanyTable.get(companyName) instanceof UniformCompany)) {
+            if (!ticket.getEntryData().equals(stationName)) {
+                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
+                        MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getStationInvalidIn()));
+                return false;
+            }
         }
+
         ticket.entryProcedure();
         return true;
-
     }
 }
