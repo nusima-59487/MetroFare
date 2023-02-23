@@ -92,7 +92,7 @@ public class TicketCommand implements TabExecutor {
         return new ArrayList<>();
     }
 
-    //Private methods for every cmds
+    //Private methods for every command.
     private void help(Player player) {
         //ticket help
         player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Ticket Commands: ");

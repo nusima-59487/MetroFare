@@ -22,11 +22,6 @@ public class FareTableStore {
             }
         }
     }
-//    public static void deinit() {
-//        for(FareTable ft : FareTables.values()){
-//            ft.exportToCSV();
-//        }
-//    }
 
     protected static void loadTable(File file) throws InvalidFareTableException, FileNotFoundException {
         if (!file.getName().endsWith(".csv")) return;

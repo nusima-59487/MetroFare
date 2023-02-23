@@ -76,6 +76,18 @@
 
     <repositories>
         <repository>
+            <id>BK-Repo</id>
+            <url>https://ci.mg-dev.eu/plugin/repository/everything/</url>
+        </repository>
+        <repository>
+            <id>codemc-repo</id>
+            <url>https://repo.codemc.org/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>codemc-snapshots</id>
+            <url>https://repo.codemc.io/repository/maven-snapshots/</url>
+        </repository>
+        <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
@@ -87,45 +99,9 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
-        <repository>
-            <id>codemc-repo</id>
-            <url>https://repo.codemc.org/repository/maven-public/</url>
-        </repository>
-        <repository>
-            <id>codemc-snapshots</id>
-            <url>https://repo.codemc.io/repository/maven-snapshots/</url>
-        </repository>
-        <repository>
-            <id>BK-Repo</id>
-            <url>https://ci.mg-dev.eu/plugin/repository/everything/</url>
-        </repository>
     </repositories>
 
     <dependencies>
-        <dependency>
-            <groupId>com.github.marcoacierno</groupId>
-            <artifactId>pastebin-java-api</artifactId>
-            <version>0.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
-        </dependency>
-
-        <dependency>
-            <groupId>net.wesjd</groupId>
-            <artifactId>anvilgui</artifactId>
-            <version>1.4.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.16.5-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-
         <dependency>
             <groupId>com.bergerkiller.bukkit</groupId>
             <artifactId>BKCommonLib</artifactId>
@@ -138,20 +114,39 @@
             <version>1.18.2-v2</version>
             <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.github.marcoacierno</groupId>
+            <artifactId>pastebin-java-api</artifactId>
+            <version>0.2.1</version>
+        </dependency>
         <dependency>
             <groupId>com.github.MilkBowl</groupId>
             <artifactId>VaultAPI</artifactId>
             <version>1.7</version>
             <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>net.wesjd</groupId>
+            <artifactId>anvilgui</artifactId>
+            <version>1.4.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>me.hasunemiku2015</groupId>
             <artifactId>mikucore</artifactId>
             <version>1.4</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/external-jar/MikuCore-1.4.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+        </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.16.5-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

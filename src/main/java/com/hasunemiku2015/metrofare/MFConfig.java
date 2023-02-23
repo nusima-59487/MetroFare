@@ -37,7 +37,7 @@ public class MFConfig {
     public boolean hasBuildEditorPermission(Player player) {
         return editorPermissionEnabled || player.hasPermission("metro_fare.build_editor");
     }
-    public boolean hasDataTablePermission(Player player){
+    public boolean hasDataTablePermission(Player player) {
         return dataBasePermissionEnabled || player.hasPermission("metro_fare.database");
     }
     public boolean noTicketingPermission(Player player) {

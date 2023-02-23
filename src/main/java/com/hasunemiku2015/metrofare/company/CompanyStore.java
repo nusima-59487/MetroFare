@@ -11,12 +11,10 @@ import java.util.Objects;
 
 public class CompanyStore {
     public static HashMap<String, AbstractCompany> CompanyTable;
-
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public static void init() {
         File CompanyFolder;
-
         CompanyTable = new HashMap<>();
 
         //Get Company Files
@@ -31,7 +29,6 @@ public class CompanyStore {
                 try (BufferedReader reader = new BufferedReader(new FileReader(f))) {
                     String companyType = reader.readLine().substring(3);
                     Object o = GSON.fromJson(reader, Class.forName(companyType));
-
                     if (o instanceof AbstractCompany) {
                         AbstractCompany c = (AbstractCompany) o;
                         c.onLoad();
@@ -72,6 +69,7 @@ public class CompanyStore {
             }
         });
     }
+    
     public static boolean newCompany(HashMap<String, Object> in) {
         AbstractCompany company;
         switch ((CompanyType) in.get("type")) {
@@ -91,7 +89,6 @@ public class CompanyStore {
             default:
                 return false;
         }
-
         CompanyTable.put(company.getName(), company);
         return true;
     }

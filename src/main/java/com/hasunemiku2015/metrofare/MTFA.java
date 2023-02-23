@@ -30,7 +30,8 @@ public final class MTFA extends JavaPlugin {
     @Override
     public void onEnable() {
         PLUGIN = this;
-        PLUGIN.saveDefaultConfig();
+//        PLUGIN.saveDefaultConfig();
+        initConfig();
 
         if (Bukkit.getPluginManager().isPluginEnabled("Vault") || MFConfig.INSTANCE.isVaultIntegrationEnabled()) {
             VaultIntegration.init();
@@ -110,6 +111,15 @@ public final class MTFA extends JavaPlugin {
         }
     }
 
+    /**
+     * Initializes and auto-updates the config.yml file. The following would be done: 
+     * <ol>
+     *     <li>Read the config.yml, check if it contains all keys of default config.yml file.</li>
+     *     <li>If (1) is true, do nothing.</li>
+     *     <li>Else, copy all values of old config into new and overwrite the old config.</li>
+     * </ol>
+     * New keys would be set as the default value.
+     */
     private void initConfig() {
         PLUGIN.saveDefaultConfig();
         YamlConfiguration oldConfig = (YamlConfiguration) PLUGIN.getConfig();
