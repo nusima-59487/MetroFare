@@ -138,7 +138,7 @@ public class MFConfig {
      boolean otpEnabled = ConfigHelper.getBoolean("one_time_payment_machine.enable");
      String prefixOTP = ConfigHelper.getString("one_time_payment_machine.prefix");
      String info1OTP = ConfigHelper.getColoredString("one_time_payment_machine.info_1");
-     String info2OTP = ConfigHelper.getColoredString("one_time_payment_machine.info_1");
+     String info2OTP = ConfigHelper.getColoredString("one_time_payment_machine.info_2");
      String transient1OTP = ConfigHelper.getColoredString("one_time_payment_machine.transient_1");
      String transient2OTP = ConfigHelper.getColoredString("one_time_payment_machine.transient_2");
 

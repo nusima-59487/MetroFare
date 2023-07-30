@@ -30,7 +30,6 @@ public final class MTFA extends JavaPlugin {
     @Override
     public void onEnable() {
         PLUGIN = this;
-//        PLUGIN.saveDefaultConfig();
         initConfig();
 
         if (Bukkit.getPluginManager().isPluginEnabled("Vault") || MFConfig.INSTANCE.isVaultIntegrationEnabled()) {
@@ -106,8 +105,8 @@ public final class MTFA extends JavaPlugin {
         }
         try {
             DataTableStore.deinit();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -131,10 +130,10 @@ public final class MTFA extends JavaPlugin {
         }
 
         PLUGIN.saveResource("config.yml", true);
-        PLUGIN.reloadConfig();
-        for (String key: oldConfig.getKeys(true)) {
+        for (String key: oldConfig.getKeys(false)) {
             PLUGIN.getConfig().set(key, oldConfig.get(key));
         }
         PLUGIN.saveConfig();
+        PLUGIN.reloadConfig();
     }
 }
