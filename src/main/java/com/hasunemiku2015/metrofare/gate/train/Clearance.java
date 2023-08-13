@@ -53,7 +53,9 @@ public class Clearance implements Listener {
 
             if (stack == null) {
                 if (i == 35) {
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " " + MFConfig.INSTANCE.getValidatorFail()));
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
+                            new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() +
+                                    MFConfig.INSTANCE.getError() + " " + MFConfig.INSTANCE.getValidatorFail()));
                     break;
                 } else {
                     continue;
@@ -63,22 +65,30 @@ public class Clearance implements Listener {
                 if (i != 35) {
                     continue;
                 } else {
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " " + MFConfig.INSTANCE.getValidatorFail()));
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
+                            new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() +
+                                    MFConfig.INSTANCE.getError() + " " + MFConfig.INSTANCE.getValidatorFail()));
                     break;
                 }
             }
 
-            boolean done0 = GateExecutionOut.DCExitLogic(player, CompanyStore.CompanyTable.get(GateUtil.parseData(event.getLine(2))[0]), stack, event.getLine(2));
+            boolean done0 = GateExecutionOut.DCExitLogic(player,
+                    CompanyStore.CompanyTable.get(GateUtil.parseData(event.getLine(2))[0]), stack, event.getLine(2));
             boolean done1 = false;
             if (done0) {
                 done1 = GateExecutionIn.DCEntryLogic(player, stack, event.getLine(3), true);
             }
 
             if (done0 && done1) {
-                Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN, () -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getValidatorComplete())), 10);
+                Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN,
+                        () -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
+                                new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " +
+                                        MFConfig.INSTANCE.getValidatorComplete())), 10);
                 break;
             } else if (i == 35) {
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " " + MFConfig.INSTANCE.getValidatorFail()));
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
+                        new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() +
+                                MFConfig.INSTANCE.getError() + " " + MFConfig.INSTANCE.getValidatorFail()));
             }
         }
     }

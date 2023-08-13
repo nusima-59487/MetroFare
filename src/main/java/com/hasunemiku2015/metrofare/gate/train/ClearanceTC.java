@@ -30,7 +30,7 @@ public class ClearanceTC extends SignAction {
         if(event.isAction(SignActionType.GROUP_ENTER,SignActionType.REDSTONE_CHANGE) && event.isPowered()){
             if(event.hasGroup()){
                 for(MinecartMember<?> mem : event.getMembers()){
-                    if(mem.getEntity().getPassengers().size() == 0) return;
+                    if(mem.getEntity().getPassengers().isEmpty()) return;
                     if(mem.getEntity().getPassengers().get(0) instanceof Player){
                         Player player = (Player) mem.getEntity().getPassengers().get(0);
                         for(int i= 0; i<= 35; i++){
@@ -38,7 +38,10 @@ public class ClearanceTC extends SignAction {
 
                             if(stack == null){
                                 if(i == 35){
-                                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR,new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " " + MFConfig.INSTANCE.getValidatorFail()));
+                                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
+                                            new TextComponent(MFConfig.INSTANCE.getBase() +
+                                                    MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() +
+                                                    " " + MFConfig.INSTANCE.getValidatorFail()));
                                     break;
                                 } else {
                                     continue;
@@ -48,22 +51,34 @@ public class ClearanceTC extends SignAction {
                                 if(i != 35){
                                     continue;
                                 } else {
-                                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR,new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " " + MFConfig.INSTANCE.getValidatorFail()));
+                                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
+                                            MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() +
+                                                    MFConfig.INSTANCE.getError() + " " +
+                                                    MFConfig.INSTANCE.getValidatorFail()));
                                     break;
                                 }
                             }
 
-                            boolean done0 = GateExecutionOut.DCExitLogic(player, CompanyStore.CompanyTable.get(GateUtil.parseData(event.getLine(2))[0]),stack,event.getLine(2));
+                            boolean done0 = GateExecutionOut.DCExitLogic(player,
+                                    CompanyStore.CompanyTable.get(GateUtil.parseData(event.getLine(2))[0]),
+                                    stack,event.getLine(2));
                             boolean done1 = false;
                             if (done0) {
-                                done1 = GateExecutionIn.DCEntryLogic(player,stack,event.getLine(3), true);
+                                done1 = GateExecutionIn.DCEntryLogic(player, stack,
+                                        event.getLine(3), true);
                             }
 
                             if(done0 && done1){
-                                Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN,() -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR,new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getValidatorComplete())),10);
+                                Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN,
+                                        () -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
+                                                new TextComponent(MFConfig.INSTANCE.getBase() +
+                                                        MFConfig.INSTANCE.getPrefix() + " " +
+                                                        MFConfig.INSTANCE.getValidatorComplete())),10);
                                 break;
                             } else if(i == 35) {
-                                player.spigot().sendMessage(ChatMessageType.ACTION_BAR,new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " " + MFConfig.INSTANCE.getValidatorFail()));
+                                player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
+                                        new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() +
+                                                MFConfig.INSTANCE.getError() + " " + MFConfig.INSTANCE.getValidatorFail()));
                             }
                         }
                     }
@@ -77,7 +92,9 @@ public class ClearanceTC extends SignAction {
         String[] infoOut = GateUtil.parseData(info.getLine(2));
         String[] infoIn = GateUtil.parseData(info.getLine(3));
 
-        if(CompanyStore.CompanyTable.containsKey(infoOut[0]) && CompanyStore.CompanyTable.containsKey(infoIn[0]) && MFConfig.INSTANCE.hasBuildGatePermission(info.getPlayer())){
+        if(CompanyStore.CompanyTable.containsKey(infoOut[0]) &&
+                CompanyStore.CompanyTable.containsKey(infoIn[0]) &&
+                MFConfig.INSTANCE.hasBuildGatePermission(info.getPlayer())){
             SignBuildOptions opt = SignBuildOptions.create()
                     .setName(MFConfig.INSTANCE.getOutput() + MFConfig.INSTANCE.getValidatorTrainCartsName());
             opt.setDescription(MFConfig.INSTANCE.getValidatorTrainCartsDescription());

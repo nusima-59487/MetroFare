@@ -39,7 +39,9 @@ public class FenceGate implements Listener {
         blockLoc.setY(y);
 
         if(blockLoc.getBlock().getType() == Material.STRUCTURE_VOID){
-            event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR,new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " This gate is locked!"));
+            event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR,
+                    new TextComponent(MFConfig.INSTANCE.getBase() +
+                            MFConfig.INSTANCE.getPrefix() + " This gate is locked!"));
             event.setCancelled(true);
         }
     }

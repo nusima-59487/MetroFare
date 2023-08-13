@@ -1,7 +1,10 @@
 package com.hasunemiku2015.metrofare.lookuptables.faretables;
 
+import lombok.Getter;
+
 import java.util.List;
 
+@Getter
 public class FareTable {
     //Vars
     private final List<String> keys;
@@ -28,9 +31,5 @@ public class FareTable {
             }
         }
         return -1;
-    }
-
-    public List<String> getKeys() {
-        return keys;
     }
 }
