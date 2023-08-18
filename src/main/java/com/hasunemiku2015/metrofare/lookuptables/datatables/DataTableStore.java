@@ -15,7 +15,6 @@ import java.util.Objects;
 public class DataTableStore {
     public static HashMap<String, DataTable> DataTables = new HashMap<>();
 
-    //Inits
     public static void init() {
         File dir = new File(MTFA.PLUGIN.getDataFolder(),"DataTables");
         dir.mkdirs();

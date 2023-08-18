@@ -34,9 +34,7 @@ public class CompanyStore {
                         c.onLoad();
                         CompanyTable.put(c.getName(), c);
                     }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+                } catch (Exception ignored) {}
             }
         }
     }

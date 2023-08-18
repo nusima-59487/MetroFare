@@ -94,7 +94,7 @@ public class GateExecutionOut implements Listener {
         }
 
         double fareUpdate = company.computeFare(s, dat) / 1000.0;
-        if (fareUpdate > 0) {
+        if (fareUpdate >= 0) {
             fare = fareUpdate;
         }
 
