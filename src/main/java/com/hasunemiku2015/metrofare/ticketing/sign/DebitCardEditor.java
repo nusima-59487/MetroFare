@@ -165,7 +165,7 @@ public class DebitCardEditor implements Listener {
     public void onBuild(SignChangeEvent event) {
         if (!(event.getBlock().getBlockData() instanceof WallSign)) return;
         if (!Objects.requireNonNull(event.getLine(0)).equalsIgnoreCase(MFConfig.INSTANCE.getPrefixDCE())) return;
-        if (MFConfig.INSTANCE.hasBuildEditorPermission(event.getPlayer())) {
+        if (!MFConfig.INSTANCE.hasBuildEditorPermission(event.getPlayer())) {
             event.getBlock().setType(Material.AIR);
             return;
         }
