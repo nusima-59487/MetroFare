@@ -54,3 +54,5 @@ permissions:
   metro_fare.ticketing:
     description: Allows a player to use ticket and debit-card related commands.
     default: op
+libraries:
+  - org.apache.commons:commons-lang3:3.0

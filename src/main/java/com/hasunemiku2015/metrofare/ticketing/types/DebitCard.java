@@ -4,7 +4,7 @@ import com.hasunemiku2015.metrofare.MFConfig;
 import com.hasunemiku2015.metrofare.MTFA;
 import com.hasunemiku2015.metrofare.VaultIntegration;
 import net.md_5.bungee.api.ChatColor;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -516,7 +516,7 @@ public class DebitCard {
      */
     public static ItemStack newCard(Player player) {
         ItemStack card = new ItemStack(Material.NAME_TAG, 1);
-        card.addUnsafeEnchantment(Enchantment.DURABILITY, 10);
+        card.addUnsafeEnchantment(Enchantment.UNBREAKING, 10);
 
         ItemMeta itm = card.getItemMeta();
         assert itm != null;
