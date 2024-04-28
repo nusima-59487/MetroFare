@@ -99,8 +99,9 @@ public class TransferGate implements Listener {
             boolean openGate = false;
             if (stack.getType().equals(Material.NAME_TAG)) {
                 boolean openGate1 = GateExecutionOut.DCExitLogic(event.getPlayer(), exitCompany, stack, var0[0]);
-                boolean openGate2 = GateExecutionIn.DCEntryLogic(event.getPlayer(), stack, var0[1], true);
-                openGate = openGate1 && openGate2;
+                if (openGate1) {
+                    openGate = GateExecutionIn.DCEntryLogic(event.getPlayer(), stack, var0[1], true);
+                }
             } else if (stack.getType().equals(Material.PAPER)) {
                 Ticket ticket = new Ticket(stack);
                 if (!ticket.isValid()) {
