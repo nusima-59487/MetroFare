@@ -27,6 +27,7 @@ public class UniformCompany extends AbstractCompany implements Serializable {
     double getFare(){
         return Fare/1000.0;
     }
+
     void setFare(double fare) {
         Fare = (int) (fare *1000);
     }

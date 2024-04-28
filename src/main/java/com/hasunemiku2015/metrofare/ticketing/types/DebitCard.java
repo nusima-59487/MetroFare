@@ -21,7 +21,7 @@ import java.util.*;
 
 /**
  * Adapter class for interacting with an ItemStack as a DebitCard. <br/><br/>
- *
+ * <p>
  * Recommended Editing Procedure:
  * <ol>
  *     <li>Create a DebitCard instance with a given ItemStack.</li>
@@ -82,6 +82,7 @@ public class DebitCard {
     /**
      * Creates a DebitCard Object from a given ItemStack.
      * The DebitCard is not valid if it does not contain all the NBT Data required.
+     *
      * @param stack ItemStack of the DebitCard Object.
      */
     public DebitCard(ItemStack stack) {
@@ -111,6 +112,7 @@ public class DebitCard {
     /**
      * Checks if a ItemStack is a valid DebitCard object.
      * Please check for validity before interacting with other methods.
+     *
      * @return True if the item is a valid DebitCard, false otherwise.
      */
     public boolean isValid() {
@@ -119,6 +121,7 @@ public class DebitCard {
 
     /**
      * Check if a DebitCard contain an entry record.
+     *
      * @return True if the card contains an entry record, false otherwise.
      */
     public boolean hasEntered() {
@@ -127,7 +130,7 @@ public class DebitCard {
 
     /**
      * Returns the entry record of a DebitCard. Use {@link String#split(String)} to get individual components. <br/>
-     *
+     * <p>
      * Entry Records for various (default) company types:
      * <ul>
      *     <li><strong>Absolute Coordinate:</strong> COMPANY_NAME,STATION_X,STATION_Z</li>
@@ -146,6 +149,7 @@ public class DebitCard {
     /**
      * Same as {@link DebitCard#getEntryData()} but returns an empty string ("")
      * if the card does not have an entry record.
+     *
      * @return The entry record of the specified DebitCard. "" if it does not have an entry record.
      * @see DebitCard#getEntryData()
      */
@@ -156,6 +160,7 @@ public class DebitCard {
     /**
      * Returns the entry record of a DebitCard as a {@link String String[]}. <br/>
      * Returns an empty array if card has no entry record.
+     *
      * @return String[] representing the entry record.
      * @see DebitCard getEntryData()
      */
@@ -173,6 +178,7 @@ public class DebitCard {
      *     <li><strong>Zone:</strong> COMPANY_NAME,ZONE_ID</li>
      * </ul>
      * Custom company types may have different entry data format.
+     *
      * @param entryData Entry record (separated in ',') to set to the DebitCard.
      * @see DebitCard
      * @see DebitCard#isValid()
@@ -188,6 +194,7 @@ public class DebitCard {
 
     /**
      * Removes the entry record of a DebitCard.
+     *
      * @see DebitCard
      */
     public void removeEntryData() {
@@ -197,6 +204,7 @@ public class DebitCard {
 
     /**
      * Returns the <strong>name</strong> of the entry company of a DebitCard.
+     *
      * @return Name of the entry company
      */
     public String getCompany() {
@@ -205,6 +213,7 @@ public class DebitCard {
 
     /**
      * Sets the <strong>name</strong> of the entry company of a DebitCard.
+     *
      * @param company The <strong>name</strong> of the entry company.
      *                Use {@link com.hasunemiku2015.metrofare.company.AbstractCompany#getName()} to get the name.
      * @see DebitCard
@@ -218,6 +227,7 @@ public class DebitCard {
 
     /**
      * Removes the entry company of a DebitCard.
+     *
      * @see DebitCard
      * @see DebitCard#isValid()
      * @see DebitCard#updateCard()
@@ -229,6 +239,7 @@ public class DebitCard {
 
     /**
      * Gets the owner of the DebitCard. In UUID String.
+     *
      * @return Owner of the DebitCard.
      */
     public String getOwner() {
@@ -237,6 +248,7 @@ public class DebitCard {
 
     /**
      * Gets the owner of the DebitCard. In UUID.
+     *
      * @return Owner of the DebitCard.
      * @see DebitCard#getOwner()
      */
@@ -247,6 +259,7 @@ public class DebitCard {
     /**
      * Commits all changes from the DebitCard object to the ItemStack.
      * <strong>MUST</strong> be called after any changes done to the DebitCard.
+     *
      * @see DebitCard
      */
     public void updateCard() {
@@ -258,7 +271,7 @@ public class DebitCard {
         }
 
         if (balance > 0) {
-            lore.add(MFConfig.INSTANCE.getBalancePrefix() + ChatColor.GREEN + MFConfig.INSTANCE.getCurrencyUnit()  + balance / 1000.0);
+            lore.add(MFConfig.INSTANCE.getBalancePrefix() + ChatColor.GREEN + MFConfig.INSTANCE.getCurrencyUnit() + balance / 1000.0);
         } else if (balance < 0) {
             lore.add(MFConfig.INSTANCE.getBalancePrefix() + ChatColor.RED + MFConfig.INSTANCE.getCurrencyUnit() + balance / 1000.0);
         } else {
@@ -271,6 +284,7 @@ public class DebitCard {
 
     /**
      * Returns the balance of a DebitCard in terms of MetroFare's smallest denomination (0.001 unit).
+     *
      * @return 1000 times the balance in the DebitCard.
      */
     public int getBalance() {
@@ -279,8 +293,9 @@ public class DebitCard {
 
     /**
      * Returns the balance of a DebitCard in floating-point number. (Not recommended).
-     * @deprecated Use {@link DebitCard#getBalance()} for accuracy.
+     *
      * @return DebitCard balance in floating-point number.
+     * @deprecated Use {@link DebitCard#getBalance()} for accuracy.
      */
     @Deprecated
     public double getBalanceDecimal() {
@@ -289,6 +304,7 @@ public class DebitCard {
 
     /**
      * Sets the balance of a DebitCard in MetroFare's smallest denomination (0.001 unit).
+     *
      * @param balance 1000 times the new balance of DebitCard.
      * @see DebitCard
      * @see DebitCard#isValid()
@@ -303,11 +319,11 @@ public class DebitCard {
      * @param balance New balance of DebitCard, round down to nearest 0.001.
      *                Cannot be larger than {@link Integer#MAX_VALUE} / 1000
      * @return True if the balance is successfully updated, false otherwise.
-     * @deprecated Use {@link DebitCard#setBalance(int)} if possible.
      * @see DebitCard
      * @see DebitCard#isValid()
      * @see DebitCard#updateCard()
      * @see DebitCard#setBalance(int)
+     * @deprecated Use {@link DebitCard#setBalance(int)} if possible.
      */
     @Deprecated
     public boolean setBalanceDecimal(double balance) {
@@ -323,6 +339,7 @@ public class DebitCard {
 
     /**
      * Returns the amount added every time auto top-up is activated, in MetroFare's smallest denomination (0.001 unit).
+     *
      * @return 1000 times the auto top-up amount.
      */
     public int getAddAmount() {
@@ -332,8 +349,9 @@ public class DebitCard {
     /**
      * Returns the amount added every time auto top-up is activated of a
      * DebitCard in floating-point number (Not recommended).
-     * @deprecated Use {@link DebitCard#getAddAmount()} for accuracy.
+     *
      * @return DebitCard balance in floating-point number.
+     * @deprecated Use {@link DebitCard#getAddAmount()} for accuracy.
      */
     @Deprecated
     public double getAddAmountDecimal() {
@@ -343,6 +361,7 @@ public class DebitCard {
     /**
      * Sets the amount of money (in MetroFare's smallest denomination (0.001 unit))
      * to add to the DebitCard everytime auto top-up is called.
+     *
      * @param addAmount 1000 times the amount to add.
      * @see DebitCard
      * @see DebitCard#isValid()
@@ -355,12 +374,13 @@ public class DebitCard {
 
     /**
      * Sets the amount of money to add to the DebitCard everytime auto top-up is called, to the nearest 0.001 unit.
-     * @deprecated Use {@link DebitCard#setAddAmount(int)} if possible.
+     *
      * @param addAmount Amount to add, less than {@link Integer#MAX_VALUE} / 1000.0 .
      * @return True if the addAmount is set successfully, false otherwise.
      * @see DebitCard
      * @see DebitCard#isValid()
      * @see DebitCard#updateCard()
+     * @deprecated Use {@link DebitCard#setAddAmount(int)} if possible.
      */
     @Deprecated
     public boolean setAddAmountDecimal(double addAmount) {
@@ -373,6 +393,7 @@ public class DebitCard {
 
     /**
      * Reset the amount of money added to DebitCard upon auto top-up to 0.
+     *
      * @see DebitCard
      * @see DebitCard#isValid()
      * @see DebitCard#updateCard()
@@ -398,9 +419,10 @@ public class DebitCard {
 
     /**
      * Adds a new payment record to the DebitCard. Remove the oldest record if records are reached.
-     * @param company The company that runs the transaction. Maybe a company name or an arbitrary string.
+     *
+     * @param company  The company that runs the transaction. Maybe a company name or an arbitrary string.
      * @param isDeduct True if money is deducted from the DebitCard, false otherwise.
-     * @param amount Amount of money added/deducted from the DebitCard.
+     * @param amount   Amount of money added/deducted from the DebitCard.
      * @see DebitCard
      * @see DebitCard#isValid()
      * @see DebitCard#updateCard()
@@ -427,6 +449,7 @@ public class DebitCard {
      *         <li>-500.0</li>
      *     </ul>
      * </ol>
+     *
      * @return List of String[] representing the entry records.
      */
     public List<String[]> getPaymentRecords() {
@@ -484,8 +507,10 @@ public class DebitCard {
     // ============================================================================================================== //
     //                                                    Issue Card                                                  //
     // ============================================================================================================== //
+
     /**
      * Creates a new DebitCard item for a specified player.
+     *
      * @param player The player to issue a new DebitCard.
      * @return ItemStack of the newly issued DebitCard.
      */

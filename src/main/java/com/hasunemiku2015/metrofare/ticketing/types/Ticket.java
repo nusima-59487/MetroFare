@@ -3,8 +3,6 @@ package com.hasunemiku2015.metrofare.ticketing.types;
 import com.hasunemiku2015.metrofare.company.AbstractCompany;
 import com.hasunemiku2015.metrofare.MFConfig;
 import com.hasunemiku2015.metrofare.MTFA;
-import lombok.Data;
-import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
@@ -42,15 +40,27 @@ public class Ticket {
     private final int entered;
     private final ItemStack stack;
 
-    @Getter
     private final String companyFrom;
-    @Getter
     private final String companyTo;
-    @Getter
     private final String entryData;
-    @Getter
     private final String exitData;
     private final int fare;
+
+    public String getCompanyFrom() {
+        return companyFrom;
+    }
+
+    public String getCompanyTo() {
+        return companyTo;
+    }
+
+    public String getEntryData() {
+        return entryData;
+    }
+
+    public String getExitData() {
+        return exitData;
+    }
 
     // ============================================================================================================== //
     //                                                  NamespaceKey                                                  //
@@ -160,7 +170,7 @@ public class Ticket {
     public static ItemStack newTicket(AbstractCompany entryCompany, AbstractCompany exitCompany,
                                       String entryData, String exitData, int fare) {
         ItemStack its = new ItemStack(Material.PAPER, 1);
-        its.addUnsafeEnchantment(Enchantment.DURABILITY, 10);
+        its.addUnsafeEnchantment(Enchantment.UNBREAKING, 10);
 
         ItemMeta itm = its.getItemMeta();
         assert itm != null;
@@ -213,9 +223,21 @@ public class Ticket {
      * POJO for returning the ItemStack and Fare in {@link Ticket#newTicket(AbstractCompany, String, String)}
      * @author hasunemiku2015
      */
-    @Data
     static class TicketIssueData {
         public final ItemStack ticket;
         public final int fare;
+
+        TicketIssueData(ItemStack ticket, int fare) {
+            this.ticket = ticket;
+            this.fare = fare;
+        }
+
+        public ItemStack getTicket() {
+            return ticket;
+        }
+
+        public int getFare() {
+            return fare;
+        }
     }
 }

@@ -1,13 +1,10 @@
 package com.hasunemiku2015.metrofare.company;
 
-import lombok.Getter;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
 
-@Getter
 public abstract class AbstractCompany implements Serializable {
     //Serialization ID
     private static final long serialVersionUID = 314159265L;
@@ -23,6 +20,14 @@ public abstract class AbstractCompany implements Serializable {
         type = (CompanyType) input.get("type");
         owners = (List<String>) input.get("owners");
         revenue = 0;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public CompanyType getType() {
+        return type;
     }
 
     public void addOwner(String Owner) {

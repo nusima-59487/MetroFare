@@ -6,7 +6,7 @@
 
     <groupId>com.hasunemiku2015</groupId>
     <artifactId>MetroFare</artifactId>
-    <version>0.9</version>
+    <version>0.10</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -120,14 +120,9 @@
             <systemPath>${project.basedir}/external-jar/MikuCore-1.4.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
-        </dependency>
-        <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.16.5-R0.1-SNAPSHOT</version>
+            <version>1.20.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

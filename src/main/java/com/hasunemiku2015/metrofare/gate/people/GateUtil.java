@@ -107,11 +107,11 @@ public class GateUtil {
 
     public static String[] parseData(String s) {
         if (s.contains(",")) {
-            return s.split(",");
+            return s.split(",", 2);
         } else {
             String[] out = new String[2];
             out[0] = s;
-            out[1] = null;
+            out[1] = "";
             return out;
         }
     }
