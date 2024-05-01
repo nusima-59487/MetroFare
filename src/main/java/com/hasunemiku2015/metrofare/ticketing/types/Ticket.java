@@ -170,7 +170,7 @@ public class Ticket {
     public static ItemStack newTicket(AbstractCompany entryCompany, AbstractCompany exitCompany,
                                       String entryData, String exitData, int fare) {
         ItemStack its = new ItemStack(Material.PAPER, 1);
-        its.addUnsafeEnchantment(Enchantment.UNBREAKING, 10);
+        its.addUnsafeEnchantment(Enchantment.DURABILITY, 10);
 
         ItemMeta itm = its.getItemMeta();
         assert itm != null;
