@@ -196,7 +196,7 @@ public class CompanyCommand implements CommandExecutor, TabCompleter {
                     MFConfig.INSTANCE.getError() + " Error: The company specified does not exist!");
             return true;
         }
-        if (!comp.hasOwner(player.getUniqueId().toString()) && !MFConfig.INSTANCE.hasAdminCompanyPermission(player)) {
+        if (!comp.hasOwner(player.getUniqueId().toString()) || !MFConfig.INSTANCE.hasAdminCompanyPermission(player)) {
             player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() +
                     MFConfig.INSTANCE.getError() + " Error: You are not member of this company!");
             return true;
