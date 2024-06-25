@@ -10,6 +10,7 @@ import com.hasunemiku2015.metrofare.ticketing.types.Ticket;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -55,10 +56,12 @@ public class GateExecutionOut implements Listener {
                     sign.setLine(3, MFConfig.INSTANCE.getTransient2Out());
                     sign.update();
 
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(MTFA.PLUGIN, () -> {
-                        sign.setLine(2, MFConfig.INSTANCE.getInfo1Out());
-                        sign.setLine(3, MFConfig.INSTANCE.getInfo2Out());
-                        sign.update();
+                    final Location signCoordinate = sign.getLocation();
+                    Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN, () -> {
+                        Sign updateSign = ((Sign) signCoordinate.getBlock().getState());
+                        updateSign.setLine(2, MFConfig.INSTANCE.getInfo1Out());
+                        updateSign.setLine(3, MFConfig.INSTANCE.getInfo2Out());
+                        updateSign.update();
                     }, MFConfig.INSTANCE.getOpenTime());
                     GateUtil.setBlock(sign);
                 }

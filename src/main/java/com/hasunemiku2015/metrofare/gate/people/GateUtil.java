@@ -11,23 +11,29 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.type.WallSign;
+import org.bukkit.block.sign.Side;
 import org.bukkit.util.Vector;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Optional;
 
 public class GateUtil {
     protected static void setBlock(Sign sign) {
-        if (findSignBelow(sign.getBlock()) == null) {
+        var data = sign.getSide(Side.BACK).getLines();
+        if (Arrays.stream(data).allMatch(String::isBlank)) {
+            data = findSignBelow(sign.getBlock()).map(Sign::getLines).orElse(null);
+        }
+        if (data == null) {
             return;
         }
-        String[] data = Objects.requireNonNull(findSignBelow(sign.getBlock())).getLines();
+
         if (data[0].equalsIgnoreCase("")) {
             return;
         }
 
         String[] blk1 = data[0].split(",");
-        String[] blk2 = data[1].equals("") ? new String[3] : data[1].split(",");
+        String[] blk2 = data[1].isEmpty() ? new String[3] : data[1].split(",");
         if (blk1.length != 3 || blk2.length != 3) return;
 
         Location loc = sign.getLocation();
@@ -39,17 +45,17 @@ public class GateUtil {
         }
     }
 
-    private static Sign findSignBelow(Block b) {
+    private static Optional<Sign> findSignBelow(Block b) {
         World w = b.getWorld();
         Location l = b.getLocation();
         for (int i = 1; i < 4; i++) {
             double y = l.getY();
             l.setY(--y);
-            if (w.getBlockAt(l).getState() instanceof Sign) {
-                return (Sign) w.getBlockAt(l).getState();
+            if (w.getBlockAt(l).getState() instanceof Sign sign) {
+                return Optional.of(sign);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     private static void addDirectionalOffset(Sign sign, String[] blkData, String baseState, String transientState, Location l0) {

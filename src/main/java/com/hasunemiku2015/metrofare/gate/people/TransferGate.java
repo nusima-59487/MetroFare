@@ -9,6 +9,7 @@ import com.hasunemiku2015.metrofare.ticketing.types.Ticket;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.type.WallSign;
@@ -126,9 +127,13 @@ public class TransferGate implements Listener {
                 sign.setLine(3, MFConfig.INSTANCE.getTransient2Transfer());
                 sign.update();
 
+                final Location signCoordinate = sign.getLocation();
                 Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN, () -> {
-                    sign.setLine(2, MFConfig.INSTANCE.getInfo1Transfer() + enterCompany.getName() + MFConfig.INSTANCE.getInfo3Transfer());
-                    sign.setLine(3, MFConfig.INSTANCE.getInfo2Transfer() + enterCompany.getName() + MFConfig.INSTANCE.getInfo4Transfer());
+                    Sign updateSign = ((Sign) signCoordinate.getBlock());
+                    updateSign.setLine(2, MFConfig.INSTANCE.getInfo1Transfer() + enterCompany.getName() +
+                            MFConfig.INSTANCE.getInfo3Transfer());
+                    updateSign.setLine(3, MFConfig.INSTANCE.getInfo2Transfer() + enterCompany.getName() +
+                            MFConfig.INSTANCE.getInfo4Transfer());
                     sign.update();
                 }, MFConfig.INSTANCE.getOpenTime());
 

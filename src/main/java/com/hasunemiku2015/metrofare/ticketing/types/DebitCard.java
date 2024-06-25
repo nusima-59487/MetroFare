@@ -516,7 +516,7 @@ public class DebitCard {
      */
     public static ItemStack newCard(Player player) {
         ItemStack card = new ItemStack(Material.NAME_TAG, 1);
-        card.addUnsafeEnchantment(Enchantment.DURABILITY, 10);
+        card.addUnsafeEnchantment(Enchantment.UNBREAKING, 10);
 
         ItemMeta itm = card.getItemMeta();
         assert itm != null;

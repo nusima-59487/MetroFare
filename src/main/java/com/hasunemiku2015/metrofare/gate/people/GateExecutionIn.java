@@ -9,6 +9,7 @@ import com.hasunemiku2015.metrofare.ticketing.types.Ticket;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -24,7 +25,7 @@ public class GateExecutionIn implements Listener {
     @EventHandler
     public void onEntryGateUse(PlayerInteractEvent event) {
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) {
-           return;
+            return;
         }
 
         if (Objects.requireNonNull(event.getClickedBlock()).getState() instanceof Sign) {
@@ -49,10 +50,13 @@ public class GateExecutionIn implements Listener {
                     sign.setLine(2, MFConfig.INSTANCE.getTransient1In());
                     sign.setLine(3, MFConfig.INSTANCE.getTransient2In());
                     sign.update();
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(MTFA.PLUGIN, () -> {
-                        sign.setLine(2, MFConfig.INSTANCE.getInfo1In());
-                        sign.setLine(3, MFConfig.INSTANCE.getInfo2In());
-                        sign.update();
+
+                    final Location signCoordinate = sign.getLocation();
+                    Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN, () -> {
+                        Sign updateSign = ((Sign) signCoordinate.getBlock().getState());
+                        updateSign.setLine(2, MFConfig.INSTANCE.getInfo1In());
+                        updateSign.setLine(3, MFConfig.INSTANCE.getInfo2In());
+                        updateSign.update();
                     }, MFConfig.INSTANCE.getOpenTime());
 
                     GateUtil.setBlock(sign);
