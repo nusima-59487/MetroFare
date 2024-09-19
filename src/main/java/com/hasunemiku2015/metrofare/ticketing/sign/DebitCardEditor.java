@@ -200,7 +200,7 @@ public class DebitCardEditor implements Listener {
         if (((WallSign) event.getClickedBlock().getBlockData()).getFacing() != event.getBlockFace()) return;
         Sign sign = (Sign) event.getClickedBlock().getState();
         if (!sign.getLine(0).equalsIgnoreCase(MFConfig.INSTANCE.getPrefixDCE())) return;
-
+        event.setCancelled(true);
         event.getPlayer().openInventory(inventoryGUI);
     }
 

@@ -29,6 +29,7 @@ public class OTPExecution implements Listener {
             ItemStack hand = event.getItem();
 
             if (GateUtil.checkValid(sign, MFConfig.INSTANCE.getPrefixOTP()) && GateUtil.validFace(sign, event.getBlockFace())) {
+                event.setCancelled(true);
                 if (hand == null) {
                     return;
                 }

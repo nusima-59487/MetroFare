@@ -33,6 +33,7 @@ public class GateExecutionIn implements Listener {
             ItemStack hand = event.getItem();
 
             if (GateUtil.checkValid(sign, MFConfig.INSTANCE.getPrefixIn()) && GateUtil.validFace(sign, event.getBlockFace())) {
+                event.setCancelled(true);
                 boolean openGate = false;
 
                 if (hand == null) return;

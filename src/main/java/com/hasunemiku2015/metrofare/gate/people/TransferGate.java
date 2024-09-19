@@ -88,6 +88,7 @@ public class TransferGate implements Listener {
         Sign sign = (Sign) event.getClickedBlock().getState();
 
         if (GateUtil.checkValid(sign, MFConfig.INSTANCE.getPrefixTransfer()) && GateUtil.validFace(sign, event.getBlockFace())) {
+            event.setCancelled(true);
             String[] var0 = sign.getLine(1).split(";");
             AbstractCompany exitCompany = CompanyStore.CompanyTable.get(var0[0].split(",")[0]);
             AbstractCompany enterCompany = CompanyStore.CompanyTable.get(var0[1].split(",")[0]);

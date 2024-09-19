@@ -34,6 +34,8 @@ public class GateExecutionOut implements Listener {
             String[] data = GateUtil.parseData(sign.getLine(1));
 
             if (GateUtil.checkValid(sign, MFConfig.INSTANCE.getPrefixOut()) && GateUtil.validFace(sign, event.getBlockFace())) {
+                event.setCancelled(true);
+
                 boolean openGate = false;
                 if (hand == null) return;
                 AbstractCompany company = CompanyStore.CompanyTable.get(data[0]);
