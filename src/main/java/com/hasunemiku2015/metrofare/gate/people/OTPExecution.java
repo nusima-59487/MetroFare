@@ -2,8 +2,8 @@ package com.hasunemiku2015.metrofare.gate.people;
 
 import com.hasunemiku2015.metrofare.company.AbstractCompany;
 import com.hasunemiku2015.metrofare.company.CompanyStore;
-import com.hasunemiku2015.metrofare.MFConfig;
-import com.hasunemiku2015.metrofare.MTFA;
+import com.hasunemiku2015.metrofare.MetroConfiguration;
+import com.hasunemiku2015.metrofare.MetroFare;
 import com.hasunemiku2015.metrofare.ticketing.types.DebitCard;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -28,7 +28,7 @@ public class OTPExecution implements Listener {
             Sign sign = (Sign) event.getClickedBlock().getState();
             ItemStack hand = event.getItem();
 
-            if (GateUtil.checkValid(sign, MFConfig.INSTANCE.getPrefixOTP()) && GateUtil.validFace(sign, event.getBlockFace())) {
+            if (GateUtil.checkValid(sign, MetroConfiguration.INSTANCE.getPrefixOTP()) && GateUtil.validFace(sign, event.getBlockFace())) {
                 event.setCancelled(true);
                 if (hand == null) {
                     return;
@@ -36,17 +36,17 @@ public class OTPExecution implements Listener {
 
                 if (hand.getType().equals(Material.NAME_TAG)) {
                     if (dcOtpLogic(event.getPlayer(), hand, sign.getLine(1))) {
-                        sign.setLine(2, MFConfig.INSTANCE.getTransient1OTP());
-                        sign.setLine(3, MFConfig.INSTANCE.getTransient2OTP());
+                        sign.setLine(2, MetroConfiguration.INSTANCE.getTransient1OTP());
+                        sign.setLine(3, MetroConfiguration.INSTANCE.getTransient2OTP());
                         sign.update();
 
                         final Location signCoordinate = sign.getLocation();
-                        Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN, () -> {
+                        Bukkit.getScheduler().runTaskLater(MetroFare.PLUGIN, () -> {
                             Sign updateSign = ((Sign) signCoordinate.getBlock().getState());
-                            updateSign.setLine(2, MFConfig.INSTANCE.getInfo1OTP());
-                            updateSign.setLine(3, MFConfig.INSTANCE.getInfo2OTP());
+                            updateSign.setLine(2, MetroConfiguration.INSTANCE.getInfo1OTP());
+                            updateSign.setLine(3, MetroConfiguration.INSTANCE.getInfo2OTP());
                             updateSign.update();
-                        }, MFConfig.INSTANCE.getOpenTime());
+                        }, MetroConfiguration.INSTANCE.getOpenTime());
                         GateUtil.setBlock(sign);
                     }
                 }
@@ -74,13 +74,13 @@ public class OTPExecution implements Listener {
 
         if (card.getBalance() <= 0) {
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
-                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getInsufficientOTP()));
+                    MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getInsufficientOTP()));
             return false;
         }
 
         int deductAmount1000 = (int) Math.round(Double.parseDouble(data[1]) * 1000);
-        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getChatFareOTP() + MFConfig.INSTANCE.getCurrencyUnit() + MFConfig.INSTANCE.getOutput() + (deductAmount1000 / 1000.0)));
-        Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN, () -> p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getChatRemainingOTP() + " " + MFConfig.INSTANCE.getCurrencyUnit() + card.getBalance() / 1000.0)), 20);
+        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getChatFareOTP() + MetroConfiguration.INSTANCE.getCurrencyUnit() + MetroConfiguration.INSTANCE.getOutput() + (deductAmount1000 / 1000.0)));
+        Bukkit.getScheduler().runTaskLater(MetroFare.PLUGIN, () -> p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getChatRemainingOTP() + " " + MetroConfiguration.INSTANCE.getCurrencyUnit() + card.getBalance() / 1000.0)), 20);
 
         card.setBalance(card.getBalance() - deductAmount1000);
         card.addPaymentRecord(company.getName(), true, deductAmount1000);

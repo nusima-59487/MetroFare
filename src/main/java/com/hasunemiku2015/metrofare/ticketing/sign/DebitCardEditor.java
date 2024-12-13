@@ -1,7 +1,7 @@
 package com.hasunemiku2015.metrofare.ticketing.sign;
 
-import com.hasunemiku2015.metrofare.MFConfig;
-import com.hasunemiku2015.metrofare.MTFA;
+import com.hasunemiku2015.metrofare.MetroConfiguration;
+import com.hasunemiku2015.metrofare.MetroFare;
 import com.hasunemiku2015.metrofare.VaultIntegration;
 import com.hasunemiku2015.metrofare.ticketing.commands.DebitCardCommand;
 import com.hasunemiku2015.metrofare.ticketing.types.DebitCard;
@@ -39,19 +39,19 @@ public class DebitCardEditor implements Listener {
     private static AnvilGUI.Builder dailyLimit;
 
     public static void init() {
-        inventoryGUI = Bukkit.createInventory(null, 9, MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix());
+        inventoryGUI = Bukkit.createInventory(null, 9, MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix());
 
-        inventoryGUI.setItem(0, newItem(Material.NAME_TAG, MFConfig.INSTANCE.getBase() + "New " + MFConfig.INSTANCE.getDebitCardName()));
-        inventoryGUI.setItem(1, newItem(Material.GOLD_INGOT, MFConfig.INSTANCE.getBase() + "Add Value to " + MFConfig.INSTANCE.getDebitCardName()));
-        inventoryGUI.setItem(2, newItem(Material.IRON_INGOT, MFConfig.INSTANCE.getBase() + "Bank in from " + MFConfig.INSTANCE.getDebitCardName()));
-        inventoryGUI.setItem(3, newItem(Material.BOOK, MFConfig.INSTANCE.getBase() + "View Transaction Records"));
-        inventoryGUI.setItem(4, newItem(Material.REDSTONE, MFConfig.INSTANCE.getBase() + "Enable/Disable Auto Top-Up"));
-        inventoryGUI.setItem(5, newItem(Material.REPEATER, MFConfig.INSTANCE.getBase() + "Change Add Amount of Auto Top-Up"));
-        inventoryGUI.setItem(6, newItem(Material.COMPARATOR, MFConfig.INSTANCE.getBase() + "Change Daily Limit of Auto Top-Up"));
-        inventoryGUI.setItem(7, newItem(Material.CAULDRON, MFConfig.INSTANCE.getBase() + "Reset Entry data of " + MFConfig.INSTANCE.getDebitCardName()));
+        inventoryGUI.setItem(0, newItem(Material.NAME_TAG, MetroConfiguration.INSTANCE.getBase() + "New " + MetroConfiguration.INSTANCE.getDebitCardName()));
+        inventoryGUI.setItem(1, newItem(Material.GOLD_INGOT, MetroConfiguration.INSTANCE.getBase() + "Add Value to " + MetroConfiguration.INSTANCE.getDebitCardName()));
+        inventoryGUI.setItem(2, newItem(Material.IRON_INGOT, MetroConfiguration.INSTANCE.getBase() + "Bank in from " + MetroConfiguration.INSTANCE.getDebitCardName()));
+        inventoryGUI.setItem(3, newItem(Material.BOOK, MetroConfiguration.INSTANCE.getBase() + "View Transaction Records"));
+        inventoryGUI.setItem(4, newItem(Material.REDSTONE, MetroConfiguration.INSTANCE.getBase() + "Enable/Disable Auto Top-Up"));
+        inventoryGUI.setItem(5, newItem(Material.REPEATER, MetroConfiguration.INSTANCE.getBase() + "Change Add Amount of Auto Top-Up"));
+        inventoryGUI.setItem(6, newItem(Material.COMPARATOR, MetroConfiguration.INSTANCE.getBase() + "Change Daily Limit of Auto Top-Up"));
+        inventoryGUI.setItem(7, newItem(Material.CAULDRON, MetroConfiguration.INSTANCE.getBase() + "Reset Entry data of " + MetroConfiguration.INSTANCE.getDebitCardName()));
         inventoryGUI.setItem(8, newItem(Material.BARRIER, ChatColor.RED + "Cancel"));
 
-        valueAdd = newInputInventory(MFConfig.INSTANCE.getPromptAddDCE());
+        valueAdd = newInputInventory(MetroConfiguration.INSTANCE.getPromptAddDCE());
         valueAdd.onClick((slot, stateSnapshot) -> {
             if (slot != AnvilGUI.Slot.OUTPUT) {
                 return Collections.emptyList();
@@ -64,21 +64,21 @@ public class DebitCardEditor implements Listener {
                     if (VaultIntegration.hasEnough(stateSnapshot.getPlayer(), value)) {
                         VaultIntegration.deduct(stateSnapshot.getPlayer(), value);
                         card.setBalance(card.getBalance() + (int) (value * 1000));
-                        card.addPaymentRecord(MFConfig.INSTANCE.getNameDCE(), false, (int) (value * 1000));
+                        card.addPaymentRecord(MetroConfiguration.INSTANCE.getNameDCE(), false, (int) (value * 1000));
                         card.updateCard();
 
-                        stateSnapshot.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getSuccessDCE()));
-                        Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN, () -> stateSnapshot.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getNewBalanceDCE() + card.getBalance() / 1000.0)), 5);
+                        stateSnapshot.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getSuccessDCE()));
+                        Bukkit.getScheduler().runTaskLater(MetroFare.PLUGIN, () -> stateSnapshot.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getNewBalanceDCE() + card.getBalance() / 1000.0)), 5);
                         return Collections.singletonList(AnvilGUI.ResponseAction.close());
                     }
                 }
             } catch (Exception ignored) {
             }
 
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getFailDCE()));
             return Collections.singletonList(AnvilGUI.ResponseAction.close());
         });
-        bankIn = newInputInventory(MFConfig.INSTANCE.getPromptRemoveDCE());
+        bankIn = newInputInventory(MetroConfiguration.INSTANCE.getPromptRemoveDCE());
         bankIn.onClick((slot, stateSnapshot) -> {
             if (slot != AnvilGUI.Slot.OUTPUT) {
                 return Collections.emptyList();
@@ -89,21 +89,21 @@ public class DebitCardEditor implements Listener {
                 DebitCard card = new DebitCard(player.getInventory().getItemInMainHand());
                 if (card.getBalance() / 1000.0 >= value) {
                     card.setBalance(card.getBalance() - (int) (value * 1000));
-                    card.addPaymentRecord(MFConfig.INSTANCE.getNameDCE(), true, (int) (value * 1000));
+                    card.addPaymentRecord(MetroConfiguration.INSTANCE.getNameDCE(), true, (int) (value * 1000));
                     card.updateCard();
                     VaultIntegration.add(player, value);
 
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getSuccessDCE()));
-                    Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN, () -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getNewBalanceDCE() + card.getBalance() / 1000.0)), 5);
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getSuccessDCE()));
+                    Bukkit.getScheduler().runTaskLater(MetroFare.PLUGIN, () -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getNewBalanceDCE() + card.getBalance() / 1000.0)), 5);
                     return Collections.singletonList(AnvilGUI.ResponseAction.close());
                 }
             } catch (Exception ignored) {
             }
 
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getFailDCE()));
             return Collections.singletonList(AnvilGUI.ResponseAction.close());
         });
-        addAmount = newInputInventory(MFConfig.INSTANCE.getPromptAutoAddAmountDCE());
+        addAmount = newInputInventory(MetroConfiguration.INSTANCE.getPromptAutoAddAmountDCE());
         addAmount.onClick((slot, stateSnapshot) -> {
             if (slot != AnvilGUI.Slot.OUTPUT) {
                 return Collections.emptyList();
@@ -114,7 +114,7 @@ public class DebitCardEditor implements Listener {
                 double value = Double.parseDouble(stateSnapshot.getText());
                 if (value <= card.getDailyLimit() / 1000.0) {
                     if (value > 0 && value < 2000000) {
-                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getSuccessDCE()));
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getSuccessDCE()));
                         card.setAddAmount((int) (value * 1000));
                         card.updateCard();
                         return Collections.singletonList(AnvilGUI.ResponseAction.close());
@@ -123,10 +123,10 @@ public class DebitCardEditor implements Listener {
             } catch (Exception ignored) {
             }
 
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getFailDCE()));
             return Collections.singletonList(AnvilGUI.ResponseAction.close());
         });
-        dailyLimit = newInputInventory(MFConfig.INSTANCE.getPromptAutoDailyLimitDCE());
+        dailyLimit = newInputInventory(MetroConfiguration.INSTANCE.getPromptAutoDailyLimitDCE());
         dailyLimit.onClick((slot, stateSnapshot) -> {
             if (slot != AnvilGUI.Slot.OUTPUT) {
                 return Collections.emptyList();
@@ -138,7 +138,7 @@ public class DebitCardEditor implements Listener {
 
                 if (value >= card.getAddAmount() / 1000.0) {
                     if (value > 0 && value < 2000000) {
-                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getSuccessDCE()));
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getSuccessDCE()));
                         card.setDailyLimit((int) (value * 1000));
                         card.updateCard();
                         return Collections.singletonList(AnvilGUI.ResponseAction.close());
@@ -146,7 +146,7 @@ public class DebitCardEditor implements Listener {
                 }
             } catch (Exception ignored) {
             }
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getFailDCE()));
             return Collections.singletonList(AnvilGUI.ResponseAction.close());
         });
     }
@@ -164,7 +164,7 @@ public class DebitCardEditor implements Listener {
 
     private static AnvilGUI.Builder newInputInventory(String name) {
         AnvilGUI.Builder var0 = new AnvilGUI.Builder();
-        var0.plugin(MTFA.PLUGIN);
+        var0.plugin(MetroFare.PLUGIN);
         var0.itemLeft(new ItemStack(Material.PAPER, 1));
         var0.title(name);
         return var0;
@@ -181,15 +181,15 @@ public class DebitCardEditor implements Listener {
     @EventHandler
     public void onBuild(SignChangeEvent event) {
         if (!(event.getBlock().getBlockData() instanceof WallSign)) return;
-        if (!Objects.requireNonNull(event.getLine(0)).equalsIgnoreCase(MFConfig.INSTANCE.getPrefixDCE())) return;
-        if (!MFConfig.INSTANCE.hasBuildEditorPermission(event.getPlayer())) {
+        if (!Objects.requireNonNull(event.getLine(0)).equalsIgnoreCase(MetroConfiguration.INSTANCE.getPrefixDCE())) return;
+        if (!MetroConfiguration.INSTANCE.hasBuildEditorPermission(event.getPlayer())) {
             event.getBlock().setType(Material.AIR);
             return;
         }
 
-        event.setLine(1, MFConfig.INSTANCE.getInfo1DCE());
-        event.setLine(2, MFConfig.INSTANCE.getInfo2DCE());
-        event.setLine(3, MFConfig.INSTANCE.getInfo3DCE());
+        event.setLine(1, MetroConfiguration.INSTANCE.getInfo1DCE());
+        event.setLine(2, MetroConfiguration.INSTANCE.getInfo2DCE());
+        event.setLine(3, MetroConfiguration.INSTANCE.getInfo3DCE());
     }
 
     @EventHandler
@@ -199,7 +199,7 @@ public class DebitCardEditor implements Listener {
         if (event.getClickedBlock() == null || !(event.getClickedBlock().getBlockData() instanceof WallSign)) return;
         if (((WallSign) event.getClickedBlock().getBlockData()).getFacing() != event.getBlockFace()) return;
         Sign sign = (Sign) event.getClickedBlock().getState();
-        if (!sign.getLine(0).equalsIgnoreCase(MFConfig.INSTANCE.getPrefixDCE())) return;
+        if (!sign.getLine(0).equalsIgnoreCase(MetroConfiguration.INSTANCE.getPrefixDCE())) return;
         event.setCancelled(true);
         event.getPlayer().openInventory(inventoryGUI);
     }
@@ -214,7 +214,7 @@ public class DebitCardEditor implements Listener {
     @EventHandler
     public void onIGUIClose(InventoryCloseEvent event) {
         if (event.getInventory().equals(inventoryGUI)) {
-            Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN, () -> ((Player) event.getPlayer()).updateInventory(), 1);
+            Bukkit.getScheduler().runTaskLater(MetroFare.PLUGIN, () -> ((Player) event.getPlayer()).updateInventory(), 1);
         }
     }
 
@@ -235,18 +235,18 @@ public class DebitCardEditor implements Listener {
                 for (int i = 0; i < 36; i++) {
                     if (player.getInventory().getItem(i) == null) {
                         player.getInventory().setItem(i, newCard);
-                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getSuccessDCE()));
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getSuccessDCE()));
                         return;
                     }
                 }
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getFailDCE()));
                 return;
             }
             case 1: {
                 if (valid) {
                     valueAdd.open(player);
                 } else {
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getFailDCE()));
                     player.closeInventory();
                 }
                 return;
@@ -255,7 +255,7 @@ public class DebitCardEditor implements Listener {
                 if (valid) {
                     bankIn.open(player);
                 } else {
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getFailDCE()));
                     player.closeInventory();
                 }
                 return;
@@ -267,7 +267,7 @@ public class DebitCardEditor implements Listener {
                     player.closeInventory();
                     return;
                 }
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getFailDCE()));
                 player.closeInventory();
                 return;
             }
@@ -280,11 +280,11 @@ public class DebitCardEditor implements Listener {
                     } else {
                         removeAutoTopUp(card);
                     }
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getSuccessDCE()));
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getSuccessDCE()));
                     player.closeInventory();
                     return;
                 }
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getFailDCE()));
                 player.closeInventory();
                 break;
             }
@@ -293,7 +293,7 @@ public class DebitCardEditor implements Listener {
                 if (valid && card.getLastAddedAuto() != 0) {
                     addAmount.open(player);
                 } else {
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getFailDCE()));
                     player.closeInventory();
                 }
                 return;
@@ -303,7 +303,7 @@ public class DebitCardEditor implements Listener {
                 if (valid && card.getLastAddedAuto() != 0) {
                     dailyLimit.open(player);
                 } else {
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getFailDCE()));
                     player.closeInventory();
                 }
                 return;
@@ -313,11 +313,11 @@ public class DebitCardEditor implements Listener {
                 if (valid) {
                     card.removeEntryData();
                     card.updateCard();
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getSuccessDCE()));
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getSuccessDCE()));
                     player.closeInventory();
                     return;
                 }
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getFailDCE()));
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getFailDCE()));
                 player.closeInventory();
             }
             case 8: {

@@ -1,6 +1,6 @@
 package com.hasunemiku2015.metrofare.gate.people;
 
-import com.hasunemiku2015.metrofare.MFConfig;
+import com.hasunemiku2015.metrofare.MetroConfiguration;
 import com.hasunemiku2015.metrofare.company.CompanyStore;
 import com.hasunemiku2015.metrofare.company.CompanyType;
 import org.bukkit.Material;
@@ -20,9 +20,9 @@ public class GateConstruct implements Listener {
             return;
         }
 
-        boolean entryGate = MFConfig.INSTANCE.getPrefixIn().equalsIgnoreCase(event.getLine(0)) && MFConfig.INSTANCE.isEntryGateEnabled();
-        boolean exitGate = MFConfig.INSTANCE.getPrefixOut().equalsIgnoreCase(event.getLine(0)) && MFConfig.INSTANCE.isExitGateEnabled();
-        boolean oneTimePaymentMachine = MFConfig.INSTANCE.getPrefixOTP().equalsIgnoreCase(event.getLine(0)) && MFConfig.INSTANCE.isOtpEnabled();
+        boolean entryGate = MetroConfiguration.INSTANCE.getPrefixIn().equalsIgnoreCase(event.getLine(0)) && MetroConfiguration.INSTANCE.isEntryGateEnabled();
+        boolean exitGate = MetroConfiguration.INSTANCE.getPrefixOut().equalsIgnoreCase(event.getLine(0)) && MetroConfiguration.INSTANCE.isExitGateEnabled();
+        boolean oneTimePaymentMachine = MetroConfiguration.INSTANCE.getPrefixOTP().equalsIgnoreCase(event.getLine(0)) && MetroConfiguration.INSTANCE.isOtpEnabled();
         if (!entryGate && !exitGate && !oneTimePaymentMachine) {
             return;
         }
@@ -31,7 +31,7 @@ public class GateConstruct implements Listener {
             event.getBlock().setType(Material.AIR);
             return;
         }
-        if (!MFConfig.INSTANCE.hasBuildGatePermission(event.getPlayer())) {
+        if (!MetroConfiguration.INSTANCE.hasBuildGatePermission(event.getPlayer())) {
             event.getBlock().setType(Material.AIR);
             return;
         }
@@ -51,7 +51,7 @@ public class GateConstruct implements Listener {
             return;
         }
 
-        if (MFConfig.INSTANCE.getPrefixOTP().equalsIgnoreCase(event.getLine(0))) {
+        if (MetroConfiguration.INSTANCE.getPrefixOTP().equalsIgnoreCase(event.getLine(0))) {
             try {
                 Double.parseDouble(data[1]);
             } catch (Exception ex) {
@@ -66,19 +66,19 @@ public class GateConstruct implements Listener {
         }
 
         //Prettify
-        if (MFConfig.INSTANCE.getPrefixIn().equalsIgnoreCase(event.getLine(0))) {
-            event.setLine(2, MFConfig.INSTANCE.getInfo1In());
-            event.setLine(3, MFConfig.INSTANCE.getInfo2In());
+        if (MetroConfiguration.INSTANCE.getPrefixIn().equalsIgnoreCase(event.getLine(0))) {
+            event.setLine(2, MetroConfiguration.INSTANCE.getInfo1In());
+            event.setLine(3, MetroConfiguration.INSTANCE.getInfo2In());
         }
 
-        if (MFConfig.INSTANCE.getPrefixOut().equalsIgnoreCase(event.getLine(0))) {
-            event.setLine(2, MFConfig.INSTANCE.getInfo1Out());
-            event.setLine(3, MFConfig.INSTANCE.getInfo2Out());
+        if (MetroConfiguration.INSTANCE.getPrefixOut().equalsIgnoreCase(event.getLine(0))) {
+            event.setLine(2, MetroConfiguration.INSTANCE.getInfo1Out());
+            event.setLine(3, MetroConfiguration.INSTANCE.getInfo2Out());
         }
 
-        if (MFConfig.INSTANCE.getPrefixOTP().equalsIgnoreCase(event.getLine(0))) {
-            event.setLine(2, MFConfig.INSTANCE.getInfo1OTP());
-            event.setLine(3, MFConfig.INSTANCE.getInfo2OTP());
+        if (MetroConfiguration.INSTANCE.getPrefixOTP().equalsIgnoreCase(event.getLine(0))) {
+            event.setLine(2, MetroConfiguration.INSTANCE.getInfo1OTP());
+            event.setLine(3, MetroConfiguration.INSTANCE.getInfo2OTP());
         }
     }
 }

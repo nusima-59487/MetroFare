@@ -3,8 +3,8 @@ package com.hasunemiku2015.metrofare.gate.people;
 import com.hasunemiku2015.metrofare.company.AbstractCompany;
 import com.hasunemiku2015.metrofare.company.CompanyStore;
 import com.hasunemiku2015.metrofare.company.CompanyType;
-import com.hasunemiku2015.metrofare.MFConfig;
-import com.hasunemiku2015.metrofare.MTFA;
+import com.hasunemiku2015.metrofare.MetroConfiguration;
+import com.hasunemiku2015.metrofare.MetroFare;
 import com.hasunemiku2015.metrofare.ticketing.types.Ticket;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -28,7 +28,7 @@ public class TransferGate implements Listener {
         if (event.getLine(0) == null) {
             return;
         }
-        if (!MFConfig.INSTANCE.getPrefixTransfer().equalsIgnoreCase(event.getLine(0))) {
+        if (!MetroConfiguration.INSTANCE.getPrefixTransfer().equalsIgnoreCase(event.getLine(0))) {
             return;
         }
 
@@ -36,7 +36,7 @@ public class TransferGate implements Listener {
             event.getBlock().setType(Material.AIR);
             return;
         }
-        if (!MFConfig.INSTANCE.hasBuildGatePermission(event.getPlayer())) {
+        if (!MetroConfiguration.INSTANCE.hasBuildGatePermission(event.getPlayer())) {
             event.getBlock().setType(Material.AIR);
             return;
         }
@@ -70,8 +70,8 @@ public class TransferGate implements Listener {
         String line2 = event.getLine(1);
         String line3 = event.getLine(2);
         event.setLine(1, line2 + ";" + line3);
-        event.setLine(2, MFConfig.INSTANCE.getInfo1Transfer() + data2[0]);
-        event.setLine(3, MFConfig.INSTANCE.getInfo2Transfer() + data2[0]);
+        event.setLine(2, MetroConfiguration.INSTANCE.getInfo1Transfer() + data2[0]);
+        event.setLine(3, MetroConfiguration.INSTANCE.getInfo2Transfer() + data2[0]);
     }
 
     @EventHandler
@@ -87,7 +87,7 @@ public class TransferGate implements Listener {
         }
         Sign sign = (Sign) event.getClickedBlock().getState();
 
-        if (GateUtil.checkValid(sign, MFConfig.INSTANCE.getPrefixTransfer()) && GateUtil.validFace(sign, event.getBlockFace())) {
+        if (GateUtil.checkValid(sign, MetroConfiguration.INSTANCE.getPrefixTransfer()) && GateUtil.validFace(sign, event.getBlockFace())) {
             event.setCancelled(true);
             String[] var0 = sign.getLine(1).split(";");
             AbstractCompany exitCompany = CompanyStore.CompanyTable.get(var0[0].split(",")[0]);
@@ -115,28 +115,28 @@ public class TransferGate implements Listener {
 
                 if (ticket.checkExitCompany(enterCompany)) {
                     event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
-                            MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getChatTicketTransfer()));
+                            MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getChatTicketTransfer()));
                     openGate = true;
                 } else {
                     event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
-                            MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getChatTicketErrorTransfer()));
+                            MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getChatTicketErrorTransfer()));
                 }
             }
 
             if (openGate) {
-                sign.setLine(2, MFConfig.INSTANCE.getTransient1Transfer());
-                sign.setLine(3, MFConfig.INSTANCE.getTransient2Transfer());
+                sign.setLine(2, MetroConfiguration.INSTANCE.getTransient1Transfer());
+                sign.setLine(3, MetroConfiguration.INSTANCE.getTransient2Transfer());
                 sign.update();
 
                 final Location signCoordinate = sign.getLocation();
-                Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN, () -> {
+                Bukkit.getScheduler().runTaskLater(MetroFare.PLUGIN, () -> {
                     Sign updateSign = ((Sign) signCoordinate.getBlock());
-                    updateSign.setLine(2, MFConfig.INSTANCE.getInfo1Transfer() + enterCompany.getName() +
-                            MFConfig.INSTANCE.getInfo3Transfer());
-                    updateSign.setLine(3, MFConfig.INSTANCE.getInfo2Transfer() + enterCompany.getName() +
-                            MFConfig.INSTANCE.getInfo4Transfer());
+                    updateSign.setLine(2, MetroConfiguration.INSTANCE.getInfo1Transfer() + enterCompany.getName() +
+                            MetroConfiguration.INSTANCE.getInfo3Transfer());
+                    updateSign.setLine(3, MetroConfiguration.INSTANCE.getInfo2Transfer() + enterCompany.getName() +
+                            MetroConfiguration.INSTANCE.getInfo4Transfer());
                     sign.update();
-                }, MFConfig.INSTANCE.getOpenTime());
+                }, MetroConfiguration.INSTANCE.getOpenTime());
 
                 GateUtil.setBlock(sign);
             }

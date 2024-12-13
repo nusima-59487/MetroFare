@@ -2,7 +2,7 @@ package com.hasunemiku2015.metrofare.ticketing.commands;
 
 import com.hasunemiku2015.metrofare.company.AbstractCompany;
 import com.hasunemiku2015.metrofare.company.CompanyStore;
-import com.hasunemiku2015.metrofare.MFConfig;
+import com.hasunemiku2015.metrofare.MetroConfiguration;
 import com.hasunemiku2015.metrofare.ticketing.types.Ticket;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -130,7 +130,7 @@ public class TicketCBlkCommand implements CommandExecutor {
     //Copied from TicketCmd
     private void issue(Player player, String[] args) {
         if (args.length < 5) {
-            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Insufficient Arguments!");
+            player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: Insufficient Arguments!");
         }
 
         //ticket issue <company> <from> <company> <to> <cost>(Optional) <hasEntered>(Optional)
@@ -140,7 +140,7 @@ public class TicketCBlkCommand implements CommandExecutor {
             sourceComp = CompanyStore.CompanyTable.get(args[1]);
             destComp = CompanyStore.CompanyTable.get(args[3]);
         } else {
-            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Company(s) not found");
+            player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: Company(s) not found");
             return;
         }
 
@@ -165,10 +165,10 @@ public class TicketCBlkCommand implements CommandExecutor {
         for (int i = 0; i < 36; i++) {
             if (inv.getItem(i) == null) {
                 inv.setItem(i, its);
-                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Successfully issued a new ticket from " + MFConfig.INSTANCE.getInput() + args[2] + MFConfig.INSTANCE.getBase() + " to " + MFConfig.INSTANCE.getInput() + args[4] + MFConfig.INSTANCE.getBase() + " with price " + MFConfig.INSTANCE.getCurrencyUnit() + MFConfig.INSTANCE.getInput() + fare1000 / 1000.0 + MFConfig.INSTANCE.getBase() + "!");
+                player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " Successfully issued a new ticket from " + MetroConfiguration.INSTANCE.getInput() + args[2] + MetroConfiguration.INSTANCE.getBase() + " to " + MetroConfiguration.INSTANCE.getInput() + args[4] + MetroConfiguration.INSTANCE.getBase() + " with price " + MetroConfiguration.INSTANCE.getCurrencyUnit() + MetroConfiguration.INSTANCE.getInput() + fare1000 / 1000.0 + MetroConfiguration.INSTANCE.getBase() + "!");
                 return;
             }
         }
-        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Your inventory is full!");
+        player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: Your inventory is full!");
     }
 }

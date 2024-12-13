@@ -24,22 +24,22 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Objects;
 
-public final class MTFA extends JavaPlugin {
-    public static MTFA PLUGIN;
+public final class MetroFare extends JavaPlugin {
+    public static MetroFare PLUGIN;
 
     @Override
     public void onEnable() {
         PLUGIN = this;
         initConfig();
 
-        if (Bukkit.getPluginManager().isPluginEnabled("Vault") || MFConfig.INSTANCE.isVaultIntegrationEnabled()) {
+        if (Bukkit.getPluginManager().isPluginEnabled("Vault") || MetroConfiguration.INSTANCE.isVaultIntegrationEnabled()) {
             VaultIntegration.init();
         } else {
             VaultIntegration.vault = false;
         }
 
         DataTableStore.init();
-        if (VaultIntegration.vault && MFConfig.INSTANCE.isDceEnabled()) {
+        if (VaultIntegration.vault && MetroConfiguration.INSTANCE.isDceEnabled()) {
             //Note: MUST be after Config (cuz need to use ChatColor from Config)
             DebitCardEditor.init();
         }
@@ -53,32 +53,32 @@ public final class MTFA extends JavaPlugin {
         //Note: MUST be after DataTable and FareTable cuz DataTable/FareTable Object is Transient
         CompanyStore.init();
 
-        if (Bukkit.getPluginManager().isPluginEnabled("Train_Carts") && MFConfig.INSTANCE.isValidatorEnabled()) {
+        if (Bukkit.getPluginManager().isPluginEnabled("Train_Carts") && MetroConfiguration.INSTANCE.isValidatorEnabled()) {
             TCSignToggle.init();
         }
 
         //Events
         this.getServer().getPluginManager().registerEvents(new GateConstruct(), this);
 
-        if (MFConfig.INSTANCE.isEntryGateEnabled()) {
+        if (MetroConfiguration.INSTANCE.isEntryGateEnabled()) {
             this.getServer().getPluginManager().registerEvents(new GateExecutionIn(), this);
         }
-        if (MFConfig.INSTANCE.isExitGateEnabled()) {
+        if (MetroConfiguration.INSTANCE.isExitGateEnabled()) {
             this.getServer().getPluginManager().registerEvents(new GateExecutionOut(), this);
         }
-        if (MFConfig.INSTANCE.isOtpEnabled()) {
+        if (MetroConfiguration.INSTANCE.isOtpEnabled()) {
             this.getServer().getPluginManager().registerEvents(new OTPExecution(), this);
         }
-        if (MFConfig.INSTANCE.isTransferGateEnabled()) {
+        if (MetroConfiguration.INSTANCE.isTransferGateEnabled()) {
             this.getServer().getPluginManager().registerEvents(new TransferGate(), this);
         }
 
         this.getServer().getPluginManager().registerEvents(new FenceGate(), this);
 
-        if (Bukkit.getPluginManager().isPluginEnabled("MikuCore") && MFConfig.INSTANCE.isValidatorEnabled()) {
+        if (Bukkit.getPluginManager().isPluginEnabled("MikuCore") && MetroConfiguration.INSTANCE.isValidatorEnabled()) {
             this.getServer().getPluginManager().registerEvents(new Clearance(), this);
         }
-        if (VaultIntegration.vault && MFConfig.INSTANCE.isDceEnabled()) {
+        if (VaultIntegration.vault && MetroConfiguration.INSTANCE.isDceEnabled()) {
             this.getServer().getPluginManager().registerEvents(new DebitCardEditor(), this);
         }
 

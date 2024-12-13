@@ -4,8 +4,8 @@ import com.hasunemiku2015.metrofare.company.CompanyStore;
 import com.hasunemiku2015.metrofare.gate.people.GateExecutionIn;
 import com.hasunemiku2015.metrofare.gate.people.GateExecutionOut;
 import com.hasunemiku2015.metrofare.gate.people.GateUtil;
-import com.hasunemiku2015.metrofare.MFConfig;
-import com.hasunemiku2015.metrofare.MTFA;
+import com.hasunemiku2015.metrofare.MetroConfiguration;
+import com.hasunemiku2015.metrofare.MetroFare;
 import me.hasunemiku2015.mikucore.Vehicle.MinecartSignEvent;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -26,7 +26,7 @@ public class Clearance implements Listener {
         if (!"[MetroFareValidator]".equalsIgnoreCase(event.getLine(0))) {
             return;
         }
-        if (!MFConfig.INSTANCE.hasBuildGatePermission(event.getPlayer())) {
+        if (!MetroConfiguration.INSTANCE.hasBuildGatePermission(event.getPlayer())) {
             event.getBlock().setType(Material.AIR);
             return;
         }
@@ -44,7 +44,7 @@ public class Clearance implements Listener {
 
     @EventHandler
     public void onClearance(MinecartSignEvent event) {
-        if (!event.getHeader().equalsIgnoreCase(MFConfig.INSTANCE.getValidatorVanillaPrefix())) return;
+        if (!event.getHeader().equalsIgnoreCase(MetroConfiguration.INSTANCE.getValidatorVanillaPrefix())) return;
         if (!(event.getCart().getPassengers().get(0) instanceof Player)) return;
 
         Player player = (Player) event.getCart().getPassengers().get(0);
@@ -54,8 +54,8 @@ public class Clearance implements Listener {
             if (stack == null) {
                 if (i == 35) {
                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                            new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() +
-                                    MFConfig.INSTANCE.getError() + " " + MFConfig.INSTANCE.getValidatorFail()));
+                            new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() +
+                                    MetroConfiguration.INSTANCE.getError() + " " + MetroConfiguration.INSTANCE.getValidatorFail()));
                     break;
                 } else {
                     continue;
@@ -66,8 +66,8 @@ public class Clearance implements Listener {
                     continue;
                 } else {
                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                            new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() +
-                                    MFConfig.INSTANCE.getError() + " " + MFConfig.INSTANCE.getValidatorFail()));
+                            new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() +
+                                    MetroConfiguration.INSTANCE.getError() + " " + MetroConfiguration.INSTANCE.getValidatorFail()));
                     break;
                 }
             }
@@ -80,15 +80,15 @@ public class Clearance implements Listener {
             }
 
             if (done0 && done1) {
-                Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN,
+                Bukkit.getScheduler().runTaskLater(MetroFare.PLUGIN,
                         () -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                                new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " +
-                                        MFConfig.INSTANCE.getValidatorComplete())), 10);
+                                new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " +
+                                        MetroConfiguration.INSTANCE.getValidatorComplete())), 10);
                 break;
             } else if (i == 35) {
                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                        new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() +
-                                MFConfig.INSTANCE.getError() + " " + MFConfig.INSTANCE.getValidatorFail()));
+                        new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() +
+                                MetroConfiguration.INSTANCE.getError() + " " + MetroConfiguration.INSTANCE.getValidatorFail()));
             }
         }
     }

@@ -2,7 +2,7 @@ package com.hasunemiku2015.metrofare.company;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.hasunemiku2015.metrofare.MTFA;
+import com.hasunemiku2015.metrofare.MetroFare;
 import org.bukkit.Bukkit;
 
 import java.io.*;
@@ -18,7 +18,7 @@ public class CompanyStore {
         CompanyTable = new HashMap<>();
 
         //Get Company Files
-        CompanyFolder = new File(MTFA.PLUGIN.getDataFolder(), "Companies");
+        CompanyFolder = new File(MetroFare.PLUGIN.getDataFolder(), "Companies");
         boolean created = CompanyFolder.mkdirs();
 
         //Load in json Files
@@ -42,7 +42,7 @@ public class CompanyStore {
     public static void deInit() throws IOException {
         if (CompanyTable != null) {
             for (String s : CompanyTable.keySet()) {
-                File file = new File(MTFA.PLUGIN.getDataFolder() + "/Companies", s + ".jsonc");
+                File file = new File(MetroFare.PLUGIN.getDataFolder() + "/Companies", s + ".jsonc");
 
                 boolean canCreateFile = false;
                 if (!file.exists()) {
@@ -59,7 +59,7 @@ public class CompanyStore {
     }
 
     public static void reload() {
-        Bukkit.getScheduler().runTaskAsynchronously(MTFA.PLUGIN, () -> {
+        Bukkit.getScheduler().runTaskAsynchronously(MetroFare.PLUGIN, () -> {
             try {
                 deInit();
                 init();
@@ -92,7 +92,7 @@ public class CompanyStore {
     }
 
     protected static boolean delCompany(String s) {
-        File file = new File(MTFA.PLUGIN.getDataFolder() + "/Companies", s + ".jsonc");
+        File file = new File(MetroFare.PLUGIN.getDataFolder() + "/Companies", s + ".jsonc");
         if (file.exists()) {
             boolean var = file.delete();
             CompanyStore.CompanyTable.remove(s);

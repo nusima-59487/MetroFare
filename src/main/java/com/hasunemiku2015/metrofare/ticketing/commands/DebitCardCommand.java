@@ -1,6 +1,6 @@
 package com.hasunemiku2015.metrofare.ticketing.commands;
 
-import com.hasunemiku2015.metrofare.MFConfig;
+import com.hasunemiku2015.metrofare.MetroConfiguration;
 import com.hasunemiku2015.metrofare.ticketing.types.DebitCard;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.ChatColor;
@@ -18,7 +18,7 @@ public class DebitCardCommand implements TabExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player)) return true;
         Player player = (Player) sender;
-        if (MFConfig.INSTANCE.noTicketingPermission(player)) return true;
+        if (MetroConfiguration.INSTANCE.noTicketingPermission(player)) return true;
         if (args.length == 0) {
             help(player);
             return true;
@@ -31,22 +31,22 @@ public class DebitCardCommand implements TabExecutor {
             for (int i = 0; i < 36; i++) {
                 if (inv.getItem(i) == null) {
                     inv.setItem(i, its);
-                    player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Successfully issued a new debit card!");
+                    player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " Successfully issued a new debit card!");
                     return true;
                 }
             }
-            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Your inventory is full!");
+            player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: Your inventory is full!");
             return true;
         }
         if (args[0].equalsIgnoreCase("value")) {
             if (args.length < 3) {
-                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Insufficient Arguments!");
+                player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: Insufficient Arguments!");
                 return true;
             }
 
             DebitCard card = new DebitCard(player.getInventory().getItemInMainHand());
             if (!card.isValid()) {
-                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: You are not holding a Debit Card!");
+                player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: You are not holding a Debit Card!");
                 return true;
             }
 
@@ -55,7 +55,7 @@ public class DebitCardCommand implements TabExecutor {
             try {
                 amount = Double.parseDouble(args[2]);
             } catch (NumberFormatException e) {
-                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: The amount input must be a number!");
+                player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: The amount input must be a number!");
                 return true;
             }
 
@@ -80,59 +80,59 @@ public class DebitCardCommand implements TabExecutor {
                     break;
                 }
                 default: {
-                    player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + "Error: Unknown selector!");
-                    player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + "Possible Selectors:");
-                    player.sendMessage(MFConfig.INSTANCE.getBase() + "- add");
-                    player.sendMessage(MFConfig.INSTANCE.getBase() + "- deduct");
-                    player.sendMessage(MFConfig.INSTANCE.getBase() + "- set");
+                    player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + "Error: Unknown selector!");
+                    player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + "Possible Selectors:");
+                    player.sendMessage(MetroConfiguration.INSTANCE.getBase() + "- add");
+                    player.sendMessage(MetroConfiguration.INSTANCE.getBase() + "- deduct");
+                    player.sendMessage(MetroConfiguration.INSTANCE.getBase() + "- set");
                     return true;
                 }
             }
             if (newValue < 2000000000 && newValue > -2000000000) {
                 card.setBalance(newValue);
                 card.updateCard();
-                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Successfully updated card balance!");
-                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " New Balance: " + MFConfig.INSTANCE.getCurrencyUnit() + MFConfig.INSTANCE.getOutput() + card.getBalance() / 1000.0);
+                player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " Successfully updated card balance!");
+                player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " New Balance: " + MetroConfiguration.INSTANCE.getCurrencyUnit() + MetroConfiguration.INSTANCE.getOutput() + card.getBalance() / 1000.0);
                 return true;
             } else {
-                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Cannot update value, the updated value is out of range of allowed values!");
-                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Allowed values should be between -2,000,000 and 2,000,000.");
+                player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: Cannot update value, the updated value is out of range of allowed values!");
+                player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " Allowed values should be between -2,000,000 and 2,000,000.");
                 return true;
             }
         }
         if (args[0].equalsIgnoreCase("auto")) {
             if (args.length < 2) {
-                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Unknown selector!");
-                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Possible Selectors:");
-                player.sendMessage(MFConfig.INSTANCE.getBase() + "- dailylimit");
-                player.sendMessage(MFConfig.INSTANCE.getBase() + "- addamount");
-                player.sendMessage(MFConfig.INSTANCE.getBase() + "- info");
-                player.sendMessage(MFConfig.INSTANCE.getBase() + "- enable");
-                player.sendMessage(MFConfig.INSTANCE.getBase() + "- disable");
+                player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: Unknown selector!");
+                player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " Possible Selectors:");
+                player.sendMessage(MetroConfiguration.INSTANCE.getBase() + "- dailylimit");
+                player.sendMessage(MetroConfiguration.INSTANCE.getBase() + "- addamount");
+                player.sendMessage(MetroConfiguration.INSTANCE.getBase() + "- info");
+                player.sendMessage(MetroConfiguration.INSTANCE.getBase() + "- enable");
+                player.sendMessage(MetroConfiguration.INSTANCE.getBase() + "- disable");
                 return true;
             }
 
             DebitCard dc = new DebitCard(player.getInventory().getItemInMainHand());
             if (!dc.isValid()) {
-                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: You are not holding a " + MFConfig.INSTANCE.getDebitCardName() + "!");
+                player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: You are not holding a " + MetroConfiguration.INSTANCE.getDebitCardName() + "!");
                 return true;
             }
 
             switch (args[1]) {
                 case "info": {
-                    player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getDebitCardName() + MFConfig.INSTANCE.getBase() + " Info (Auto Top Up):");
+                    player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getDebitCardName() + MetroConfiguration.INSTANCE.getBase() + " Info (Auto Top Up):");
                     if (dc.getLastAddedAuto() != 0) {
-                        player.sendMessage(MFConfig.INSTANCE.getBase() + "Add Amount: " + MFConfig.INSTANCE.getCurrencyUnit() + MFConfig.INSTANCE.getOutput() + dc.getAddAmount() / 1000.0);
-                        player.sendMessage(MFConfig.INSTANCE.getBase() + "Daily Limit: " + MFConfig.INSTANCE.getCurrencyUnit() + MFConfig.INSTANCE.getOutput() + dc.getDailyLimit() / 1000.0);
-                        player.sendMessage(MFConfig.INSTANCE.getBase() + "Last Auto Value Add Trigger Time (Unix Time): " + MFConfig.INSTANCE.getOutput() + dc.getLastAddedAuto());
+                        player.sendMessage(MetroConfiguration.INSTANCE.getBase() + "Add Amount: " + MetroConfiguration.INSTANCE.getCurrencyUnit() + MetroConfiguration.INSTANCE.getOutput() + dc.getAddAmount() / 1000.0);
+                        player.sendMessage(MetroConfiguration.INSTANCE.getBase() + "Daily Limit: " + MetroConfiguration.INSTANCE.getCurrencyUnit() + MetroConfiguration.INSTANCE.getOutput() + dc.getDailyLimit() / 1000.0);
+                        player.sendMessage(MetroConfiguration.INSTANCE.getBase() + "Last Auto Value Add Trigger Time (Unix Time): " + MetroConfiguration.INSTANCE.getOutput() + dc.getLastAddedAuto());
                     } else {
-                        player.sendMessage(MFConfig.INSTANCE.getBase() + "This card doesn't have auto top up enabled.");
+                        player.sendMessage(MetroConfiguration.INSTANCE.getBase() + "This card doesn't have auto top up enabled.");
                     }
                     return true;
                 }
                 case "dailylimit": {
                     if (dc.getLastAddedAuto() == 0) {
-                        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: This " + MFConfig.INSTANCE.getDebitCardName() + MFConfig.INSTANCE.getError() + "doesn't have auto top up enabled.");
+                        player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: This " + MetroConfiguration.INSTANCE.getDebitCardName() + MetroConfiguration.INSTANCE.getError() + "doesn't have auto top up enabled.");
                         return true;
                     }
 
@@ -140,11 +140,11 @@ public class DebitCardCommand implements TabExecutor {
                     try {
                         limit = (int) (Double.parseDouble(args[2]) * 1000);
                         if (dc.getAddAmount() >= limit) {
-                            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Add amount cannot be lower than Daily Limit.");
+                            player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: Add amount cannot be lower than Daily Limit.");
                             return true;
                         }
                     } catch (Exception ex) {
-                        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Daily limit must be a number!");
+                        player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: Daily limit must be a number!");
                         return true;
                     }
 
@@ -155,7 +155,7 @@ public class DebitCardCommand implements TabExecutor {
 
                 case "addamount": {
                     if (dc.getLastAddedAuto() == 0) {
-                        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: This " + MFConfig.INSTANCE.getDebitCardName() + MFConfig.INSTANCE.getError() + "doesn't have auto top up enabled.");
+                        player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: This " + MetroConfiguration.INSTANCE.getDebitCardName() + MetroConfiguration.INSTANCE.getError() + "doesn't have auto top up enabled.");
                         return true;
                     }
 
@@ -164,16 +164,16 @@ public class DebitCardCommand implements TabExecutor {
                         amount = (int) (Double.parseDouble(args[2]) * 1000);
 
                         if (amount <= 0) {
-                            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Add amount must be greater than 0.");
+                            player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: Add amount must be greater than 0.");
                             return true;
                         }
 
                         if (amount >= dc.getDailyLimit()) {
-                            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Add amount cannot be lower than Daily Limit.");
+                            player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: Add amount cannot be lower than Daily Limit.");
                             return true;
                         }
                     } catch (Exception ex) {
-                        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Add amount must be a number!");
+                        player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: Add amount must be a number!");
                         return true;
                     }
 
@@ -184,7 +184,7 @@ public class DebitCardCommand implements TabExecutor {
 
                 case "enable": {
                     if (dc.getLastAddedAuto() != 0) {
-                        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Auto top-up is already enabled on this " + MFConfig.INSTANCE.getDebitCardName() + MFConfig.INSTANCE.getBase() + ".");
+                        player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: Auto top-up is already enabled on this " + MetroConfiguration.INSTANCE.getDebitCardName() + MetroConfiguration.INSTANCE.getBase() + ".");
                         return true;
                     }
 
@@ -194,17 +194,17 @@ public class DebitCardCommand implements TabExecutor {
                         limit = (int) (Double.parseDouble(args[3]) * 1000);
 
                         if (amount <= 0) {
-                            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Add amount must be greater than 0.");
+                            player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: Add amount must be greater than 0.");
                             return true;
                         }
 
                         if (amount > limit) {
-                            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Add amount cannot be lower than Daily Limit.");
+                            player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: Add amount cannot be lower than Daily Limit.");
                             return true;
                         }
                     } catch (Exception ex) {
-                        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Insufficient/Invalid Arguments");
-                        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + "debitcard auto enable <add amount(Number)> <daily limit(Number)>");
+                        player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: Insufficient/Invalid Arguments");
+                        player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + "debitcard auto enable <add amount(Number)> <daily limit(Number)>");
                         return true;
                     }
 
@@ -214,13 +214,13 @@ public class DebitCardCommand implements TabExecutor {
                     dc.setDailyLimit(limit);
                     dc.updateCard();
 
-                    player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Successfully enabled auto top-up for this " + MFConfig.INSTANCE.getDebitCardName() + MFConfig.INSTANCE.getBase() + "!");
+                    player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " Successfully enabled auto top-up for this " + MetroConfiguration.INSTANCE.getDebitCardName() + MetroConfiguration.INSTANCE.getBase() + "!");
                     return true;
                 }
 
                 case "disable": {
                     if (dc.getLastAddedAuto() == 0) {
-                        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Auto top-up is already disabled on this " + MFConfig.INSTANCE.getDebitCardName() + MFConfig.INSTANCE.getBase() + ".");
+                        player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: Auto top-up is already disabled on this " + MetroConfiguration.INSTANCE.getDebitCardName() + MetroConfiguration.INSTANCE.getBase() + ".");
                         return true;
                     }
 
@@ -230,25 +230,25 @@ public class DebitCardCommand implements TabExecutor {
                     dc.removeLastAddedAuto();
                     dc.updateCard();
 
-                    player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Successfully disabled auto top-up for this " + MFConfig.INSTANCE.getDebitCardName() + MFConfig.INSTANCE.getBase() + "!");
+                    player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " Successfully disabled auto top-up for this " + MetroConfiguration.INSTANCE.getDebitCardName() + MetroConfiguration.INSTANCE.getBase() + "!");
                     return true;
                 }
             }
 
-            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: Unknown selector!");
-            player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + "Possible Selectors:");
-            player.sendMessage(MFConfig.INSTANCE.getBase() + "- dailylimit");
-            player.sendMessage(MFConfig.INSTANCE.getBase() + "- addamount");
-            player.sendMessage(MFConfig.INSTANCE.getBase() + "- info");
-            player.sendMessage(MFConfig.INSTANCE.getBase() + "- enable");
-            player.sendMessage(MFConfig.INSTANCE.getBase() + "- disable");
-            player.sendMessage(MFConfig.INSTANCE.getBase() + "- records");
+            player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: Unknown selector!");
+            player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + "Possible Selectors:");
+            player.sendMessage(MetroConfiguration.INSTANCE.getBase() + "- dailylimit");
+            player.sendMessage(MetroConfiguration.INSTANCE.getBase() + "- addamount");
+            player.sendMessage(MetroConfiguration.INSTANCE.getBase() + "- info");
+            player.sendMessage(MetroConfiguration.INSTANCE.getBase() + "- enable");
+            player.sendMessage(MetroConfiguration.INSTANCE.getBase() + "- disable");
+            player.sendMessage(MetroConfiguration.INSTANCE.getBase() + "- records");
             return true;
         }
         if (args[0].equalsIgnoreCase("records")) {
             DebitCard dc = new DebitCard(player.getInventory().getItemInMainHand());
             if (!dc.isValid()) {
-                player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() + " Error: You are not holding a " + MFConfig.INSTANCE.getDebitCardName() + "!");
+                player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() + " Error: You are not holding a " + MetroConfiguration.INSTANCE.getDebitCardName() + "!");
                 return true;
             }
 
@@ -263,7 +263,7 @@ public class DebitCardCommand implements TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (!(sender instanceof Player)) return new ArrayList<>();
-        if (MFConfig.INSTANCE.noTicketingPermission((Player) sender)) return new ArrayList<>();
+        if (MetroConfiguration.INSTANCE.noTicketingPermission((Player) sender)) return new ArrayList<>();
         List<String> out = new ArrayList<>();
 
         switch (args.length) {
@@ -298,23 +298,23 @@ public class DebitCardCommand implements TabExecutor {
     }
 
     private void help(Player player) {
-        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Debit Card Commands:");
-        player.sendMessage(MFConfig.INSTANCE.getBase() + "- help: Displays this page");
-        player.sendMessage(MFConfig.INSTANCE.getBase() + "- givecard: Issue a new card to Command Sender");
-        player.sendMessage(MFConfig.INSTANCE.getBase() + "- value: Edit the value of Debit Card");
-        player.sendMessage(MFConfig.INSTANCE.getBase() + "- auto: Edit the auto top-up settings of Debit Card");
+        player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " Debit Card Commands:");
+        player.sendMessage(MetroConfiguration.INSTANCE.getBase() + "- help: Displays this page");
+        player.sendMessage(MetroConfiguration.INSTANCE.getBase() + "- givecard: Issue a new card to Command Sender");
+        player.sendMessage(MetroConfiguration.INSTANCE.getBase() + "- value: Edit the value of Debit Card");
+        player.sendMessage(MetroConfiguration.INSTANCE.getBase() + "- auto: Edit the auto top-up settings of Debit Card");
     }
 
     public static void printPaymentRecord(Player player, DebitCard dc) {
         List<String[]> records = dc.getPaymentRecords();
 
-        player.sendMessage(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " Payment Records for this " + MFConfig.INSTANCE.getDebitCardName() + MFConfig.INSTANCE.getBase() + ":");
-        player.sendMessage(MFConfig.INSTANCE.getBase() + String.format("%1$-5s|%2$-10s|%3$5s", StringUtils.rightPad("Data", 5), StringUtils.center("Company/Individual", 20), StringUtils.leftPad("Change", 10)));
-        player.sendMessage(MFConfig.INSTANCE.getBase() + String.format("%s", "----------------------------------------------------"));
+        player.sendMessage(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " Payment Records for this " + MetroConfiguration.INSTANCE.getDebitCardName() + MetroConfiguration.INSTANCE.getBase() + ":");
+        player.sendMessage(MetroConfiguration.INSTANCE.getBase() + String.format("%1$-5s|%2$-10s|%3$5s", StringUtils.rightPad("Data", 5), StringUtils.center("Company/Individual", 20), StringUtils.leftPad("Change", 10)));
+        player.sendMessage(MetroConfiguration.INSTANCE.getBase() + String.format("%s", "----------------------------------------------------"));
 
         for (int i = 0; i < records.size(); i++) {
             String entry = String.format("%1$-5s|%2$-20s|%3$5s", StringUtils.rightPad(i + ".", 5), StringUtils.center(records.get(i)[0], 20), StringUtils.rightPad(records.get(i)[1].contains("+") ? ChatColor.GREEN + records.get(i)[1] : ChatColor.RED + records.get(i)[1], 10));
-            player.sendMessage(MFConfig.INSTANCE.getBase() + entry);
+            player.sendMessage(MetroConfiguration.INSTANCE.getBase() + entry);
         }
     }
 }

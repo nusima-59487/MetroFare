@@ -1,6 +1,6 @@
 package com.hasunemiku2015.metrofare.lookuptables.datatables;
 
-import com.hasunemiku2015.metrofare.MTFA;
+import com.hasunemiku2015.metrofare.MetroFare;
 import de.vogella.algorithms.dijkstra.engine.DijkstraAlgorithm;
 import de.vogella.algorithms.dijkstra.model.Edge;
 import de.vogella.algorithms.dijkstra.model.Graph;
@@ -45,13 +45,13 @@ public class DataTable {
         this.name = name;
         this.password = password;
 
-        File file = new File(MTFA.PLUGIN.getDataFolder() + "/DataTables", name + ".csv");
+        File file = new File(MetroFare.PLUGIN.getDataFolder() + "/DataTables", name + ".csv");
         file.createNewFile();
         ObjInit();
     }
 
     protected void exportToCSV() throws IOException {
-        File file = new File(MTFA.PLUGIN.getDataFolder() + "/DataTables", name + ".csv");
+        File file = new File(MetroFare.PLUGIN.getDataFolder() + "/DataTables", name + ".csv");
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, false))) {
             writer.write("Password:," + password);
             writer.newLine();

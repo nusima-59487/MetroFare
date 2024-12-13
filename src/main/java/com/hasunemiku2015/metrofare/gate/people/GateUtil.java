@@ -1,7 +1,7 @@
 package com.hasunemiku2015.metrofare.gate.people;
 
-import com.hasunemiku2015.metrofare.MFConfig;
-import com.hasunemiku2015.metrofare.MTFA;
+import com.hasunemiku2015.metrofare.MetroConfiguration;
+import com.hasunemiku2015.metrofare.MetroFare;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,7 +15,6 @@ import org.bukkit.block.sign.Side;
 import org.bukkit.util.Vector;
 
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.Optional;
 
 public class GateUtil {
@@ -66,7 +65,7 @@ public class GateUtil {
         }
 
         setBlockNBT(transientState, l0);
-        Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN, () -> setBlockNBT(baseState, l0), MFConfig.INSTANCE.getOpenTime());
+        Bukkit.getScheduler().runTaskLater(MetroFare.PLUGIN, () -> setBlockNBT(baseState, l0), MetroConfiguration.INSTANCE.getOpenTime());
     }
 
     private static Vector getDirectionalOffset(Sign sign, int breath, int height, int depth) {

@@ -10,8 +10,8 @@ import com.hasunemiku2015.metrofare.company.CompanyStore;
 import com.hasunemiku2015.metrofare.gate.people.GateExecutionIn;
 import com.hasunemiku2015.metrofare.gate.people.GateExecutionOut;
 import com.hasunemiku2015.metrofare.gate.people.GateUtil;
-import com.hasunemiku2015.metrofare.MFConfig;
-import com.hasunemiku2015.metrofare.MTFA;
+import com.hasunemiku2015.metrofare.MetroConfiguration;
+import com.hasunemiku2015.metrofare.MetroFare;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -22,7 +22,7 @@ import org.bukkit.inventory.ItemStack;
 public class ClearanceTC extends SignAction {
     @Override
     public boolean match(SignActionEvent info) {
-        return info.isType(MFConfig.INSTANCE.getValidatorTrainCartsPrefix());
+        return info.isType(MetroConfiguration.INSTANCE.getValidatorTrainCartsPrefix());
     }
 
     @Override
@@ -39,9 +39,9 @@ public class ClearanceTC extends SignAction {
                             if(stack == null){
                                 if(i == 35){
                                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                                            new TextComponent(MFConfig.INSTANCE.getBase() +
-                                                    MFConfig.INSTANCE.getPrefix() + MFConfig.INSTANCE.getError() +
-                                                    " " + MFConfig.INSTANCE.getValidatorFail()));
+                                            new TextComponent(MetroConfiguration.INSTANCE.getBase() +
+                                                    MetroConfiguration.INSTANCE.getPrefix() + MetroConfiguration.INSTANCE.getError() +
+                                                    " " + MetroConfiguration.INSTANCE.getValidatorFail()));
                                     break;
                                 } else {
                                     continue;
@@ -52,9 +52,9 @@ public class ClearanceTC extends SignAction {
                                     continue;
                                 } else {
                                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
-                                            MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() +
-                                                    MFConfig.INSTANCE.getError() + " " +
-                                                    MFConfig.INSTANCE.getValidatorFail()));
+                                            MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() +
+                                                    MetroConfiguration.INSTANCE.getError() + " " +
+                                                    MetroConfiguration.INSTANCE.getValidatorFail()));
                                     break;
                                 }
                             }
@@ -69,16 +69,16 @@ public class ClearanceTC extends SignAction {
                             }
 
                             if(done0 && done1){
-                                Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN,
+                                Bukkit.getScheduler().runTaskLater(MetroFare.PLUGIN,
                                         () -> player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                                                new TextComponent(MFConfig.INSTANCE.getBase() +
-                                                        MFConfig.INSTANCE.getPrefix() + " " +
-                                                        MFConfig.INSTANCE.getValidatorComplete())),10);
+                                                new TextComponent(MetroConfiguration.INSTANCE.getBase() +
+                                                        MetroConfiguration.INSTANCE.getPrefix() + " " +
+                                                        MetroConfiguration.INSTANCE.getValidatorComplete())),10);
                                 break;
                             } else if(i == 35) {
                                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                                        new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() +
-                                                MFConfig.INSTANCE.getError() + " " + MFConfig.INSTANCE.getValidatorFail()));
+                                        new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() +
+                                                MetroConfiguration.INSTANCE.getError() + " " + MetroConfiguration.INSTANCE.getValidatorFail()));
                             }
                         }
                     }
@@ -94,10 +94,10 @@ public class ClearanceTC extends SignAction {
 
         if(CompanyStore.CompanyTable.containsKey(infoOut[0]) &&
                 CompanyStore.CompanyTable.containsKey(infoIn[0]) &&
-                MFConfig.INSTANCE.hasBuildGatePermission(info.getPlayer())){
+                MetroConfiguration.INSTANCE.hasBuildGatePermission(info.getPlayer())){
             SignBuildOptions opt = SignBuildOptions.create()
-                    .setName(MFConfig.INSTANCE.getOutput() + MFConfig.INSTANCE.getValidatorTrainCartsName());
-            opt.setDescription(MFConfig.INSTANCE.getValidatorTrainCartsDescription());
+                    .setName(MetroConfiguration.INSTANCE.getOutput() + MetroConfiguration.INSTANCE.getValidatorTrainCartsName());
+            opt.setDescription(MetroConfiguration.INSTANCE.getValidatorTrainCartsDescription());
             return opt.handle(info.getPlayer());
         }
 

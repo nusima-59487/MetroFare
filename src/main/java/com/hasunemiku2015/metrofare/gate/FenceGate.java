@@ -1,6 +1,6 @@
 package com.hasunemiku2015.metrofare.gate;
 
-import com.hasunemiku2015.metrofare.MFConfig;
+import com.hasunemiku2015.metrofare.MetroConfiguration;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Location;
@@ -22,7 +22,7 @@ public class FenceGate implements Listener {
         blockLoc.setY(y);
 
         if((blockLoc.getBlock().getBlockData() instanceof Gate)){
-            if(!MFConfig.INSTANCE.hasFenceGatePermission(event.getPlayer())){
+            if(!MetroConfiguration.INSTANCE.hasFenceGatePermission(event.getPlayer())){
                 event.setCancelled(true);
             }
         }
@@ -40,8 +40,8 @@ public class FenceGate implements Listener {
 
         if(blockLoc.getBlock().getType() == Material.STRUCTURE_VOID){
             event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                    new TextComponent(MFConfig.INSTANCE.getBase() +
-                            MFConfig.INSTANCE.getPrefix() + " This gate is locked!"));
+                    new TextComponent(MetroConfiguration.INSTANCE.getBase() +
+                            MetroConfiguration.INSTANCE.getPrefix() + " This gate is locked!"));
             event.setCancelled(true);
         }
     }

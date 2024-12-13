@@ -1,6 +1,6 @@
 name: ${project.artifactId}
 version: ${project.version}
-main: com.hasunemiku2015.metrofare.MTFA
+main: com.hasunemiku2015.metrofare.MetroFare
 api-version: 1.16
 softdepend: [Vault,Train_Carts,MikuCore]
 commands:

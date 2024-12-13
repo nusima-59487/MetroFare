@@ -6,7 +6,7 @@
 
     <groupId>com.hasunemiku2015</groupId>
     <artifactId>MetroFare</artifactId>
-    <version>0.10.2</version>
+    <version>0.10.4</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -110,7 +110,7 @@
         <dependency>
             <groupId>net.wesjd</groupId>
             <artifactId>anvilgui</artifactId>
-            <version>1.9.4-SNAPSHOT</version>
+            <version>1.10.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>me.hasunemiku2015</groupId>

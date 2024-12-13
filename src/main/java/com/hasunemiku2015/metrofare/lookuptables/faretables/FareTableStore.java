@@ -3,7 +3,7 @@ package com.hasunemiku2015.metrofare.lookuptables.faretables;
 import com.besaba.revonline.pastebinapi.Pastebin;
 import com.besaba.revonline.pastebinapi.impl.factory.PastebinFactory;
 import com.besaba.revonline.pastebinapi.response.Response;
-import com.hasunemiku2015.metrofare.MTFA;
+import com.hasunemiku2015.metrofare.MetroFare;
 
 import java.io.*;
 import java.util.*;
@@ -13,7 +13,7 @@ public class FareTableStore {
 
     public static void init() throws FileNotFoundException, InvalidFareTableException {
         FareTables = new HashMap<>();
-        File dir = new File(MTFA.PLUGIN.getDataFolder(), "FareTables");
+        File dir = new File(MetroFare.PLUGIN.getDataFolder(), "FareTables");
         boolean b = dir.mkdirs();
         if (!b) {
             //Read the csv files
@@ -63,7 +63,7 @@ public class FareTableStore {
         final Response<String> pasteResponse = pastebin.getRawPaste(pasteKey);
         if (pasteResponse.hasError()) return 1;
 
-        File file = new File(MTFA.PLUGIN.getDataFolder() + "/FareTables", localFileName + ".csv");
+        File file = new File(MetroFare.PLUGIN.getDataFolder() + "/FareTables", localFileName + ".csv");
         if(file.exists()) return 2;
         boolean b = file.createNewFile();
         if(!b) return 3;

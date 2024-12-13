@@ -1,10 +1,11 @@
 package com.hasunemiku2015.metrofare.company;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 
 public class ZoneAbsCompany extends AbstractCompany implements Serializable {
-    //Serialization ID
+    @Serial
     private static final long serialVersionUID = 314159265L;
 
     //Vars

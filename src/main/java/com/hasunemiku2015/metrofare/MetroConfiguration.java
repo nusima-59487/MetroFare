@@ -6,8 +6,8 @@ import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 
-public class MFConfig {
-    public static MFConfig INSTANCE = new MFConfig();
+public class MetroConfiguration {
+    public static MetroConfiguration INSTANCE = new MetroConfiguration();
 
     // ============================================================================================================== //
     //                                                General                                                         //
@@ -212,10 +212,10 @@ public class MFConfig {
     // ============================================================================================================== //
     /**
      * Inner helper class for reading config files.
-     * @see MFConfig
+     * @see MetroConfiguration
      */
     static class ConfigHelper {
-         static final FileConfiguration config = MTFA.PLUGIN.getConfig();
+         static final FileConfiguration config = MetroFare.PLUGIN.getConfig();
 
         /**
          * Returns a boolean value from the config.yml.

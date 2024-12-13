@@ -1,7 +1,7 @@
 package com.hasunemiku2015.metrofare.ticketing.types;
 
-import com.hasunemiku2015.metrofare.MFConfig;
-import com.hasunemiku2015.metrofare.MTFA;
+import com.hasunemiku2015.metrofare.MetroConfiguration;
+import com.hasunemiku2015.metrofare.MetroFare;
 import com.hasunemiku2015.metrofare.VaultIntegration;
 import net.md_5.bungee.api.ChatColor;
 import org.apache.commons.lang3.StringUtils;
@@ -61,19 +61,19 @@ public class DebitCard {
     // ============================================================================================================== //
     //                                                  NamespaceKey                                                  //
     // ============================================================================================================== //
-    private static final NamespacedKey UUID_KEY = new NamespacedKey(MTFA.PLUGIN, "UUID");
-    private static final NamespacedKey COMPANY_KEY = new NamespacedKey(MTFA.PLUGIN, "Company");
-    private static final NamespacedKey ENTRY_DATA_KEY = new NamespacedKey(MTFA.PLUGIN, "EntryData");
-    private static final NamespacedKey OWNER_KEY = new NamespacedKey(MTFA.PLUGIN, "Owner");
-    private static final NamespacedKey BALANCE_KEY = new NamespacedKey(MTFA.PLUGIN, "Balance");
-    private static final NamespacedKey VALIDITY_KEY = new NamespacedKey(MTFA.PLUGIN, "Valid");
+    private static final NamespacedKey UUID_KEY = new NamespacedKey(MetroFare.PLUGIN, "UUID");
+    private static final NamespacedKey COMPANY_KEY = new NamespacedKey(MetroFare.PLUGIN, "Company");
+    private static final NamespacedKey ENTRY_DATA_KEY = new NamespacedKey(MetroFare.PLUGIN, "EntryData");
+    private static final NamespacedKey OWNER_KEY = new NamespacedKey(MetroFare.PLUGIN, "Owner");
+    private static final NamespacedKey BALANCE_KEY = new NamespacedKey(MetroFare.PLUGIN, "Balance");
+    private static final NamespacedKey VALIDITY_KEY = new NamespacedKey(MetroFare.PLUGIN, "Valid");
 
-    private static final NamespacedKey LAST_ADDED_AUTO_KEY = new NamespacedKey(MTFA.PLUGIN, "LastAddedAuto");
-    private static final NamespacedKey ADD_AMOUNT_KEY = new NamespacedKey(MTFA.PLUGIN, "AddAmount");
-    private static final NamespacedKey ADDED_AMOUNT_KEY = new NamespacedKey(MTFA.PLUGIN, "AddedAmount");
-    private static final NamespacedKey DAILY_LIMIT_KEY = new NamespacedKey(MTFA.PLUGIN, "DailyLimit");
+    private static final NamespacedKey LAST_ADDED_AUTO_KEY = new NamespacedKey(MetroFare.PLUGIN, "LastAddedAuto");
+    private static final NamespacedKey ADD_AMOUNT_KEY = new NamespacedKey(MetroFare.PLUGIN, "AddAmount");
+    private static final NamespacedKey ADDED_AMOUNT_KEY = new NamespacedKey(MetroFare.PLUGIN, "AddedAmount");
+    private static final NamespacedKey DAILY_LIMIT_KEY = new NamespacedKey(MetroFare.PLUGIN, "DailyLimit");
 
-    private static final NamespacedKey PAYMENT_RECORD_KEY = new NamespacedKey(MTFA.PLUGIN, "PaymentRecord");
+    private static final NamespacedKey PAYMENT_RECORD_KEY = new NamespacedKey(MetroFare.PLUGIN, "PaymentRecord");
 
     // ============================================================================================================== //
     //                                                  API Methods                                                   //
@@ -264,18 +264,18 @@ public class DebitCard {
      */
     public void updateCard() {
         List<String> lore = new ArrayList<>();
-        lore.add(MFConfig.INSTANCE.getOwnerPrefix() + MFConfig.INSTANCE.getInput() + Objects.requireNonNull(Bukkit.getPlayer(UUID.fromString(owner))).getName());
+        lore.add(MetroConfiguration.INSTANCE.getOwnerPrefix() + MetroConfiguration.INSTANCE.getInput() + Objects.requireNonNull(Bukkit.getPlayer(UUID.fromString(owner))).getName());
 
         if (balance <= 0) {
             autoTopUp();
         }
 
         if (balance > 0) {
-            lore.add(MFConfig.INSTANCE.getBalancePrefix() + ChatColor.GREEN + MFConfig.INSTANCE.getCurrencyUnit() + balance / 1000.0);
+            lore.add(MetroConfiguration.INSTANCE.getBalancePrefix() + ChatColor.GREEN + MetroConfiguration.INSTANCE.getCurrencyUnit() + balance / 1000.0);
         } else if (balance < 0) {
-            lore.add(MFConfig.INSTANCE.getBalancePrefix() + ChatColor.RED + MFConfig.INSTANCE.getCurrencyUnit() + balance / 1000.0);
+            lore.add(MetroConfiguration.INSTANCE.getBalancePrefix() + ChatColor.RED + MetroConfiguration.INSTANCE.getCurrencyUnit() + balance / 1000.0);
         } else {
-            lore.add(MFConfig.INSTANCE.getBalancePrefix() + ChatColor.DARK_GRAY + MFConfig.INSTANCE.getCurrencyUnit() + "0");
+            lore.add(MetroConfiguration.INSTANCE.getBalancePrefix() + ChatColor.DARK_GRAY + MetroConfiguration.INSTANCE.getCurrencyUnit() + "0");
         }
 
         meta.setLore(lore);
@@ -429,9 +429,9 @@ public class DebitCard {
      */
     public void addPaymentRecord(String company, boolean isDeduct, int amount) {
         if (isDeduct) {
-            record.addPaymentRecord(company, StringUtils.rightPad("-" + MFConfig.INSTANCE.getCurrencyUnit() + amount / 1000.0, 10));
+            record.addPaymentRecord(company, StringUtils.rightPad("-" + MetroConfiguration.INSTANCE.getCurrencyUnit() + amount / 1000.0, 10));
         } else {
-            record.addPaymentRecord(company, StringUtils.rightPad("+" + MFConfig.INSTANCE.getCurrencyUnit() + amount / 1000.0, 10));
+            record.addPaymentRecord(company, StringUtils.rightPad("+" + MetroConfiguration.INSTANCE.getCurrencyUnit() + amount / 1000.0, 10));
         }
 
         cardDataCache.set(PAYMENT_RECORD_KEY, PersistentDataType.STRING, record.toString());
@@ -520,12 +520,12 @@ public class DebitCard {
 
         ItemMeta itm = card.getItemMeta();
         assert itm != null;
-        itm.setDisplayName(MFConfig.INSTANCE.getDebitCardName());
+        itm.setDisplayName(MetroConfiguration.INSTANCE.getDebitCardName());
         itm.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
         List<String> lore = new ArrayList<>();
-        lore.add(MFConfig.INSTANCE.getOwnerPrefix() + MFConfig.INSTANCE.getInput() + player.getName());
-        lore.add(MFConfig.INSTANCE.getBalancePrefix() + ChatColor.DARK_GRAY + MFConfig.INSTANCE.getCurrencyUnit() + 0);
+        lore.add(MetroConfiguration.INSTANCE.getOwnerPrefix() + MetroConfiguration.INSTANCE.getInput() + player.getName());
+        lore.add(MetroConfiguration.INSTANCE.getBalancePrefix() + ChatColor.DARK_GRAY + MetroConfiguration.INSTANCE.getCurrencyUnit() + 0);
         itm.setLore(lore);
 
         PersistentDataContainer pdc = itm.getPersistentDataContainer();

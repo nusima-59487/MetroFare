@@ -2,8 +2,8 @@ package com.hasunemiku2015.metrofare.gate.people;
 
 import com.hasunemiku2015.metrofare.company.AbstractCompany;
 import com.hasunemiku2015.metrofare.company.CompanyStore;
-import com.hasunemiku2015.metrofare.MFConfig;
-import com.hasunemiku2015.metrofare.MTFA;
+import com.hasunemiku2015.metrofare.MetroConfiguration;
+import com.hasunemiku2015.metrofare.MetroFare;
 import com.hasunemiku2015.metrofare.company.UniformCompany;
 import com.hasunemiku2015.metrofare.ticketing.types.DebitCard;
 import com.hasunemiku2015.metrofare.ticketing.types.Ticket;
@@ -33,7 +33,7 @@ public class GateExecutionOut implements Listener {
             ItemStack hand = event.getItem();
             String[] data = GateUtil.parseData(sign.getLine(1));
 
-            if (GateUtil.checkValid(sign, MFConfig.INSTANCE.getPrefixOut()) && GateUtil.validFace(sign, event.getBlockFace())) {
+            if (GateUtil.checkValid(sign, MetroConfiguration.INSTANCE.getPrefixOut()) && GateUtil.validFace(sign, event.getBlockFace())) {
                 event.setCancelled(true);
 
                 boolean openGate = false;
@@ -49,22 +49,22 @@ public class GateExecutionOut implements Listener {
                     openGate = TicketExitLogic(event.getPlayer(), company, hand, sign);
                     if (openGate) {
                         event.getPlayer().getInventory().setItemInMainHand(new ItemStack(Material.AIR, 1));
-                        event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getChatOut()));
+                        event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getChatOut()));
                     }
                 }
 
                 if (openGate) {
-                    sign.setLine(2, MFConfig.INSTANCE.getTransient1Out());
-                    sign.setLine(3, MFConfig.INSTANCE.getTransient2Out());
+                    sign.setLine(2, MetroConfiguration.INSTANCE.getTransient1Out());
+                    sign.setLine(3, MetroConfiguration.INSTANCE.getTransient2Out());
                     sign.update();
 
                     final Location signCoordinate = sign.getLocation();
-                    Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN, () -> {
+                    Bukkit.getScheduler().runTaskLater(MetroFare.PLUGIN, () -> {
                         Sign updateSign = ((Sign) signCoordinate.getBlock().getState());
-                        updateSign.setLine(2, MFConfig.INSTANCE.getInfo1Out());
-                        updateSign.setLine(3, MFConfig.INSTANCE.getInfo2Out());
+                        updateSign.setLine(2, MetroConfiguration.INSTANCE.getInfo1Out());
+                        updateSign.setLine(3, MetroConfiguration.INSTANCE.getInfo2Out());
                         updateSign.update();
-                    }, MFConfig.INSTANCE.getOpenTime());
+                    }, MetroConfiguration.INSTANCE.getOpenTime());
                     GateUtil.setBlock(sign);
                 }
             }
@@ -75,22 +75,22 @@ public class GateExecutionOut implements Listener {
         DebitCard card = new DebitCard(hand);
         if (!card.isValid()) {
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
-                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getDebitCardInvalidOut()));
+                    MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getDebitCardInvalidOut()));
             return false;
         }
         if (!card.getOwner().equals(p.getUniqueId().toString())) {
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
-                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getPlayerInvalidOut()));
+                    MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getPlayerInvalidOut()));
             return false;
         }
         if (!card.hasEntered()) {
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
-                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getCardNotEnteredOut()));
+                    MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getCardNotEnteredOut()));
             return false;
         }
 
         String s = card.getEntryData();
-        double fare = MFConfig.INSTANCE.getDefaultFare();
+        double fare = MetroConfiguration.INSTANCE.getDefaultFare();
 
         String dat = "";
         try {
@@ -103,8 +103,8 @@ public class GateExecutionOut implements Listener {
             fare = fareUpdate;
         }
 
-        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getChatOut() + MFConfig.INSTANCE.getCurrencyUnit() + MFConfig.INSTANCE.getOutput() + fare));
-        Bukkit.getScheduler().runTaskLater(MTFA.PLUGIN, () -> p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getChatRemaining() + MFConfig.INSTANCE.getCurrencyUnit() + MFConfig.INSTANCE.getOutput() + (card.getBalance() / 1000.0))), 20);
+        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getChatOut() + MetroConfiguration.INSTANCE.getCurrencyUnit() + MetroConfiguration.INSTANCE.getOutput() + fare));
+        Bukkit.getScheduler().runTaskLater(MetroFare.PLUGIN, () -> p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getChatRemaining() + MetroConfiguration.INSTANCE.getCurrencyUnit() + MetroConfiguration.INSTANCE.getOutput() + (card.getBalance() / 1000.0))), 20);
 
         card.removeEntryData();
         card.removeCompany();
@@ -120,17 +120,17 @@ public class GateExecutionOut implements Listener {
         Ticket ticket = new Ticket(hand);
         if (!ticket.isValid()) {
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
-                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getTicketInvalidOut()));
+                    MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getTicketInvalidOut()));
             return false;
         }
         if (!ticket.hasEntered()) {
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
-                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getTicketNotEnteredOut()));
+                    MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getTicketNotEnteredOut()));
             return false;
         }
         if (!ticket.checkExitCompany(company)) {
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
-                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getTicketWrongExitCompanyOut()));
+                    MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getTicketWrongExitCompanyOut()));
             return false;
         }
 
@@ -149,13 +149,13 @@ public class GateExecutionOut implements Listener {
 
         if (!ticket.checkExitCompany(CompanyStore.CompanyTable.get(ticket.getCompanyFrom()))) {
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
-                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getTicketInvalidInterCompanyOut()));
+                    MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getTicketInvalidInterCompanyOut()));
             return false;
         }
 
         if (ticket.getFare() < company.computeFare(ticket.getEntryData(), stationName)) {
             p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(
-                    MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getPrefix() + " " + MFConfig.INSTANCE.getTicketInsufficientFareOut()));
+                    MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getPrefix() + " " + MetroConfiguration.INSTANCE.getTicketInsufficientFareOut()));
             return false;
         }
         return true;

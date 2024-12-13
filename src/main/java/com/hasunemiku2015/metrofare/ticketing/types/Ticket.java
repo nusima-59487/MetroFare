@@ -1,8 +1,8 @@
 package com.hasunemiku2015.metrofare.ticketing.types;
 
 import com.hasunemiku2015.metrofare.company.AbstractCompany;
-import com.hasunemiku2015.metrofare.MFConfig;
-import com.hasunemiku2015.metrofare.MTFA;
+import com.hasunemiku2015.metrofare.MetroConfiguration;
+import com.hasunemiku2015.metrofare.MetroFare;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
@@ -65,13 +65,13 @@ public class Ticket {
     // ============================================================================================================== //
     //                                                  NamespaceKey                                                  //
     // ============================================================================================================== //
-    private static final NamespacedKey ENTERED_KEY = new NamespacedKey(MTFA.PLUGIN, "Entered");
+    private static final NamespacedKey ENTERED_KEY = new NamespacedKey(MetroFare.PLUGIN, "Entered");
 
-    private static final NamespacedKey ENTRY_DATA_KEY = new NamespacedKey(MTFA.PLUGIN, "EntryData");
-    private static final NamespacedKey EXIT_DATA_KEY = new NamespacedKey(MTFA.PLUGIN, "ExitData");
+    private static final NamespacedKey ENTRY_DATA_KEY = new NamespacedKey(MetroFare.PLUGIN, "EntryData");
+    private static final NamespacedKey EXIT_DATA_KEY = new NamespacedKey(MetroFare.PLUGIN, "ExitData");
 
-    private static final NamespacedKey FARE_KEY = new NamespacedKey(MTFA.PLUGIN, "Fare");
-    private static final NamespacedKey VALID_KEY = new NamespacedKey(MTFA.PLUGIN, "Valid");
+    private static final NamespacedKey FARE_KEY = new NamespacedKey(MetroFare.PLUGIN, "Fare");
+    private static final NamespacedKey VALID_KEY = new NamespacedKey(MetroFare.PLUGIN, "Valid");
 
     // ============================================================================================================== //
     //                                                  API Methods                                                   //
@@ -150,7 +150,7 @@ public class Ticket {
         ItemMeta itm = stack.getItemMeta();
         assert itm != null;
         PersistentDataContainer pdc = itm.getPersistentDataContainer();
-        pdc.set(new NamespacedKey(MTFA.PLUGIN, "Entered"), PersistentDataType.INTEGER, 1);
+        pdc.set(new NamespacedKey(MetroFare.PLUGIN, "Entered"), PersistentDataType.INTEGER, 1);
         stack.setItemMeta(itm);
     }
 
@@ -174,12 +174,12 @@ public class Ticket {
 
         ItemMeta itm = its.getItemMeta();
         assert itm != null;
-        itm.setDisplayName(MFConfig.INSTANCE.getTicketName());
+        itm.setDisplayName(MetroConfiguration.INSTANCE.getTicketName());
 
         List<String> lore = new ArrayList<>();
-        lore.add(MFConfig.INSTANCE.getTicketPrefixIn() + ": " + MFConfig.INSTANCE.getBase() + entryData + " (" + entryCompany.getName() + ")");
-        lore.add(MFConfig.INSTANCE.getTicketPrefixOut() + ": " + MFConfig.INSTANCE.getBase() + exitData + " (" + exitCompany.getName() + ")");
-        lore.add(MFConfig.INSTANCE.getTicketPrefixFare() + ": " + MFConfig.INSTANCE.getBase() + MFConfig.INSTANCE.getCurrencyUnit() + fare / 1000.0);
+        lore.add(MetroConfiguration.INSTANCE.getTicketPrefixIn() + ": " + MetroConfiguration.INSTANCE.getBase() + entryData + " (" + entryCompany.getName() + ")");
+        lore.add(MetroConfiguration.INSTANCE.getTicketPrefixOut() + ": " + MetroConfiguration.INSTANCE.getBase() + exitData + " (" + exitCompany.getName() + ")");
+        lore.add(MetroConfiguration.INSTANCE.getTicketPrefixFare() + ": " + MetroConfiguration.INSTANCE.getBase() + MetroConfiguration.INSTANCE.getCurrencyUnit() + fare / 1000.0);
         itm.setLore(lore);
 
         PersistentDataContainer pdc = itm.getPersistentDataContainer();
@@ -189,7 +189,7 @@ public class Ticket {
         pdc.set(ENTERED_KEY, PersistentDataType.INTEGER, 0);
         pdc.set(FARE_KEY, PersistentDataType.INTEGER, fare);
 
-        pdc.set(new NamespacedKey(MTFA.PLUGIN, "UUID"), PersistentDataType.STRING, UUID.randomUUID().toString());
+        pdc.set(new NamespacedKey(MetroFare.PLUGIN, "UUID"), PersistentDataType.STRING, UUID.randomUUID().toString());
         its.setItemMeta(itm);
         return its;
     }
