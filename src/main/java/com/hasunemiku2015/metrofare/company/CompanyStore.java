@@ -100,4 +100,8 @@ public class CompanyStore {
         }
         return false;
     }
+
+    protected static HashMap<String, AbstractCompany> getCompany () {
+        return CompanyTable; 
+    }
 }

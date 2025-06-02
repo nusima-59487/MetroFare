@@ -16,6 +16,8 @@ import com.hasunemiku2015.metrofare.ticketing.commands.DebitCardCommand;
 import com.hasunemiku2015.metrofare.ticketing.commands.TicketCBlkCommand;
 import com.hasunemiku2015.metrofare.ticketing.commands.TicketCommand;
 import com.hasunemiku2015.metrofare.ticketing.sign.DebitCardEditor;
+import com.hasunemiku2015.metrofare.ticketing.sign.SingleUseTicketMachine;
+
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -42,6 +44,10 @@ public final class MetroFare extends JavaPlugin {
         if (VaultIntegration.vault && MetroConfiguration.INSTANCE.isDceEnabled()) {
             //Note: MUST be after Config (cuz need to use ChatColor from Config)
             DebitCardEditor.init();
+        }
+
+        if (VaultIntegration.vault && MetroConfiguration.INSTANCE.isStmEnabled()) {
+            SingleUseTicketMachine.init(); 
         }
 
         try {
@@ -80,6 +86,9 @@ public final class MetroFare extends JavaPlugin {
         }
         if (VaultIntegration.vault && MetroConfiguration.INSTANCE.isDceEnabled()) {
             this.getServer().getPluginManager().registerEvents(new DebitCardEditor(), this);
+        }
+        if (VaultIntegration.vault && MetroConfiguration.INSTANCE.isStmEnabled()) {
+            this.getServer().getPluginManager().registerEvents(new SingleUseTicketMachine(), this);
         }
 
         //Commands

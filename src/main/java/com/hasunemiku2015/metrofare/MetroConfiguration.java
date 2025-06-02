@@ -164,6 +164,19 @@ public class MetroConfiguration {
      String newBalanceDCE = ConfigHelper.getColoredString("card_editor.new_balance");
 
     // ============================================================================================================== //
+    //                                            Single Use Ticket Machine                                           //
+    // ============================================================================================================== //
+     boolean stmEnabled = ConfigHelper.getBoolean("single_use_ticket_machine.enable"); 
+
+     String prefixSTM = ConfigHelper.getColoredString("single_use_ticket_machine.prefix");
+     String info1STM = ConfigHelper.getColoredString("single_use_ticket_machine.info_1"); 
+     String info2STM = ConfigHelper.getColoredString("single_use_ticket_machine.info_2"); 
+     
+     String promptStationCodeSTM = ConfigHelper.getColoredString("single_use_ticket_machine.prompt_station_code"); 
+     String promptInvalidStationCodeSTM = ConfigHelper.getColoredString("single_use_ticket_machine.prompt_invalid_station_code"); 
+     String failSTM = ConfigHelper.getColoredString("single_use_ticket_machine.fail"); 
+
+    // ============================================================================================================== //
     //                                              DebitCard Validator                                               //
     // ============================================================================================================== //
      boolean validatorEnabled = ConfigHelper.getBoolean("validator.enable");
@@ -563,6 +576,34 @@ public class MetroConfiguration {
 
     public String getNewBalanceDCE() {
         return newBalanceDCE;
+    }
+
+    public boolean isStmEnabled () {
+        return stmEnabled; 
+    }
+
+    public String getPrefixSTM () {
+        return prefixSTM; 
+    }
+
+    public String getInfo1STM () {
+        return info1STM; 
+    }
+
+    public String getInfo2STM () {
+        return info2STM; 
+    }
+
+    public String getPromptStationCodeSTM () {
+        return promptStationCodeSTM; 
+    }
+
+    public String getPromptInvalidStationCodeSTM () {
+        return promptInvalidStationCodeSTM; 
+    }
+
+    public String getFailSTM () {
+        return failSTM; 
     }
 
     public boolean isValidatorEnabled() {

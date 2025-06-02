@@ -119,6 +119,15 @@ card_editor:
   fail: '&4An error occurred'
   new_balance: '&eNew Card Balance: '
 
+single_use_ticket_machine: 
+  enable: true
+  prefix: '[MetroFareSTM]'
+  info_1: '&6&l單程票售票機'
+  info_2: '&5Single Use Ticket'
+  prompt_station_code: '&eDestination Stn. Code'
+  prompt_invalid_station_code: '&4Invalid Station Code!'
+  fail: '&4An error occured'
+
 validator:
   enable: true
   vanilla:
